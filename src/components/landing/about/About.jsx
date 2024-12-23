@@ -1,8 +1,26 @@
-import React from 'react'
+"use client"
 
-const about = () => {
+import { BorderBeam } from "@/components/decorations/BorderBeam";
+import FadeIn from "@/components/transitions/FadeIn";
+import Image from "next/image";
+import React, { useState, useRef } from "react";
+import YouTube from "react-youtube";
+
+const About = () => {
+  const [videoVisible, setVideoVisible] = useState(false);
+  const playerRef = useRef(null);
+
+  const onReady = (event) => {
+    playerRef.current = event.target;
+  };
+
+  const togglePlay = () => {
+    setVideoVisible(true);
+    playerRef.current.playVideo();
+  };
+
   return (
-    <div className="w-screen h-auto flex flex-col px-[11vw] gap-y-[5vw]">
+    <div className="w-screen max-w-full h-auto flex flex-col px-[10vw] py-[8vw] gap-y-[5vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF] overflow-x-clip">
       <div className="w-auto flex flex-col gap-y-[2.5vw]">
         <div className="w-auto flex flex-row gap-x-[2vw] justify-center items-center">
           <div className="w-[10vw] h-[0.6vw] bg-yellow-300 place-content-center"></div>
@@ -40,18 +58,59 @@ const about = () => {
             CSIRT Kemhan secara resmi di-launching pada 8 Desember 2021 dan setiap pengguna sistem 
             elektronik di lingkungan Kementerian Pertahanan merupakan konstituen dari CSIRT Kemhan.
             </p>
-          </div>
-          {/* <div className="flex-1 flex justify-center items-center">
-            <iframe
-              className="w-full h-[25vw] rounded-lg shadow-lg"
-              src="https://www.youtube.com/embed/x7izdWGQJJo?start=153"
-              title="Profil CSIRT Kemhan"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div> */}
+          </div>  
         </div>
+      </div>
+      <div className="relative w-full aspect-[327/490] md:aspect-[17/8] bg-neutral-900 rounded-[5vw] md:rounded-[1.5vw] shadow-[0_0.52vw_2.2vw_0_rgba(0,0,0,0.25)] ">
+        <div className="hidden md:block relative w-full h-full rounded-[5vw] md:rounded-[1.5vw]">
+          <BorderBeam size={600} duration={20} borderWidth={6} />
+        </div>
+        <div className="md:hidden block relative w-full h-full rounded-[5vw] md:rounded-[1.5vw]">
+          <BorderBeam size={400} duration={12} borderWidth={4} />
+        </div>
+
+        {!videoVisible && (
+          <FadeIn
+            direction="right"
+            order={2.5}
+            className="relative -top-[80vw] md:-top-[22.5vw] left-0 right-0 mx-auto h-[20vw] md:h-[8vw] flex gap-x-[2vw] items-center justify-center text-white font-bold text-[4.5vw]">
+            <p className="max-md:hidden">PLAY</p>
+            <button
+              className="relative w-[28vw] md:w-[8vw] md:hover:scale-[1.05] transition duration-500 aspect-[120/75] "
+              onClick={togglePlay}>
+              <Image
+                src="/play_video_button.png"
+                alt="play button"
+                fill
+                style={{ objectFit: "contain" }}
+                draggable="false"
+              />
+            </button>
+            <p className="max-md:hidden">VIDEO</p>
+          </FadeIn>
+        )}
+
+        <YouTube
+          videoId="v258kj7BhA0"
+          opts={{
+            height: "100%",
+            width: "100%",
+            playerVars: {
+              autoplay: 0,
+              controls: 1,
+              modestbranding: 1,
+              rel: 0,
+              showinfo: 1,
+              fs: 1,
+              cc_load_policy: 1,
+              iv_load_policy: 3,
+            },
+          }}
+          onReady={onReady}
+          className={`absolute top-0 left-0 w-full h-full ${
+            videoVisible ? "opacity-100 z-10" : "opacity-0 -z-10"
+          }`}
+        />
       </div>
       <div className="w-auto flex flex-col gap-y-[2.5vw]">
         <div className="w-auto flex flex-row gap-x-[2vw] justify-center items-center">
@@ -85,4 +144,4 @@ const about = () => {
   )
 }
 
-export default about
+export default About

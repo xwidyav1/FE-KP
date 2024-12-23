@@ -15,7 +15,7 @@ const menu = [
   { section: "Layanan" },
   { section: "Event" },
   { section: "Hubungi Kami" },
-  { section: "Aduan SIber" },
+  { section: "Aduan Siber" },
 ];
 
 const NavbarLanding = () => {
@@ -76,7 +76,7 @@ const NavbarLanding = () => {
     <>
       {/* Navbar Desktop */}
       <div
-        className={`max-md:hidden fixed flex gap-x-[0.7vw] top-[1vw] left-0 right-0 mx-auto w-fit h-[7vw] p-[0.7vw] rounded-[1vw] z-[1000] transition-transform duration-300 backdrop-blur-[0.4vw] ${
+        className={`max-md:hidden fixed flex gap-x-[0.7vw] top-[1vw] left-0 right-0 mx-auto w-fit h-[7vw] p-[0.7vw] bg-white/50 rounded-[1vw] border-[0.1vw] border-white z-[1000] transition-transform duration-300 backdrop-blur-[0.4vw] ${
           visible ? "translate-y-0" : "-translate-y-[125%]"
         }`}>
         <FadeIn direction="down" order={2} className="h-full w-fit">
