@@ -41,10 +41,10 @@ const Berita = () => {
             <h1 className="font-semibold text-[1.5vw] line-clamp-2">
               Judul Berita Terbaru Terkait CSIRT KEMHAN RI sangat panjang sekali lagilagiaa galaioif agfaua ffadfadfoa ga gain aadda aoni
             </h1>
-            <p className="text-[1vw] text-gray-500">
+            <p className="text-[0.9vw] text-gray-500">
               19 Desember 2024, 12.55
             </p>
-            <p className="text-[1.1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[10vw]">
+            <p className="text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[10vw]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
@@ -72,7 +72,7 @@ const Berita = () => {
               <h1 className="font-semibold text-[1.3vw] line-clamp-2">
                 Judul Berita Terbaru Terkait CSIRT KEMHAN RI hai hai hai hai hai hai hai hai ahi ahia hai ahaia ahai 
               </h1>
-              <p className="text-[1vw] text-gray-500">
+              <p className="text-[0.9vw] text-gray-500">
                 19 Desember 2024, 12.55
               </p>
             </div>
@@ -94,7 +94,7 @@ const Berita = () => {
               <h1 className="font-semibold text-[1.3vw] line-clamp-2">
                 Judul Berita Terbaru Terkait CSIRT KEMHAN RI
               </h1>
-              <p className="text-[1vw] text-gray-500">
+              <p className="text-[0.9vw] text-gray-500">
                 19 Desember 2024, 12.55
               </p>
             </div>
@@ -116,7 +116,7 @@ const Berita = () => {
               <h1 className="font-semibold text-[1.3vw] line-clamp-2">
                 Judul Berita Terbaru Terkait CSIRT KEMHAN RI
               </h1>
-              <p className="text-[1vw] text-gray-500">
+              <p className="text-[0.9vw] text-gray-500">
                 19 Desember 2024, 12.55
               </p>
             </div>
