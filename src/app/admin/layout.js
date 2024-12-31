@@ -18,15 +18,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Navbar />
-        <div className="flex">
-          <div className="hidden md:block h-auto w-[15vw]">
+        <div className="flex flex-row">
+          <div className="fixed z-10 h-full w-[13vw] bg-slate-200">
             <Sidebar />
+          </div>         
+          <div className="w-full flex flex-col overflow-hidden">
+            <div>
+              <Navbar/>
+            </div>
+            <div className="ml-[13vw] pt-[1vw] px-[2vw] overflow-auto">
+              {children}
+            </div>     
           </div>
-          <div className="p-[2vw] w-full md:max-w-full">
-            {children}
-          </div>     
-        </div>
+        </div>       
       </body>
     </html>
   );

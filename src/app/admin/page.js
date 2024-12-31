@@ -1,6 +1,6 @@
 // import { Button } from "@/components/ui/button";
 import DashboardCard from "@/components/admin/dashboard/DashboardCard";
-import { Newspaper, Images, File, Files} from 'lucide-react';
+import { Newspaper, Images, File, Files, ChevronRight} from 'lucide-react';
 import PostsTable from "@/components/admin/posts/PostsTable";
 import AnalyticsChart from "@/components/admin/dashboard/AnalyticsChart";
 
