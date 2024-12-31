@@ -100,7 +100,7 @@ const NavbarLanding = () => {
             <FadeIn
               direction="down"
               order={2 + 0.5 * index}
-              className="h-[2vw] w-[0.005vw] bg-neutral-300/50"></FadeIn>
+              className="h-[2vw] w-[0.1vw] bg-neutral-300/50"></FadeIn>
             <FadeIn
               direction="down"
               order={2 + 0.5 * index}
