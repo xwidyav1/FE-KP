@@ -26,7 +26,7 @@ const Hero = () => {
   return (
     <div className="w-screen max-w-full h-auto md:h-[55vw] gap-y-[10vw] md:gap-y-[4vw] px-[5vw] md:px-[10vw] py-[9vw] overflow-x-clip relative">
       <FadeIn direction="down" order={2} duration={1}>
-        <div className="relative w-[80vw] aspect-[1590/727] rounded-[5vw] md:rounded-[1.5vw] shadow-[0_0.52vw_2.2vw_0_rgba(0,0,0,0.25)]">
+        <div className="relative w-[80vw] aspect-[1590/727] rounded-[5vw] md:rounded-[1vw] shadow-[0_0.52vw_2.2vw_0_rgba(0,0,0,0.25)]">
           <Image
             src={image}
             alt="hero"

@@ -9,23 +9,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
 const menu = [
-  { section: "Beranda", topDsktp: 0, topMb: 0 },
-  { section: "Tentang Kami", topDsktp: 245, topMb: 20 },
-  { section: "RFC 2350", topDsktp: 485, topMb: 100 },
-  { section: "Layanan", url: "/layanan" },
-  { section: "Event", dropdown: [
-    { section: "Kegiatan", url: "/kegiatan" },
-    { section: "Galeri", url: "/galeri/1" }
-  ] },
-  { section: "Berita", url: "/berita/1" },
-  { section: "Hubungi Kami", url: "/kontak" },
+  { section: "Beranda", url:"/" },
+  { section: "Aduan Siber", topDsktp: 90, topMb: 20 },
+  { section: "Layanan VA", topDsktp: 262, topMb: 100 },
+  { section: "Pedoman Teknis", topDsktp: 487, topMb: 100  },
 ];
 
 const NavbarLanding = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [hoveredMenu, setHoveredMenu] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,8 +52,10 @@ const NavbarLanding = () => {
 
   const handleClick = (item) => {
     if (item.url) {
+      // Redirect jika properti `url` tersedia
       window.location.href = item.url;
     } else if (item.topDsktp !== undefined || item.topMb !== undefined) {
+      // Scroll ke posisi jika properti `topDsktp` atau `topMb` tersedia
       const isMobile = window.innerWidth < 768;
       const topInVw = isMobile ? item.topMb : item.topDsktp;
       const topInPixels = (topInVw * window.innerHeight) / 100;
@@ -83,7 +78,7 @@ const NavbarLanding = () => {
           <Link
             href="/"
             replace
-            className="h-full w-[15vw] grid place-content-center">
+            className="h-full w-[15vw] text-primary grid place-content-center">
             <div className="relative w-[15vw] aspect-[2114/579]">
               <Image
                 src="/logo-csirt-kemhan.png"
@@ -96,11 +91,7 @@ const NavbarLanding = () => {
           </Link>
         </FadeIn>
         {menu.map((value, index) => (
-          <div 
-            key={index} 
-            className="flex flex-row items-center justify-center gap-x-[0.8vw]"
-            onMouseEnter={() => setHoveredMenu(value.section)}
-            onMouseLeave={() => setHoveredMenu(null)}>
+          <div key={index} className="flex flex-row items-center justify-center gap-x-[0.8vw]">
             <FadeIn
               direction="down"
               order={2 + 0.5 * index}
@@ -111,21 +102,9 @@ const NavbarLanding = () => {
               className="h-full w-fit">
               <button
                 onClick={() => handleClick(value)}
-                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-[1.03vw] grid place-content-center transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
+                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-lg-vw grid place-content-center transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
                 {value.section}
               </button>
-              {value.dropdown && hoveredMenu === value.section && (
-                <div className="absolute right-[16.4vw] top-[5vw] mt-[1vw] w-[10vw] bg-white rounded-[0.7vw] border-[0.1vw] border-neutral-300/50  z-[1000] transition-transform duration-300 backdrop-blur-[0.4vw] shadow-lg overflow-hidden">
-                  {value.dropdown.map((item, subIndex) => (
-                    <Link
-                      key={subIndex}
-                      href={item.url}
-                      className="block px-[1vw] py-[0.5vw] text-[1vw] text-neutral-700 transition-color duration-200 ease-in-out delay-100 hover:text-yellow-500">
-                      {item.section}
-                    </Link>
-                  ))}
-                </div>
-              )}
             </FadeIn>
           </div>
         ))}
