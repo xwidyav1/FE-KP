@@ -1,13 +1,82 @@
-import React from 'react'
+"use client"
+
+import { useState, useEffect }from 'react'
 import Image from "next/image";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { 
+  MdKeyboardDoubleArrowLeft, 
+  MdKeyboardArrowLeft, 
+  MdKeyboardArrowRight, 
+  MdKeyboardDoubleArrowRight 
+} from "react-icons/md";
+import { guides } from "./pedoman_teknis"
 
 export default function Layanan() {
+  // State untuk mengontrol mounting komponen
+  const [isMounted, setIsMounted] = useState(false);
+
+  // State lainnya
+  const [currentPage, setCurrentPage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const rowsPerPage = 7;
+  const filteredGuides = guides.filter((guide) =>
+    guide.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const totalPages = Math.ceil(filteredGuides.length / rowsPerPage);
+
+  // Data untuk halaman saat ini
+  const currentData = filteredGuides.slice(
+    currentPage * rowsPerPage,
+    (currentPage + 1) * rowsPerPage
+  );
+
+  const handleFirstPage = () => setCurrentPage(0);
+  const handlePrevDesktop = () => setCurrentPage((prev) => Math.max(prev - 1, 0));
+  const handleNextDesktop = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+  const handleLastPage = () => setCurrentPage(totalPages - 1);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(0); // Reset ke halaman pertama saat melakukan pencarian
+  };
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <div className="w-full h-auto flex flex-col pt-[10vw] px-[10vw]">
-      <div className="h-[37vw] text-center text-[2.5vw] font-semibold text-[#012247]">
-        Dukungan Siber
+    <div className="relative w-full h-auto flex flex-col pt-[6vw] px-[10vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF]">
+      <div className="w-[80vw] md:w-[60vw] aspect-[1748/2424] absolute right-[-17vw] md:right-[-28vw] top-[-28vw] md:top-[-33vw] z-0">
+        <Image
+          src="/right_neural.png"
+          alt="network image"
+          fill
+          style={{ objectFit: "contain" }}
+          draggable="false"
+        />
       </div>
-      <div className="flex flex-col gap-y-[7vw]">
+      <div className="flex flex-col h-[40vw] text-center items-center justify-center text-[#012247] gap-y-[6vw] mb-[8vw] z-10">
+        <p className="text-[3vw]">
+          "You can&apos;t defend. You can&apos;t prevent. 
+          <br className="max-md:hidden" /> The only thing you can do is detect and respond."
+        </p>
+        <p className="text-[1.5vw]">
+          Bruce Schneier, Renowned Security Technologist
+        </p>
+      </div>
+      <div className="flex flex-col gap-y-[8vw]">
         <div className="flex flex-col gap-y-[2vw]">
           <div className="flex flex-row gap-x-[1vw] items-center">
             <div className="text-[2vw] font-semibold text-[#012247]">
@@ -73,16 +142,96 @@ export default function Layanan() {
             />
           </div>
         </div>
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <div className="flex flex-row gap-x-[1vw] items-center">
             <div className="text-[2vw] font-semibold text-[#012247]">
               Pedoman Teknis
             </div>
-            <div className="w-[10vw] h-[0.15vw] bg-[#FFC600]">        
+            <div className="w-[10vw] h-[0.15vw] bg-[#FFC600]"></div>
+          </div>
+
+          {/* Search Bar */}
+          <div className="w-[20vw] mt-[2vw]">
+            <input
+              type="text"
+              placeholder="Cari nama panduan..."
+              value={searchTerm}
+              onChange={handleSearch}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-300"
+            />
+          </div>
+
+          <div className="h-auto mt-[1vw] mb-[13vw]">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-[#012247] pointer-events-none">
+                <TableHead className="text-white">Nama Panduan</TableHead>
+                <TableHead className="text-white">Ukuran File</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+                {currentData.length > 0 ? (
+                  currentData.map((guide, index) => (
+                    <TableRow
+                      key={index}
+                      className={`${
+                        index % 2 === 0 ? 'bg-gray-100' : ''
+                      } hover:bg-blue-100`}
+                    >
+                      <TableCell className="border px-4 py-2 text-blue-600">
+                        <a href="#" className="hover:underline">
+                          {guide.name}
+                        </a>
+                      </TableCell>
+                      <TableCell className="border px-4 py-2">{guide.size}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={2} className="text-center py-4">
+                      Tidak ada hasil yang sesuai.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+          </Table>
+
+          {/* Pagination Controls */}
+          <div className="max-md:hidden flex flex-row justify-end items-center w-full mt-4 gap-x-4 mr-6">
+            <div className="text-black text-sm">
+              Page {currentPage + 1} of {totalPages}
+            </div>
+            <div className="flex flex-row justify-between gap-x-2">
+              <button 
+                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                onClick={handleFirstPage}
+                disabled={currentPage === 0}
+              >
+                <MdKeyboardDoubleArrowLeft />
+              </button>
+              <button 
+                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                onClick={handlePrevDesktop}
+                disabled={currentPage === 0}
+              >
+                <MdKeyboardArrowLeft />
+              </button>
+              <button 
+                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                onClick={handleNextDesktop}
+                disabled={currentPage === totalPages - 1}
+              >
+                <MdKeyboardArrowRight />
+              </button>
+              <button 
+                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                onClick={handleLastPage}
+                disabled={currentPage === totalPages - 1}
+              >
+                <MdKeyboardDoubleArrowRight />
+              </button>
             </div>
           </div>
-          <div className="h-[50vw]">
-
           </div>
         </div>
       </div>

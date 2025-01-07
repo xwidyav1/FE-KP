@@ -22,7 +22,7 @@ const BeritaCard = ({ value }) => {
             {value.kategori}
           </Link>
           <Link 
-            href="/"
+            href={`/artikel/${value.slug}`}
             className="w-fit font-semibold text-[1.4vw] line-clamp-2 text-[#012247] hover:underline">
             {value.title}
           </Link>

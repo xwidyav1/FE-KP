@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import HamButton from "./HamButton";
-import { HiChevronRight } from "react-icons/hi";
+import { HiChevronRight, HiArrowLeft } from "react-icons/hi";
 import FadeIn from "@/components/transitions/FadeIn";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
@@ -102,7 +102,10 @@ const NavbarLanding = () => {
               className="h-full w-fit">
               <button
                 onClick={() => handleClick(value)}
-                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-lg-vw grid place-content-center transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
+                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-lg-vw flex justify-center items-center place-content-center gap-x-[0.7vw] transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">               
+                {value.section === "Beranda" && (
+                  <HiArrowLeft className="size-[3vw] md:size-[1vw]" />
+                )}
                 {value.section}
               </button>
             </FadeIn>

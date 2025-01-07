@@ -36,7 +36,7 @@ const NavbarGaleri = ({ middle = false }) => {
           <FadeIn direction="down" order={2.2}>
             <Link
               href="/"
-              className="md:ml-[0.005vw] h-[14vw] md:h-[3vw] w-[22vw] md:w-[7vw] font-medium rounded-[2.5vw] md:rounded-[0.6vw] bg-inherit text-neutral-700 text-sm-vw-mb md:text-lg-vw flex justify-center items-center gap-x-[2vw] md:gap-x-[.5vw] hover:border-[0.1vw] hover:border-neutral-300">
+              className="md:ml-[0.005vw] h-[14vw] md:h-[3vw] w-[22vw] md:w-[7vw] font-medium rounded-[2.5vw] md:rounded-[0.6vw] bg-inherit text-neutral-700 text-sm-vw-mb md:text-lg-vw flex justify-center items-center gap-x-[2vw] md:gap-x-[.5vw] transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
               <HiArrowLeft className="size-[3vw] md:size-[1vw]" />
               {value.section}
             </Link>

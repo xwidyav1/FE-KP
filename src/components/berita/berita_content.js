@@ -6,6 +6,7 @@ export const berita = [
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
     date: "6 Januari 2025, 08.30",
+    slug: "berita-pertama",
   },
   {
     title: "Runway's Next-Gen Video Generation AI",
@@ -13,7 +14,8 @@ export const berita = [
       "Runway launched a new AI model for high-fidelity, fast, and controllable video generation, pushing the boundaries of creative AI applications. This innovation promises to revolutionize video production by making it more accessible and efficient.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "5 Januari 2025, 08.30",
+    slug: "berita-kedua",
   },
   {
     title: "AI Optimism in Financial Planning",
@@ -21,7 +23,8 @@ export const berita = [
       "A Northwestern Mutual study shows growing trust in AI tools for financial planning among younger Americans. The study highlights a cautious yet positive outlook on AI's role in enhancing efficiency in financial services.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "4 Januari 2025, 08.30",
+    slug: "berita-ketiga",
   },
   {
     title: "Ilya Sutskever's New AI Company",
@@ -29,7 +32,8 @@ export const berita = [
       "Ilya Sutskever, co-founder of OpenAI, launched Safe Superintelligence Inc (SSI) to focus on developing safe and ethical AI technologies. This new venture aims to address critical issues in AI safety and reliability.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "3 Januari 2025, 08.30",
+    slug: "berita-keempat",
   },
   {
     title: "Shutterstock's AI Licensing Success",
@@ -37,7 +41,8 @@ export const berita = [
       "Shutterstock generated $104 million in 2023 by providing its media library for AI model training, attracting major tech firms like OpenAI and Meta. This move highlights the potential of the dataset market in AI development.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "2 Januari 2025, 08.30",
+    slug: "berita-kelima",
   },
   {
     title: "Anthropic's Claude 3.5 Sonnet Release",
@@ -45,7 +50,8 @@ export const berita = [
       "Anthropic introduced Claude 3.5 Sonnet, an advanced AI model known for its nuanced understanding and natural tone. It's available for free on Claude.ai and the Claude iPhone app, enhancing productivity in tasks like legal drafting and business report writing.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "1 Januari 2025, 08.30",
+    slug: "berita-keenam",
   },
   {
     title: "Picsart and Getty Images Partnership",
@@ -53,7 +59,8 @@ export const berita = [
       "Picsart partnered with Getty Images to launch an AI model for commercially-safe image generation, ensuring high-quality and legally compliant visuals for creators and marketers. This collaboration aims to democratize creative tools using AI.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "1 Januari 2025, 08.30",
+    slug: "berita-ketujuh",
   },
   {
     title: "AI in Healthcare and Education",
@@ -61,7 +68,8 @@ export const berita = [
       "The global push for effective AI governance continues, with new initiatives focusing on the transformational benefits of AI in public services like healthcare and education. This collaborative effort aims to maximize AI's positive impact on society.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "1 Januari 2025, 08.30",
+    slug: "berita-kedelapan",
   },
   {
     title: "AI-Driven Fraud Detection in Fintech",
@@ -69,7 +77,8 @@ export const berita = [
       "AI is revolutionizing fraud detection in fintech, enabling real-time analysis and prediction of fraudulent activities. This technology helps financial institutions protect their customers and assets more effectively.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "1 Januari 2025, 08.30",
+    slug: "berita-kesembilan",
   },
   {
     title: "AI-Enhanced Content Creation Tools",
@@ -77,7 +86,8 @@ export const berita = [
       "Tools like GPT-4 are being used to enhance content creation, making it easier for writers and marketers to generate high-quality content efficiently. These AI tools are transforming how content is produced and consumed.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "1 Januari 2025, 08.30",
+    slug: "berita-kesepuluh",
   },
   {
     title: "AI Optimism in Policy and Governance",
@@ -85,6 +95,7 @@ export const berita = [
       "Governments and industry leaders are collaborating to create responsible AI policies, focusing on safety, transparency, and ethical standards. This multi-stakeholder approach aims to ensure AI benefits are maximized while mitigating risks.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
-    date: "6 Januari 2025, 08.30",
+    date: "1 Januari 2025, 08.30",
+    slug: "berita-kesebelas",
   },
 ];
