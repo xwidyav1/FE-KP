@@ -45,9 +45,9 @@ export default function Kontak() {
       direction="right"
       className="w-full h-auto bg-[#FFFFFF]">
       <div className="h-[60vw] flex flex-col md:gap-y-[3vw] pt-[8vw] px-[10vw]">
-        <div className="max-md:relative max-md:h-[50vw] flex flex-row items-center gap-x-[38vw]">
+        <div className="max-md:relative max-md:h-[50vw] flex flex-row items-center gap-x-[37vw]">
           <div className="flex flex-row gap-x-[1vw] items-center">
-            <h2 className="max-md:absolute w-[80vw] md:w-[auto] text-5xl-vw-mb md:text-[2.5vw] text-[#012247] top-[0vw] left-[0vw]">
+            <h2 className="max-md:absolute w-[80vw] md:w-[auto] text-5xl-vw-mb md:text-[2.5vw] text-[#012247] font-semibold top-[0vw] left-[0vw]">
               Hubungi <span className="max-md:hidden"> Kami </span>
             </h2>
             <div className="w-[10vw] h-[0.15vw] bg-[#FFC600]">        
@@ -76,7 +76,7 @@ export default function Kontak() {
               </iframe>
             </div>          
           </div>
-          <div className="w-[30vw] h-[30vw] bg-white rounded-[1vw] shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)]">
+          <div className="w-[30vw] h-[25vw] bg-white rounded-[1vw] shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)]">
             <div className="flex flex-col gap-y-[1vw] mt-[2vw] mx-[1.5vw]">
               <div className="flex flex-row gap-x-[1.5vw]">
                 <div className="flex items-center justify-center w-[3vw] h-[3vw] border-[0.1vw] border-[#012247] rounded-full">

@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-        <Link rel="icon" href="./favicon.ico" />
+        <Link rel="icon" href="/favicon.ico" />
       </Head>
       <body className={poppins.className}>
         {children}

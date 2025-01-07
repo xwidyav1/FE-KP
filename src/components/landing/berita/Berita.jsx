@@ -1,11 +1,21 @@
-"use client"
+"use client";
 
 import React from 'react';
 import { HiArrowRight } from "react-icons/hi";
 import Image from "next/image";
 import Link from "next/link";
+import { berita } from "@/components/berita/berita_content"; // Pastikan path benar
 
 const Berita = () => {
+  // Sort berita berdasarkan tanggal terbaru
+  const sortedBerita = berita.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // Berita utama (pertama dalam daftar)
+  const mainBerita = sortedBerita[0];
+
+  // Berita lainnya
+  const otherBerita = sortedBerita.slice(1, 4); // Ambil 3 berita berikutnya
+
   return (
     <div className="w-screen h-auto px-[10vw] mb-[10vw] flex flex-col gap-y-[1.6vw]">
       <div className="flex flex-row justify-between">
@@ -13,9 +23,8 @@ const Berita = () => {
           <div className="text-[2vw] font-semibold text-[#012247]">
             Berita Terbaru
           </div>
-          <div className="w-[10vw] h-[0.15vw] bg-[#FFC600]">        
-          </div>
-        </div>      
+          <div className="w-[10vw] h-[0.15vw] bg-[#FFC600]"></div>
+        </div>
         <div className="flex flex-row text-[1.2vw] items-center gap-x-[0.6vw]">
           <Link
             href="/berita/1"
@@ -27,131 +36,66 @@ const Berita = () => {
         </div>
       </div>
       <div className="flex flex-col gap-y-[1.75vw]">
-        <div className="w-auto h-[22vw] flex flex-row rounded-[0.5vw] shadow-[0_0.1vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
-          <Link 
-            href="/"
-            className="relative w-[38vw] overflow-hidden">
-            <Image
-              src="/hero1.jpeg"
-              alt="berita"
-              fill
-              className="object-cover transition-transform duration-1000 ease-in-out hover:scale-110"
-              draggable="false"
-            />
-          </Link>
-          <div className="w-[42vw] flex flex-col p-[1.4vw] gap-y-[0.5vw]">
-            <Link 
-              href="/"
-              className="w-fit text-[1vw] text-[#012247] hover:underline">
-              Kategori
+        {/* Berita utama */}
+        {mainBerita && (
+          <div className="w-auto h-[22vw] flex flex-row rounded-[0.5vw] shadow-[0_0.1vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
+            <Link href="/" className="relative w-[38vw] overflow-hidden">
+              <Image
+                src={mainBerita.image}
+                alt="berita"
+                fill
+                className="object-cover transition-transform duration-1000 ease-in-out hover:scale-110"
+                draggable="false"
+              />
             </Link>
-            <Link 
-              href="/"
-              className="w-fit font-semibold text-[1.5vw] line-clamp-2 text-[#012247] hover:underline">
-              Judul Berita Terbaru Terkait CSIRT KEMHAN RI
-            </Link>
-            <p className="text-[0.9vw] text-gray-500">
-              19 Desember 2024, 12.55
-            </p>
-            <p className="text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[10vw]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-            irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
-            deserunt mollit anim id est laborum.
-            </p>
+            <div className="w-[42vw] flex flex-col p-[1.4vw] gap-y-[0.5vw]">
+              <Link href="/" className="w-fit text-[1vw] text-[#012247] hover:underline">
+                {mainBerita.kategori}
+              </Link>
+              <Link href="/" className="w-fit font-semibold text-[1.5vw] line-clamp-2 text-[#012247] hover:underline">
+                {mainBerita.title}
+              </Link>
+              <p className="text-[0.9vw] text-gray-500">
+                {mainBerita.date}
+              </p>
+              <p className="text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[10vw]">
+                {mainBerita.content}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
+        {/* Berita lainnya */}
         <div className="w-auto flex flex-row gap-[1.75vw] justify-between">
-          <div className="w-[25.5vw] flex flex-col h-[22vw] rounded-[0.5vw] gap-y-[0.1vw] shadow-[0_0.2vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
-            <Link 
-              href="/"
-              className="relative h-[13vw] overflow-hidden">
-              <Image 
-                src="/hero1.jpeg"
-                alt="berita"
-                fill
-                className="object-cover transition-transform duration-1000 ease-in-out hover:scale-110"
-                draggable="false"
-              />
-            </Link>
-            <div className="flex flex-col h-[9vw] p-[1vw] gap-y-[0.1vw]">
-              <Link 
-                href="/"
-                className="w-fit text-[1vw] text-[#012247] hover:underline">
-                Kategori
+          {otherBerita.map((item, index) => (
+            <div
+              key={index}
+              className="w-[25.5vw] flex flex-col h-[22vw] rounded-[0.5vw] gap-y-[0.1vw] shadow-[0_0.2vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
+              <Link href="/" className="relative h-[13vw] overflow-hidden">
+                <Image
+                  src={item.image}
+                  alt="berita"
+                  fill
+                  className="object-cover transition-transform duration-1000 ease-in-out hover:scale-110"
+                  draggable="false"
+                />
               </Link>
-              <Link 
-                href="/"
-                className="w-fit font-semibold text-[1.3vw] line-clamp-2 text-[#012247] hover:underline">
-                Judul Berita Terbaru Terkait CSIRT KEMHAN RI
-              </Link>
-              <p className="text-[0.9vw] text-gray-500">
-                19 Desember 2024, 12.55
-              </p>
+              <div className="flex flex-col h-[9vw] p-[1vw] gap-y-[0.1vw]">
+                <Link href="/" className="w-fit text-[1vw] text-[#012247] hover:underline">
+                  {item.kategori}
+                </Link>
+                <Link href="/" className="w-fit font-semibold text-[1.3vw] line-clamp-2 text-[#012247] hover:underline">
+                  {item.title}
+                </Link>
+                <p className="text-[0.9vw] text-gray-500">
+                  {item.date}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="w-[25.5vw] flex flex-col h-[22vw] rounded-[0.5vw] gap-y-[0.1vw] shadow-[0_0.2vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
-            <Link 
-              href="/"
-              className="relative h-[13vw] overflow-hidden">
-              <Image 
-                src="/hero1.jpeg"
-                alt="berita"
-                fill
-                className="object-cover transition-transform duration-1000 ease-in-out hover:scale-110"
-                draggable="false"
-              />
-            </Link>
-            <div className="flex flex-col h-[9vw] p-[1vw] gap-y-[0.1vw]">
-              <Link 
-                href="/"
-                className="w-fit text-[1vw] text-[#012247] hover:underline">
-                Kategori
-              </Link>
-              <Link 
-                href="/"
-                className="w-fit font-semibold text-[1.3vw] line-clamp-2 text-[#012247] hover:underline">
-                Judul Berita Terbaru Terkait CSIRT KEMHAN RI
-              </Link>
-              <p className="text-[0.9vw] text-gray-500">
-                19 Desember 2024, 12.55
-              </p>
-            </div>
-          </div>
-          <div className="w-[25.5vw] flex flex-col h-[22vw] rounded-[0.5vw] gap-y-[0.1vw] shadow-[0_0.2vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
-            <Link 
-              href="/"
-              className="relative h-[13vw] overflow-hidden">
-              <Image 
-                src="/hero1.jpeg"
-                alt="berita"
-                fill
-                className="object-cover transition-transform duration-1000 ease-in-out hover:scale-110"
-                draggable="false"
-              />
-            </Link>
-            <div className="flex flex-col h-[9vw] p-[1vw] gap-y-[0.1vw]">
-              <Link 
-                href="/"
-                className="w-fit text-[1vw] text-[#012247] hover:underline">
-                Kategori
-              </Link>
-              <Link 
-                href="/"
-                className="w-fit font-semibold text-[1.3vw] line-clamp-2 text-[#012247] hover:underline">
-                Judul Berita Terbaru Terkait CSIRT KEMHAN RI
-              </Link>
-              <p className="text-[0.9vw] text-gray-500">
-                19 Desember 2024, 12.55
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Berita
+export default Berita;

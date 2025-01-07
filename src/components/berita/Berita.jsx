@@ -183,22 +183,25 @@ const Berita = ({ currentPage: initialPage, onPageChange }) => {
           </div>
           <div className="flex flex-row justify-between gap-x-[0.5vw]">
             <button 
-              className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+              className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] bg-white border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handleFirstPage}
               disabled={currentPage === 0}>
               <MdKeyboardDoubleArrowLeft />
             </button>
-            <button className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+            <button 
+              className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] bg-white border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handlePrevDesktop}
               disabled={currentPage === 0}>
               <MdKeyboardArrowLeft />  
             </button>
-            <button className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+            <button 
+              className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] bg-white border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handleNextDesktop}
               disabled={currentPage === totalPages - 1}>
               <MdKeyboardArrowRight />
             </button>
-            <button className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+            <button 
+              className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] bg-white border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handleLastPage}
               disabled={currentPage === totalPages - 1}>
               <MdKeyboardDoubleArrowRight />
