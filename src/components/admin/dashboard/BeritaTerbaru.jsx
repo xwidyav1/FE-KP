@@ -8,10 +8,11 @@ import {
   TableCaption,
 } from '@/components/ui/table';
 import Link from 'next/link';
-import { posts } from './posts';
+import { posts } from '../posts/posts';
+import { Trash2 } from 'lucide-react';
 // import PropTypes from 'prop-types';
 
-const PostsTable = ({ limit, title }) => {
+const BeritaTerbaru = ({ limit, title }) => {
   // Sort posts in dec order based on date
   const sortedPosts = [...posts].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -21,7 +22,7 @@ const PostsTable = ({ limit, title }) => {
   const filteredPosts = limit ? sortedPosts.slice(0, limit) : sortedPosts;
 
   return (
-    <div>
+    <div className="mb-[7vw]">
       <h3 className='text-[1.7vw] mb-[1vw] font-semibold'>{title ? title : 'Berita Terbaru'}</h3>
       <Table>
         <TableHeader>
@@ -35,8 +36,8 @@ const PostsTable = ({ limit, title }) => {
             <TableHead className='hidden md:table-cell text-right'>
               Tanggal
             </TableHead>
-            <TableHead>
-              Lihat
+            <TableHead className="flex justify-center items-center">
+              Aksi
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -45,17 +46,20 @@ const PostsTable = ({ limit, title }) => {
             <TableRow key={posts.id}>
               <TableCell>{posts.title}</TableCell>
               <TableCell className='hidden md:table-cell'>
-                {posts.author}
+                {posts.category}
               </TableCell>
               <TableCell className='text-right hidden md:table-cell'>
                 {posts.date}
               </TableCell>
-              <TableCell>
-                <Link href={`/admin/artikel/edit/${posts.id}`}>
-                  <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xs'>
+              <TableCell className="flex justify-center items-center gap-x-[1vw]">
+                <Link href={`/admin/berita/edit/${posts.id}`}>
+                  <button className='w-[4vw] h-[2.5vw] bg-blue-500 hover:bg-blue-700 text-white font-semibold py-[0.5vw] px-[1.1vw] rounded text-[1vw] flex items-center justify-center'>
                     Edit
                   </button>
                 </Link>
+                <button className="w-[3vw] h-[2.5vw] bg-red-500 hover:bg-red-700 text-white font-bold rounded flex items-center justify-center ">
+                  <Trash2 />
+                </button>
               </TableCell>
             </TableRow>
           ))}
@@ -65,4 +69,4 @@ const PostsTable = ({ limit, title }) => {
   );
 };
 
-export default PostsTable;
+export default BeritaTerbaru;

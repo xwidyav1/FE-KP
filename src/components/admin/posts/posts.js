@@ -3,8 +3,9 @@ export const posts = [
     id: '1',
     title: 'The Rise of Artificial Intelligence',
     body: 'Artificial Intelligence (AI) is revolutionizing various industries...',
-    author: 'John Doe',
+    category: 'Lain-lain',
     date: '2024-05-01',
+    image:"https://www.google.com/url?sa=i&url=https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-7714534%2Fjokowi-ungkap-alasan-tak-hadiri-tahun-baruan-bareng-eks-gubernur-jakarta&psig=AOvVaw0WbJoOmb9jlEtxyHKKGwnM&ust=1736320113624000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLDS9NSG44oDFQAAAAAdAAAAABAE",
     comments: [
       { id: '1', text: 'Great introduction!', username: 'Jane' },
       {
@@ -18,8 +19,9 @@ export const posts = [
     id: '2',
     title: 'Quantum Computing: A New Era of Computing',
     body: 'Quantum computing holds the potential to solve problems...',
-    author: 'Emily Smith',
+    category: 'Lain-lain',
     date: '2024-04-28',
+    image:"https://afila.co.id/storage/artikel/ck1G4UYbGGmwrmlQzlBOVyUCsz7YqOK3kkL75THy.jpg",
     comments: [
       { id: '1', text: 'Fascinating read!', username: 'Mark' },
       {
@@ -33,8 +35,9 @@ export const posts = [
     id: '3',
     title: 'Blockchain: Transforming Industries',
     body: 'Blockchain technology is disrupting traditional industries...',
-    author: 'David Johnson',
+    category: 'Lain-lain',
     date: '2024-05-03',
+    image:"hero1.jpeg",
     comments: [
       { id: '1', text: 'Blockchain has immense potential!', username: 'Lucy' },
       {
@@ -48,8 +51,9 @@ export const posts = [
     id: '4',
     title: 'The Future of Augmented Reality',
     body: 'Augmented Reality (AR) is changing the way we interact...',
-    author: 'Sophia Williams',
+    category: 'Lain-lain',
     date: '2024-05-05',
+    image:"hero1.jpeg",
     comments: [
       { id: '1', text: 'AR applications are amazing!', username: 'Grace' },
       {
@@ -63,8 +67,9 @@ export const posts = [
     id: '5',
     title: 'The Internet of Things (IoT): Connecting Everything',
     body: 'The Internet of Things (IoT) is creating interconnected...',
-    author: 'Andrew Brown',
+    category: 'Lain-lain',
     date: '2024-05-08',
+    image:"hero1.jpeg",
     comments: [
       {
         id: '1',
@@ -82,8 +87,9 @@ export const posts = [
     id: '6',
     title: '5G Technology: The Next Generation of Connectivity',
     body: '5G technology promises faster speeds and lower latency...',
-    author: 'Emma Davis',
+    category: 'Lain-lain',
     date: '2024-05-10',
+    image:"hero1.jpeg",
     comments: [
       {
         id: '1',
@@ -101,8 +107,9 @@ export const posts = [
     id: '7',
     title: 'Cybersecurity in the Digital Age',
     body: 'As technology advances, cybersecurity becomes...',
-    author: 'Michael Johnson',
+    category: 'Lain-lain',
     date: '2024-05-12',
+    image:"hero1.jpeg",
     comments: [
       {
         id: '1',
@@ -116,8 +123,9 @@ export const posts = [
     id: '8',
     title: 'Artificial Neural Networks: Mimicking the Brain',
     body: 'Artificial Neural Networks (ANNs) are inspired by the...',
-    author: 'Isabella White',
+    category: 'Lain-lain',
     date: '2024-05-15',
+    image:"hero1.jpeg",
     comments: [
       {
         id: '1',
@@ -135,8 +143,9 @@ export const posts = [
     id: '9',
     title: 'Cloud Computing: Enabling Scalable Solutions',
     body: 'Cloud computing provides on-demand access to computing...',
-    author: 'James Taylor',
+    category: 'Lain-lain',
     date: '2024-05-18',
+    image:"hero1.jpeg",
     comments: [
       {
         id: '1',
@@ -154,8 +163,9 @@ export const posts = [
     id: '10',
     title: 'Machine Learning: Powering Intelligent Systems',
     body: 'Machine Learning (ML) algorithms enable computers...',
-    author: 'Ava Johnson',
+    category: 'Lain-lain',
     date: '2024-05-20',
+    image:"https://www.bohan.id/storage/images/upload/2023/admin/08-Aug/Machine-Learning.jpg",
     comments: [
       { id: '1', text: 'ML is reshaping industries.', username: 'Emma' },
       {

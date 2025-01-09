@@ -6,8 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
-import { CalendarIcon, ChevronRight } from "lucide-react";
-import Link from "next/link"
+import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -24,20 +23,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import RichTextEditor from "@/components/admin/richtexteditor";
+import TabelBerita from "@/components/admin/berita/TabelBerita";
 
 // Skema validasi form untuk masing-masing opsi
 const schemas = {
   berita: z.object({
     title: z.string().min(1, { message: "Judul berita belum terisi!" }),
+    category: z.string().min(1, { message: "Kategori berita belum dipilih!" }),
     body: z.string().min(1, { message: "Isi berita belum terisi!" }),
     photo: z.any().refine((file) => file instanceof File, { message: "Masukkan foto berita!" }),
     date: z.date({ message: "Tentukan tanggal berita!" }),
   }),
   profil: z.object({
-    body: z.string().min(1, { message: "Deskripsi profil organisasai belum terisi!" }),
+    body: z.string().min(1, { message: "Deskripsi profil organisasi belum terisi!" }),
     videoLink: z.string().url({ message: "Pastikan link video benar!" }),
   }),
   visi: z.object({
@@ -55,6 +61,7 @@ const Artikel = () => {
     resolver: zodResolver(schemas[formType]),
     defaultValues: {
       title: "",
+      category: "",
       body: "",
       photo: null,
       date: null,
@@ -72,13 +79,7 @@ const Artikel = () => {
   return (
     <div>
       <BackButton text="Kembali" link="/admin" />
-      {/* <Link className="w-fit flex flex-row items-center pb-[1.7vw]" href="/admin"> 
-        <ChevronRight /> 
-        <h1 className="text-[1.3vw] font-semibold">
-          Artikel
-        </h1>
-      </Link> */}
-      <div className="flex flex-col gap-y-[2vw]">
+      <div className="flex flex-col gap-y-[2vw] mb-[10vw]">
         <Select
           onValueChange={(value) => {
             setFormType(value);
@@ -114,6 +115,34 @@ const Artikel = () => {
                     </FormItem>
                   )}
                 />
+
+                <FormField
+                  control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Kategori</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={(value) => field.onChange(value)}
+                          defaultValue=""
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Pilih Kategori Berita" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="csirt">Berita CSIRT-Kemhan</SelectItem>
+                            <SelectItem value="peringatan">Peringatan Keamanan</SelectItem>
+                            <SelectItem value="info">Info Penting</SelectItem>
+                            <SelectItem value="lain">Lain-lain</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="body"
@@ -130,6 +159,7 @@ const Artikel = () => {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="photo"
@@ -147,6 +177,7 @@ const Artikel = () => {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="date"
@@ -174,7 +205,9 @@ const Artikel = () => {
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
-                            disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
                             initialFocus
                           />
                         </PopoverContent>
@@ -183,6 +216,15 @@ const Artikel = () => {
                     </FormItem>
                   )}
                 />
+
+                <Button
+                  type="submit">
+                  Upload Berita
+                </Button>
+                
+                <div className="pt-[5vw]">
+                  <TabelBerita className="pt-[10vw]" limit={5} title="Semua Berita" />
+                </div>
               </>
             )}
 
@@ -217,50 +259,59 @@ const Artikel = () => {
                     </FormItem>
                   )}
                 />
+
+                <Button type="submit">Upload</Button>
               </>
             )}
 
             {formType === "visi" && (
-              <FormField
-                control={form.control}
-                name="body"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Isi</FormLabel>
-                      <FormControl>
-                        <RichTextEditor
-                            content={field.value}
-                            onChange={(value) => field.onChange(value)}
-                          />
-                      </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {formType === "misi" && (
-              <FormField
-                control={form.control}
-                name="body"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Isi</FormLabel>
+              <>
+                <FormField
+                  control={form.control}
+                  name="body"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Isi</FormLabel>
                       <FormControl>
                         <RichTextEditor
                           content={field.value}
                           onChange={(value) => field.onChange(value)}
                         />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit">upload</Button>
+              </>
+              
+            )}
+
+            {formType === "misi" && (
+              <>
+                <FormField
+                control={form.control}
+                name="body"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Isi</FormLabel>
+                    <FormControl>
+                      <RichTextEditor
+                        content={field.value}
+                        onChange={(value) => field.onChange(value)}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
-                )}
-              />
-            )}    
-
-            <Button type="submit">
-              upload
-            </Button>
+                  )}
+                />
+                
+                <Button type="submit">upload</Button>
+              </>
+              
+            )}
+            
           </form>
         </Form>
       </div>
