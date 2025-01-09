@@ -26,56 +26,109 @@ import { posts } from '@/components/admin/posts/posts';
 import { useParams } from 'next/navigation';
 import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/admin/richtexteditor";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Judul berita belum terisi!",
-  }),
-  category: z.string().min(1, {
-    message: "Kategori berita belum dipilih!",
-  }),
-  body: z.string().min(1, {
-    message: "Isi berita belum terisi!",
-  }),
-  photo: z.union([
-    z.string(), // Untuk default URL photo
-    z.any().refine((file) => file instanceof File, {
-      message: "Masukkan foto berita!",
-    }), // Untuk file yang diupload
-  ]),
+  title: z.string().min(1, 'Title is required'),
+  content: z.string().min(1, 'Content is required'),
+  category: z.string().min(1, 'Category is required'),
+  image: z.any().optional(),
 });
+
+const BACKEND_URL = 'http://localhost:8000'; // Ganti dengan URL backend Laravel Anda
 
 const Edit = () => {
   const { toast } = useToast();
-  const params = useParams(); // Get the params
+  const params = useParams();
   const id = params?.id;
-
-  const post = posts.find((post) => post.id === id);
-
-  if (!post) {
-    return <div>Post not found</div>;
-  }
+  const [loading, setLoading] = useState(false);
+  const [initialData, setInitialData] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: post?.title || '',
-      body: post?.body || '',
-      category: post?.category || '',
-      // date: post?.date || '',
-      photo: post?.image || '',
+      title: '',
+      content: '',
+      category: '',
+      image: null,
     },
   });
 
-  const handleSubmit = (data) => {
-    toast({
-      title: 'Post has been updated successfully',
-      description: `Updated by ${post?.category} on ${post?.date}`,
-    });
+  // Fetch data artikel berdasarkan ID
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        const { data } = await axios.get(`${BACKEND_URL}/artikel/${id}`);
+        setInitialData(data);
+        form.reset({
+          title: data.title,
+          content: data.content,
+          category: data.category,
+        });
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to load article data',
+        });
+      }
+    };
 
-    // Logika untuk mengupdate data post di backend dapat ditambahkan di sini
-    console.log('Updated Data:', data);
+    if (id) fetchArticle();
+  }, [id, form, toast]);
+
+  // Submit data untuk update artikel
+  const handleSubmit = async (data) => {
+    setLoading(true);
+    try {
+      await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true,
+      });
+
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'image' && value instanceof File) {
+          formData.append(key, value);
+        } else if (value) {
+          formData.append(key, value);
+        }
+      });
+
+      await axios.post(`${BACKEND_URL}/artikel/${id}?_method=PUT`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      });
+
+      toast({
+        title: 'Success',
+        description: 'Article updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating article:', error);
+      toast({
+        title: 'Error',
+        description: error.response?.data?.message || 'Failed to update article',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Membersihkan URL object untuk mencegah kebocoran memori
+  useEffect(() => {
+    return () => {
+      if (previewImage) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [previewImage]);
+
+  if (!initialData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -109,7 +162,6 @@ const Edit = () => {
                 <FormControl>
                   <Select
                     onValueChange={(value) => field.onChange(value)}
-                    defaultValue={post.category} // Default value dari post.js
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Pilih Kategori Berita" />
@@ -130,7 +182,7 @@ const Edit = () => {
 
           <FormField
             control={form.control}
-            name="body"
+            name="content"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Isi</FormLabel>
@@ -147,7 +199,7 @@ const Edit = () => {
 
           <FormField
             control={form.control}
-            name="photo"
+            name="image"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Foto</FormLabel>
@@ -173,8 +225,10 @@ const Edit = () => {
             )}
           />
 
-          <Button className="w-full dark:bg-slate-800 dark:text-white">
-            Update Post
+          <Button type="submit" disabled={loading} className="w-full dark:bg-slate-800 dark:text-white">
+          {loading ? 'Updating...' : 'Update Berita'}
+            
+            
           </Button>
         </form>
       </Form>
