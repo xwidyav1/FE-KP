@@ -38,7 +38,7 @@ export default function NewsDetail({ params }) {
         <div className="w-[55vw] flex flex-col gap-y-[1vw]">
           {/* Category and Title */}
           <div className="flex flex-col gap-y-[0.3vw]">
-            <a href="#" className="text-[1.2vw] md:text-[1.1vw] text-[#012247] hover:underline">
+            <a className="text-[1.2vw] md:text-[1.1vw] text-[#012247]">
               {article.kategori}
             </a>
             <h1 className="text-[4vw] md:text-[2.5vw] font-bold text-[#012247]">
