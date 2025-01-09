@@ -49,9 +49,9 @@ const Berita = () => {
               />
             </Link>
             <div className="w-[42vw] flex flex-col p-[1.4vw] gap-y-[0.5vw]">
-              <Link href="/" className="w-fit text-[1vw] text-[#012247] hover:underline">
+              <p href="/" className="w-fit text-[1vw] text-[#012247]">
                 {mainBerita.kategori}
-              </Link>
+              </p>
               <Link href="/" className="w-fit font-semibold text-[1.5vw] line-clamp-2 text-[#012247] hover:underline">
                 {mainBerita.title}
               </Link>
@@ -80,9 +80,9 @@ const Berita = () => {
                 />
               </Link>
               <div className="flex flex-col h-[9vw] p-[1vw] gap-y-[0.1vw]">
-                <Link href="/" className="w-fit text-[1vw] text-[#012247] hover:underline">
+                <p className="w-fit text-[1vw] text-[#012247]">
                   {item.kategori}
-                </Link>
+                </p>
                 <Link href="/" className="w-fit font-semibold text-[1.3vw] line-clamp-2 text-[#012247] hover:underline">
                   {item.title}
                 </Link>

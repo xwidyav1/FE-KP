@@ -16,11 +16,10 @@ const BeritaCard = ({ value }) => {
           />
         </div>
         <div className="flex flex-col w-[19.9vw] gap-y-[0.4vw]">
-          <Link 
-            href="/"
-            className="w-fit text-[1vw] text-[#012247] hover:underline">
+          <p 
+            className="w-fit text-[1vw] text-[#012247]">
             {value.kategori}
-          </Link>
+          </p>
           <Link 
             href={`/artikel/${value.slug}`}
             className="w-fit font-semibold text-[1.4vw] line-clamp-2 text-[#012247] hover:underline">

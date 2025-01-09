@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 const poppins = Poppins({
   subsets: ["latin"],
