@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -10,16 +11,43 @@ import {
 import Link from 'next/link';
 import { posts } from '../posts/posts';
 import { Trash2 } from 'lucide-react';
-// import PropTypes from 'prop-types';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const BeritaTerbaru = ({ limit, title }) => {
-  // Sort posts in dec order based on date
-  const sortedPosts = [...posts].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/latest-articles'); // Ganti endpoint sesuai kebutuhan
+        const sortedPosts = response.data.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setPosts(sortedPosts);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch posts.');
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   // Filter posts to limit
-  const filteredPosts = limit ? sortedPosts.slice(0, limit) : sortedPosts;
+  const filteredPosts = limit ? posts.slice(0, limit) : posts;
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
+
 
   return (
     <div className="mb-[7vw]">

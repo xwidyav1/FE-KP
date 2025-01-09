@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -8,29 +8,47 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Link from 'next/link';
-import { posts } from '../posts/posts';
+import { fetchPosts } from '@/components/admin/posts/posts';
 import { Trash2 } from 'lucide-react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const TabelBerita = ({ title }) => {
-  const itemsPerPage = 5; // Jumlah item per halaman
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Sort posts in descending order based on date
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  // Sort posts
   const sortedPosts = [...posts].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
-  // Calculate total pages
   const totalPages = Math.ceil(sortedPosts.length / itemsPerPage);
 
-  // Get posts for the current page
   const paginatedPosts = sortedPosts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Handle page navigation
   const goToPage = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
@@ -54,7 +72,7 @@ const TabelBerita = ({ title }) => {
             <TableRow key={post.id}>
               <TableCell>{post.title}</TableCell>
               <TableCell className="hidden md:table-cell">{post.category}</TableCell>
-              <TableCell className="text-right hidden md:table-cell">{post.date}</TableCell>
+              <TableCell className="text-right hidden md:table-cell">{post.updated_at}</TableCell>
               <TableCell className="flex justify-center items-center gap-x-[1vw]">
                 <Link href={`/admin/berita/edit/${post.id}`}>
                   <button className="w-[4vw] h-[2.5vw] bg-blue-500 hover:bg-blue-700 text-white font-semibold py-[0.5vw] px-[1.1vw] rounded text-[1vw] flex items-center justify-center">

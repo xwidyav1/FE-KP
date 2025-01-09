@@ -5,10 +5,8 @@ import BackButton from "@/components/admin/BackButton";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+
 import {
   Form,
   FormControl,
@@ -17,11 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -32,50 +25,81 @@ import {
 } from "@/components/ui/select";
 import RichTextEditor from "@/components/admin/richtexteditor";
 import TabelBerita from "@/components/admin/berita/TabelBerita";
+import axios from "axios";
+const BACKEND_URL = "http://localhost:8000"; 
 
 // Skema validasi form untuk masing-masing opsi
 const schemas = {
   berita: z.object({
     title: z.string().min(1, { message: "Judul berita belum terisi!" }),
     category: z.string().min(1, { message: "Kategori berita belum dipilih!" }),
-    body: z.string().min(1, { message: "Isi berita belum terisi!" }),
-    photo: z.any().refine((file) => file instanceof File, { message: "Masukkan foto berita!" }),
-    date: z.date({ message: "Tentukan tanggal berita!" }),
+    content: z.string().min(1, { message: "Isi berita belum terisi!" }),
+    image: z.any().refine((file) => file instanceof File, { message: "Masukkan foto berita!" }),
   }),
   profil: z.object({
-    body: z.string().min(1, { message: "Deskripsi profil organisasi belum terisi!" }),
-    videoLink: z.string().url({ message: "Pastikan link video benar!" }),
+    content: z.string().min(1, { message: "Deskripsi profil organisasi belum terisi!" }),
+    image: z.string().url({ message: "Pastikan link video benar!" }),
   }),
   visi: z.object({
-    body: z.string().min(1, { message: "Masukkan visi organisasi!" }),
+    content: z.string().min(1, { message: "Masukkan visi organisasi!" }),
   }),
   misi: z.object({
-    body: z.string().min(1, { message: "Masukkan misi organisasi!" }),
+    content: z.string().min(1, { message: "Masukkan misi organisasi!" }),
   }),
 };
 
 const Artikel = () => {
   const [formType, setFormType] = useState("berita");
+  const [loading, setLoading] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(schemas[formType]),
     defaultValues: {
       title: "",
       category: "",
-      body: "",
-      photo: null,
-      date: null,
-      videoLink: "",
+      content: "",
+      image: null,
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form data submitted:", data);
-    if (data.photo) {
-      console.log("Photo file:", data.photo.name);
+  const onSubmit = async (data) => {
+    setLoading(true); // Indikator loading
+    try {
+      // Step 1: Mendapatkan CSRF cookie dari backend
+      await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true, // Penting jika menggunakan Sanctum untuk autentikasi
+      });
+  
+      // Step 2: Membuat FormData untuk mengirim data, termasuk file
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'image' && value instanceof File) {
+          formData.append(key, value);
+        } else if (value) {
+          formData.append(key, value);
+        }
+      });
+  
+      // Step 3: Mengirim data ke backend menggunakan POST
+      const response = await axios.post(`${BACKEND_URL}/artikel`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true, // Mengizinkan pengiriman cookie
+      });
+  
+      // Step 4: Tangani respons jika berhasil
+      console.log('Artikel berhasil dibuat:', response.data);
+      alert('Artikel berhasil dibuat!');
+    } catch (error) {
+      // Step 5: Tangani error
+      console.error('Gagal membuat artikel:', error);
+      alert('Terjadi kesalahan saat membuat artikel.');
+    } finally {
+      setLoading(false); // Selesai loading
     }
   };
-
+  
   return (
     <div>
       <BackButton text="Kembali" link="/admin" />
@@ -83,7 +107,13 @@ const Artikel = () => {
         <Select
           onValueChange={(value) => {
             setFormType(value);
-            form.reset();
+            form.reset({
+              title: value === "profil" ? "profil" : "", "visi" : "visi", "misi" : "misi",
+              category: value === "profil" ? "profil" : "", "visi" : "visi", "misi" : "misi",
+              content: "",
+              image: null,
+          
+            });
           }}
           defaultValue="berita"
         >
@@ -145,7 +175,7 @@ const Artikel = () => {
 
                 <FormField
                   control={form.control}
-                  name="body"
+                  name="content"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Isi</FormLabel>
@@ -162,7 +192,7 @@ const Artikel = () => {
 
                 <FormField
                   control={form.control}
-                  name="photo"
+                  name="image"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Foto</FormLabel>
@@ -178,44 +208,7 @@ const Artikel = () => {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="date"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Tanggal</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className="w-[240px] pl-3 text-left font-normal"
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>Pilih tanggal</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                
 
                 <Button
                   type="submit">
@@ -232,7 +225,7 @@ const Artikel = () => {
               <>
                 <FormField
                   control={form.control}
-                  name="body"
+                  name="content"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Isi</FormLabel>
@@ -248,7 +241,7 @@ const Artikel = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="videoLink"
+                  name="image"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Link Video</FormLabel>
@@ -268,7 +261,7 @@ const Artikel = () => {
               <>
                 <FormField
                   control={form.control}
-                  name="body"
+                  name="content"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Isi</FormLabel>
@@ -292,7 +285,7 @@ const Artikel = () => {
               <>
                 <FormField
                 control={form.control}
-                name="body"
+                name="content"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Isi</FormLabel>
@@ -307,7 +300,9 @@ const Artikel = () => {
                   )}
                 />
                 
-                <Button type="submit">upload</Button>
+                <Button type="submit" disabled={loading}>
+                {loading ? "Loading..." : "Upload"}
+                </Button>
               </>
               
             )}
