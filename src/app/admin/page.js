@@ -1,7 +1,7 @@
 // import { Button } from "@/components/ui/button";
 import DashboardCard from "@/components/admin/dashboard/DashboardCard";
 import { Newspaper, Images, File, Files, ChevronRight} from 'lucide-react';
-import PostsTable from "@/components/admin/posts/PostsTable";
+import BeritaTerbaru from "@/components/admin/dashboard/BeritaTerbaru";
 import AnalyticsChart from "@/components/admin/dashboard/AnalyticsChart";
 
 export default function Home(){
@@ -30,7 +30,7 @@ export default function Home(){
         />
       </div>
       <AnalyticsChart />
-      <PostsTable limit={5} className="mt-[3vw]" />
+      <BeritaTerbaru limit={5} className="mt-[3vw]" />
     </div>
   );
 }

@@ -19,7 +19,9 @@ import {
   Folders, 
   CreditCard, 
   Settings, 
-  User
+  User,
+  Users,
+  LogOut,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -27,7 +29,7 @@ import Image from "next/image";
 const Sidebar = () => {
   return (   
       <div className="flex flex-col">
-        <div className="h-[5vw] flex justify-center items-center bg-slate-100"> 
+        <div className="h-[5vw] flex justify-center items-center bg-slate-200"> 
           <div className="relative w-[10vw] aspect-[2114/579]"> 
             <Image
               src="/logo-csirt-kemhan.png"
@@ -44,7 +46,6 @@ const Sidebar = () => {
           <CommandGroup heading="Main Menu">
             <CommandSeparator />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
               <CommandItem>
                 <LayoutDashboard className="mr-[0.5vw] h-[1vw] w-[1vw]" />
                 <Link href="/admin">Dashboard</Link>
@@ -62,7 +63,26 @@ const Sidebar = () => {
                 <Link href="/admin/dokumen">Dokumen</Link>
               </CommandItem>
             </CommandList>
-          </CommandGroup>       
+          </CommandGroup> 
+          <CommandSeparator />
+          <CommandGroup heading="Admin">
+            <CommandList>
+              <CommandItem>
+                <User className="mr-[0.5vw] h-[1vw] w-[1vw]" />
+                <Link href="/admin/profile">Profile</Link>
+              </CommandItem>
+              <CommandItem>
+                <Users className="mr-[0.5vw] h-[1vw] w-[1vw]" />
+                <Link href="/admin/team">Team</Link>
+              </CommandItem>
+              <CommandItem className="text-red-500">
+                <button className="flex flex-row items-center gap-x-[0.6vw]">
+                  <LogOut className="mr-[0.5vw] h-[1vw] w-[1vw] " />                
+                  Log Out
+                </button>
+              </CommandItem>
+            </CommandList>
+          </CommandGroup>      
         </Command>
       </div>
   )

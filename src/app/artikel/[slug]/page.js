@@ -2,7 +2,7 @@
 
 import { use, useEffect, useState } from 'react';
 import { berita } from '@/components/berita/berita_content';
-import Navbar from "@/components/galeri/Navbar";
+import Navbar from '@/components/berita/Navbar';
 import Footer from "@/components/footer/Footer";
 import Image from "next/image";
 import { CalendarDays } from 'lucide-react';

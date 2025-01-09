@@ -1,4 +1,7 @@
 "use client";
+
+import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
@@ -41,10 +44,18 @@ export default function RichTextEditor({ content, onChange }) {
       },
     },
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML());
       onChange(editor.getHTML());
     },
   });
+
+  if (typeof window === "undefined") {
+    // Render nothing on the server to avoid hydration mismatches
+    return null;
+  }
+
+  if (!editor) {
+    return <div>Loading editor...</div>;
+  }
 
   return (
     <div>

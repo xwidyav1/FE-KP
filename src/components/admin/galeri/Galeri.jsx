@@ -27,7 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 // Skema validasi form untuk galeri
 const gallerySchema = z.object({
-  activityName: z.string().min(1, { message: "Nama kegiatan belum terisi!" }),
+  description: z.string().min(1, { message: "Nama kegiatan belum terisi!" }),
   activityDate: z.date({ message: "Tentukan tanggal kegiatan!" }),
   image: z.any().refine((file) => file instanceof File, { message: "Masukkan gambar!" }),
 });
@@ -38,7 +38,7 @@ const Galeri = () => {
   const form = useForm({
     resolver: zodResolver(gallerySchema),
     defaultValues: {
-      activityName: "",
+      description: "",
       activityDate: null,
       image: null,
     },
@@ -59,7 +59,7 @@ const Galeri = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
-              name="activityName"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nama Kegiatan</FormLabel>
