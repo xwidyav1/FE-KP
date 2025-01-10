@@ -1,36 +1,64 @@
+"use client";
+
 import { Poppins } from "next/font/google";
+import React, { useState } from "react";
 import Navbar from "@/components/admin/navbar/Navbar";
 import Sidebar from "@/components/admin/sidebar/Sidebar";
-// import Link from "next/link";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Pilih bobot sesuai kebutuhan
-  variable: "--font-poppins", // Variable untuk CSS kustom jika diperlukan
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
 });
 
-export const metadata= {
-  title: "Admin Kemhan CSIRT",
-  description: "Admin Kemhan CSIRT website",
-};
+// export const metadata = {
+//   title: "Admin Kemhan CSIRT",
+//   description: "Admin Kemhan CSIRT website",
+// };
 
 export default function RootLayout({ children }) {
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
   return (
     <html lang="en">
       <body className={poppins.className}>
         <div className="flex flex-row">
-          <div className="fixed z-10 h-full w-[13vw] bg-slate-200">
+          {/* Sidebar */}
+          <div
+            className={`fixed z-10 h-full bg-slate-200 transition-all duration-500 ${
+              isSidebarVisible ? "w-[13vw]" : "w-[0vw]"
+            }`}
+          >
             <Sidebar />
-          </div>         
-          <div className="w-full flex flex-col overflow-hidden">
-            <div>
-              <Navbar/>
-            </div>
-            <div className="ml-[13vw] pt-[1vw] px-[2vw] overflow-auto">
-              {children}
-            </div>     
           </div>
-        </div>       
+
+          {/* Main Content */}
+          <div
+            className="w-full flex flex-col overflow-hidden"
+          >
+            {/* Navbar */}
+            <div
+              className={`transition-all duration-500 ${
+                isSidebarVisible ? "ml-[13vw]" : "ml-[0vw]"
+              }`}
+            >
+              <Navbar toggleSidebar={toggleSidebar} />
+            </div>
+
+            {/* Children */}
+            <div
+              className={`pt-[1vw] px-[5vw] overflow-auto transition-all duration-500 ${
+                isSidebarVisible ? "ml-[13vw]" : "ml-[0vw]"
+              }`}
+            >
+              {children}
+            </div>
+          </div>
+        </div>
       </body>
     </html>
   );

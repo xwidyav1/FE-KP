@@ -1,24 +1,18 @@
-import React from 'react'
+"use client"
+
+import React, { useState } from 'react';
 import {
   Command,
-  CommandDialog,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command"
 import { 
   LayoutDashboard, 
   File,
   Images,
   Send,
-  Newspaper, 
-  Folders, 
-  CreditCard, 
-  Settings, 
   User,
   Users,
   LogOut,
@@ -27,6 +21,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Sidebar = () => {
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  
+    const handleLogout = () => {
+      // Tambahkan logika logout di sini, misalnya clear token atau redirect
+      console.log("User logged out");
+      setIsLogoutModalOpen(false);
+    };
+
   return (   
       <div className="flex flex-col">
         <div className="h-[5vw] flex justify-center items-center bg-slate-200"> 
@@ -76,7 +78,9 @@ const Sidebar = () => {
                 <Link href="/admin/team">Team</Link>
               </CommandItem>
               <CommandItem className="text-red-500">
-                <button className="flex flex-row items-center gap-x-[0.6vw]">
+                <button 
+                  onClick={() => setIsLogoutModalOpen(true)}
+                  className="flex flex-row items-center gap-x-[0.6vw]">
                   <LogOut className="mr-[0.5vw] h-[1vw] w-[1vw] " />                
                   Log Out
                 </button>
@@ -84,6 +88,29 @@ const Sidebar = () => {
             </CommandList>
           </CommandGroup>      
         </Command>
+
+        {/* Modal Logout */}
+        {isLogoutModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-[20vw] text-center">
+              <h2 className="text-black text-lg font-semibold mb-4">Yakin keluar ?</h2>
+              <div className="flex justify-center gap-x-4">
+                <button
+                  className="bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-400"
+                  onClick={() => setIsLogoutModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
   )
 }
