@@ -8,24 +8,46 @@ import {
 } from '@/components/ui/table';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
-import { guides } from '@/components/admin/dokumen/data_pedoman_teknis';
-import { useState } from 'react';
+import { fetchPosts } from '@/components/admin/dokumen/data_pedoman_teknis';
+import { useState, useEffect } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md';
 
-const PedomanTeknis = ({ limit, title }) => {
-  const itemsPerPage = 5; // Jumlah item per halaman
+const BACKEND_URL = 'http://localhost:8000'; 
+const PedomanTeknis = ({ description }) => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
 
   // Sort guides in descending order based on date
-  const sortedGuides = [...guides].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  const sortedPosts = [...posts].sort(
+    (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
   );
 
   // Calculate total pages
-  const totalPages = Math.ceil(sortedGuides.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedPosts.length / itemsPerPage);
 
   // Get guides for the current page
-  const paginatedGuides = sortedGuides.slice(
+  const paginatedGuides = sortedPosts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -50,17 +72,17 @@ const PedomanTeknis = ({ limit, title }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {paginatedGuides.map((guide) => (
-            <TableRow key={guide.id}>
-              <TableCell>{guide.name}</TableCell>
-              <TableCell className="text-right">{guide.size}</TableCell>
+          {paginatedGuides.map((posts) => (
+            <TableRow key={posts.id}>
+              <TableCell>{posts.name}</TableCell>
+              <TableCell className="text-right">{posts.size}</TableCell>
               <TableCell className="text-center">
-                <Link href={guide.dokumen} target="_blank" className="text-blue-500 hover:underline">
+                <Link href={`${BACKEND_URL}/storage/${posts.documents}`} target="_blank" className="text-blue-500 hover:underline">
                   Lihat Dokumen
                 </Link>
               </TableCell>
               <TableCell className="flex justify-center items-center gap-x-[1vw]">
-                <Link href={`/admin/dokumen/guides/edit/${guide.id}`}>
+                <Link href={`/admin/dokumen/guides/edit/${posts.id}`}>
                   <button className="w-[4vw] h-[2.5vw] bg-blue-500 hover:bg-blue-700 text-white font-semibold py-[0.5vw] px-[1.1vw] rounded text-[1vw] flex items-center justify-center">
                     Edit
                   </button>

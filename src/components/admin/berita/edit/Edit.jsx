@@ -216,9 +216,24 @@ const Edit = () => {
                     <Input
                       type="file"
                       accept=".png, .jpg, .jpeg"
-                      onChange={(e) => field.onChange(e.target.files[0])}
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        field.onChange(file); // Menyimpan file di form state
+                        if (file) {
+                          setPreviewImage(URL.createObjectURL(file)); // Membuat URL pratinjau
+                        }
+                      }}
                     />
                   </FormControl>
+                  {previewImage && (
+                  <div className="mt-4">
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="h-32 w-32 object-cover rounded"
+                    />
+                  </div>
+                )}
                 </div>
                 <FormMessage />
               </FormItem>

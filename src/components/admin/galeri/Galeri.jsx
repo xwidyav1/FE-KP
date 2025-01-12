@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BackButton from "@/components/admin/BackButton";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -17,37 +14,71 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import axios from "axios";
+const BACKEND_URL = 'http://localhost:8000';
 
 // Skema validasi form untuk galeri
 const gallerySchema = z.object({
-  description: z.string().min(1, { message: "Nama kegiatan belum terisi!" }),
-  activityDate: z.date({ message: "Tentukan tanggal kegiatan!" }),
+  title: z.string().min(1, { message: "Nama kegiatan belum terisi!" }),
+  description: z.string().min(1,{ message: "Deskripsi belum terisi!" }),
   image: z.any().refine((file) => file instanceof File, { message: "Masukkan gambar!" }),
 });
 
 const Galeri = () => {
   const [formType] = useState("galeri");
+  const [loading, setLoading] = useState(false);
+  const [initialData, setInitialData] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  
 
   const form = useForm({
     resolver: zodResolver(gallerySchema),
     defaultValues: {
+      title: "",
       description: "",
-      activityDate: null,
-      image: null,
+      image: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form data submitted:", data);
-    if (data.image) {
-      console.log("Image file:", data.image.name);
+  useEffect(() => {
+    return () => {
+      if (previewImage) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [previewImage]);
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true,
+      });
+
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === 'image' && value instanceof File) {
+          formData.append(key, value);
+        } else if (value) {
+          formData.append(key, value);
+        }
+      });
+
+      await axios.post(`${BACKEND_URL}/galleries`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      });
+      alert("Gallery berhasil diperbarui!");
+    } catch (error) {
+      console.error("Gagal menyimpan gallery:", error);
+      alert("Terjadi kesalahan saat menyimpan gallery.");
+    } finally {
+      setLoading(false);
+      window.location.reload();
     }
   };
 
@@ -59,7 +90,7 @@ const Galeri = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
-              name="description"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nama Kegiatan</FormLabel>
@@ -70,60 +101,64 @@ const Galeri = () => {
                 </FormItem>
               )}
             />
-            <FormField
+           <FormField
               control={form.control}
-              name="activityDate"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Tanggal</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className="w-[240px] pl-3 text-left font-normal"
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pilih tanggal</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="image"
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Foto</FormLabel>
+                  <FormLabel>Deskripsi</FormLabel>
                   <FormControl>
-                    <Input
-                      type="file"
-                      accept=".png, .jpg, .jpeg"
-                      onChange={(e) => field.onChange(e.target.files[0])}
-                    />
+                    <Input placeholder="Masukkan Deskripsi" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Upload</Button>
+             <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Foto</FormLabel>
+                <div className="flex flex-col space-y-2">
+                  {/* Tampilkan foto saat ini */}
+                  {field.value && typeof field.value === "string" ? (
+                    <img
+                      src={field.value}
+                      alt="Current Photo"
+                      className="w-[24vw] h-[13.5vw] object-cover rounded-md"
+                    />
+                  ) : null}
+                  <FormControl>
+                    <Input
+                      type="file"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        field.onChange(file); // Menyimpan file di form state
+                        if (file) {
+                          setPreviewImage(URL.createObjectURL(file)); // Membuat URL pratinjau
+                        }
+                      }}
+                    />
+                  </FormControl>
+                  {previewImage && (
+                  <div className="mt-4">
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="h-32 w-32 object-cover rounded"
+                    />
+                  </div>
+                )}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+            <Button type="submit" disabled={loading}>
+                  {loading ? "Loading..." : `Upload Gallery`}
+                </Button>
           </form>
         </Form>
       </div>

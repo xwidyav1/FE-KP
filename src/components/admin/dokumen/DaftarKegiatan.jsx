@@ -8,17 +8,26 @@ import {
 } from '@/components/ui/table';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
-import { events } from '@/components/admin/dokumen/data_kegiatan';
-import { useState } from 'react';
+import { fetchEvents } from '@/components/admin/dokumen/data_kegiatan';
+import { useState, useEffect} from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md';
-
+const BACKEND_URL = 'http://localhost:8000';
 const DaftarKegiatan = ({ limit, title }) => {
   const itemsPerPage = 5; // Jumlah item per halaman
   const [currentPage, setCurrentPage] = useState(1);
+  const [events, setEvents] = useState([]);
 
+  useEffect(() => {
+    const getEvents = async () => {
+      const fetchedEvents = await fetchEvents();
+      setEvents(fetchedEvents);
+    };
+
+    getEvents();
+  }, []);
   // Sort guides in descending order based on date
   const sortedEvents = [...events].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.tanggal).getTime() - new Date(a.tanggal).getTime()
   );
 
   // Calculate total pages
@@ -39,7 +48,7 @@ const DaftarKegiatan = ({ limit, title }) => {
 
   return (
     <div className="mb-[7vw]">
-      <h3 className="text-[1.7vw] mb-[1vw] font-semibold">{title || 'Pedoman Teknis'}</h3>
+      <h3 className="text-[1.7vw] mb-[1vw] font-semibold">{title || 'Kegiatan'}</h3>
       <Table>
         <TableHeader>
           <TableRow>
@@ -53,12 +62,12 @@ const DaftarKegiatan = ({ limit, title }) => {
         <TableBody>
           {paginatedEvents.map((event) => (
             <TableRow key={event.id}>
-              <TableCell>{event.name}</TableCell>
-              <TableCell className="text-center">{event.date}</TableCell>
+              <TableCell>{event.acara}</TableCell>
+              <TableCell className="text-center">{event.tanggal}</TableCell>
               <TableCell className="text-right">{event.tempat}</TableCell>
               <TableCell className="text-center">
                 {event.materi.map((materi, index) => (
-                  <Link key={index} href={materi} target="_blank" className="text-blue-500 hover:underline block">
+                  <Link key={index} href={`${BACKEND_URL}/storage/${event.materi}`} target="_blank" className="text-blue-500 hover:underline block">
                     Lihat Dokumen {index + 1}
                   </Link>
                 ))}

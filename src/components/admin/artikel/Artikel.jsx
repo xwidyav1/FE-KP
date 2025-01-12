@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackButton from "@/components/admin/BackButton";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,19 +26,21 @@ import {
 import RichTextEditor from "@/components/admin/richtexteditor";
 import TabelBerita from "@/components/admin/berita/TabelBerita";
 import axios from "axios";
-const BACKEND_URL = "http://localhost:8000"; 
 
-// Skema validasi form untuk masing-masing opsi
+const BACKEND_URL = "http://localhost:8000";
+
 const schemas = {
   berita: z.object({
     title: z.string().min(1, { message: "Judul berita belum terisi!" }),
     category: z.string().min(1, { message: "Kategori berita belum dipilih!" }),
     content: z.string().min(1, { message: "Isi berita belum terisi!" }),
-    image: z.any().refine((file) => file instanceof File, { message: "Masukkan foto berita!" }),
+    image: z
+      .any()
+      .refine((file) => file instanceof File, { message: "Masukkan foto berita!" }),
   }),
   profil: z.object({
     content: z.string().min(1, { message: "Deskripsi profil organisasi belum terisi!" }),
-    image: z.string().url({ message: "Pastikan link video benar!" }),
+    link_video: z.string().url( { message: "Deskripsi profil organisasi belum terisi!" }),
   }),
   visi: z.object({
     content: z.string().min(1, { message: "Masukkan visi organisasi!" }),
@@ -51,6 +53,14 @@ const schemas = {
 const Artikel = () => {
   const [formType, setFormType] = useState("berita");
   const [loading, setLoading] = useState(false);
+  const [initialData, setInitialData] = useState(null);
+  const [loadingFetch, setLoadingFetch] = useState(false);
+
+  const formIds = {
+    profil: 1122,
+    visi: 2233,
+    misi: 3456,
+  };
 
   const form = useForm({
     resolver: zodResolver(schemas[formType]),
@@ -58,45 +68,106 @@ const Artikel = () => {
       title: "",
       category: "",
       content: "",
-      image: null,
+      image: undefined,
     },
   });
 
-  const onSubmit = async (data) => {
-    setLoading(true); // Indikator loading
-    try {
-      // Step 1: Mendapatkan CSRF cookie dari backend
-      await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
-        withCredentials: true, // Penting jika menggunakan Sanctum untuk autentikasi
-      });
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(`Fetching data untuk formType: ${formType}`);
+        setLoadingFetch(true);
   
-      // Step 2: Membuat FormData untuk mengirim data, termasuk file
+        const id = formIds[formType];
+        const response = await axios.get(`${BACKEND_URL}/artikel/${id}`);
+        console.log("Data fetched:", response.data);
+  
+        // Asumsikan data ada di response.data tanpa pembungkus tambahan
+        const data = response.data;
+  
+        if (!data) {
+          throw new Error("Data tidak ditemukan");
+        }
+  
+        setInitialData(data);
+  
+        // Reset form dengan data yang sesuai
+        if (formType === "profil") {
+          form.reset({
+            content: data.content || "",
+            link_video: data.link_video || "",
+          });
+        } else if (formType === "visi" || formType === "misi") {
+          form.reset({
+            content: data.content || "",
+          });
+        }
+      } catch (error) {
+        console.error("Gagal mengambil data:", error);
+      } finally {
+        if (formType !== "berita") {
+          setLoadingFetch(false);
+        }
+      }
+    };
+  
+    if (formType !== "berita") {
+      fetchData();
+    } else {
+      form.reset({
+        title: "",
+        category: "",
+        content: "",
+        image: undefined,
+      });
+      setLoadingFetch(false);
+    }
+  }, [formType]);
+  
+  
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+
+    try {
+      await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true,
+    });
+      const id = formIds[formType];
+      const url = formType === "berita" ? `${BACKEND_URL}/artikel` : `${BACKEND_URL}/artikel/${id}?_method=PUT`;
+
+
+      if (formType !== "berita") {
+        data.title = formType;
+        data.category = formType;
+      }
+
       const formData = new FormData();
       Object.entries(data).forEach(([key, value]) => {
-        if (key === 'image' && value instanceof File) {
+        if (key === "image" && value instanceof File) {
           formData.append(key, value);
         } else if (value) {
           formData.append(key, value);
         }
       });
-  
-      // Step 3: Mengirim data ke backend menggunakan POST
-      const response = await axios.post(`${BACKEND_URL}/artikel`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        withCredentials: true, // Mengizinkan pengiriman cookie
+
+      await axios({
+        method:"post",
+        url,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
       });
-  
-      // Step 4: Tangani respons jika berhasil
-      console.log('Artikel berhasil dibuat:', response.data);
-      alert('Artikel berhasil dibuat!');
+
+      alert("Artikel berhasil diperbarui!");
     } catch (error) {
-      // Step 5: Tangani error
-      console.error('Gagal membuat artikel:', error);
-      alert('Terjadi kesalahan saat membuat artikel.');
+      console.error("Gagal menyimpan artikel:", error);
+      alert("Terjadi kesalahan saat menyimpan artikel.");
     } finally {
-      setLoading(false); // Selesai loading
+      setLoading(false);
+      window.location.reload();
     }
   };
   
@@ -105,16 +176,7 @@ const Artikel = () => {
       <BackButton text="Kembali" link="/admin" />
       <div className="flex flex-col gap-y-[2vw] mb-[10vw]">
         <Select
-          onValueChange={(value) => {
-            setFormType(value);
-            form.reset({
-              title: value === "profil" ? "profil" : "", "visi" : "visi", "misi" : "misi",
-              category: value === "profil" ? "profil" : "", "visi" : "visi", "misi" : "misi",
-              content: "",
-              image: null,
-          
-            });
-          }}
+          onValueChange={(value) => setFormType(value)}
           defaultValue="berita"
         >
           <SelectTrigger>
@@ -127,6 +189,11 @@ const Artikel = () => {
             <SelectItem value="misi">Misi</SelectItem>
           </SelectContent>
         </Select>
+        {loadingFetch ? (
+        <div className="flex justify-center items-center">
+          <p>Loading...</p>
+        </div>
+      ) : (
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -208,20 +275,17 @@ const Artikel = () => {
                   )}
                 />
 
-                
-
-                <Button
-                  type="submit">
-                  Upload Berita
+                <Button type="submit" disabled={loading}>
+                  {loading ? "Loading..." : "Upload Berita"}
                 </Button>
-                
+
                 <div className="pt-[5vw]">
                   <TabelBerita className="pt-[10vw]" limit={5} title="Semua Berita" />
                 </div>
               </>
             )}
 
-            {formType === "profil" && (
+          {formType === "profil" && (
               <>
                 <FormField
                   control={form.control}
@@ -241,23 +305,25 @@ const Artikel = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="image"
+                  name="link_video"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Link Video</FormLabel>
                       <FormControl>
-                        <Input placeholder="Masukkan URL Video" {...field} />
+                        <Input type="url"  placeholder="Masukkan URL Video" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
 
-                <Button type="submit">Upload</Button>
+                <Button type="submit" disabled={loading}>
+                  {loading ? "Loading..." : "Upload Profil"}
+                </Button>
               </>
             )}
 
-            {formType === "visi" && (
+            {formType === "visi"  && (
               <>
                 <FormField
                   control={form.control}
@@ -276,39 +342,38 @@ const Artikel = () => {
                   )}
                 />
 
-                <Button type="submit">upload</Button>
-              </>
-              
-            )}
-
-            {formType === "misi" && (
-              <>
-                <FormField
-                control={form.control}
-                name="content"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Isi</FormLabel>
-                    <FormControl>
-                      <RichTextEditor
-                        content={field.value}
-                        onChange={(value) => field.onChange(value)}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                  )}
-                />
-                
                 <Button type="submit" disabled={loading}>
-                {loading ? "Loading..." : "Upload"}
+                  {loading ? "Loading..." : `Upload ${formType.charAt(0).toUpperCase() + formType.slice(1)}`}
                 </Button>
               </>
-              
             )}
-            
+            {formType === "misi"  && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="content"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Isi</FormLabel>
+                      <FormControl>
+                        <RichTextEditor
+                          content={field.value}
+                          onChange={(value) => field.onChange(value)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button type="submit" disabled={loading}>
+                  {loading ? "Loading..." : `Upload ${formType.charAt(0).toUpperCase() + formType.slice(1)}`}
+                </Button>
+              </>
+            )}
           </form>
         </Form>
+      )}
       </div>
     </div>
   );

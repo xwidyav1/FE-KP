@@ -10,16 +10,38 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Link from 'next/link';
-import { galeri } from '@/components/admin/galeri/data_galeri';
+import { fetchPosts } from '@/components/admin/galeri/data_galeri';
 import { Trash2 } from 'lucide-react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { useEffect } from 'react';
 
+const BACKEND_URL = 'http://localhost:8000'; 
 const TabelGaleri = ({ description }) => {
-  const itemsPerPage = 5; // Jumlah item per halaman
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   // Sort posts in descending order based on date
-  const sortedPosts = [...galeri].sort(
+  const sortedPosts = [...posts].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
@@ -57,7 +79,7 @@ const TabelGaleri = ({ description }) => {
               <TableCell>{post.description}</TableCell>
               <TableCell className="hidden md:table-cell">
                 <img 
-                  src={post.imgsrc} 
+                  src={`${BACKEND_URL}/storage/${post.image}`} 
                   alt={post.description} 
                   className="w-[14.4vw] h-[8.1vw] object-cover rounded-md" 
                 />
