@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BackButton from '@/components/admin/BackButton';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { events } from '@/components/admin/dokumen/data_kegiatan';
 import { useParams } from 'next/navigation';
 import { useToast } from "@/hooks/use-toast";
-
+import axios from 'axios';
 const formSchema = z.object({
   acara: z.string().min(1, { message: "Nama acara tidak boleh kosong!" }),
   tanggal: z.string().min(1, { message: "Tanggal tidak boleh kosong!" }),
@@ -30,43 +30,89 @@ const formSchema = z.object({
     .min(1, { message: "Minimal satu file materi diperlukan!" }),
 });
 
-const EditKegiatan = () => {
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+const BACKEND_URL = 'http://localhost:8000'; // Ganti dengan URL backend Laravel Anda
 
-  const handleRemoveFile = (index) => {
-    const updatedFiles = uploadedFiles.filter((_, i) => i !== index);
-    setUploadedFiles(updatedFiles);
-    form.setValue("materi", updatedFiles, { shouldValidate: false });
-  };
-  
+const EditKegiatan = () => {
   const { toast } = useToast();
   const params = useParams();
   const id = params?.id;
+  console.log("ID:", id);
+  const [loading, setLoading] = useState(false);
+  const [initialData, setInitialData] = useState(null);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
-  const event = events.find((event) => event.id === id);
-
-  if (!event) {
-    return <div>Event not found</div>;
-  }
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      acara: event?.name || '',
-      tempat: event?.tempat || '',
-      tanggal: event?.date || '', // Pastikan 'date' sudah terisi
-      materi: event?.materi || [], // Pastikan materi terisi dengan array
+      acara:  '',
+      tempat:  '',
+      tanggal:  '', 
+      materi:  [], 
     },
   });
+  useEffect(() => {
+    const formatDate = (date) => {
+      const [day, month, year] = date.split('-'); // Asumsi format DD-MM-YYYY
+      return `${year}-${month}-${day}`; // Ubah ke format YYYY-MM-DD
+    };
+    const fetchKegiatan = async () => {
+      try {
+        console.log('Fetching kegiatan...');
+        console.log(`Attempting to fetch from: ${BACKEND_URL}/kegiatan/${id}`);
+        const { data } = await axios.get(`${BACKEND_URL}/kegiatan/${id}`);
+        console.log('Data kegiatan:', data);
+        setInitialData(data);
+        form.reset({
+          acara: data.acara,
+          tempat: data.tempat,
+          tanggal: formatDate(data.tanggal),
+        });
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to load article data',
+        });
+      }
+    };
 
-  const handleSubmit = (data) => {
-    toast({
-      title: 'Post has been updated successfully',
-    });
+    if (id) fetchKegiatan();
+  }, [id, form, toast]);
 
-    // Logika untuk mengupdate data post di backend dapat ditambahkan di sini
-    console.log('Updated Data:', data);
+  const handleSubmit = async (data) => {
+    setLoading(true);
+    try {
+      await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true,
+      });
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === "materi" && Array.isArray(value)) {
+          value.forEach((file) => formData.append("materi[]", file));
+        } else if (value) {
+          formData.append(key, value);
+        }
+      });
+
+      await axios.post(`${BACKEND_URL}/kegiatan/${id}?_method=PUT`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      });
+
+      alert(`${formType} berhasil disimpan!`);
+    } catch (error) {
+      console.error("Gagal menyimpan data:", error);
+      alert("Terjadi kesalahan saat menyimpan data.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (!initialData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

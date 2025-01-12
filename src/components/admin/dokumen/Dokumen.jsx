@@ -1,6 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import BackButton from "@/components/admin/BackButton";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,154 +27,148 @@ import PedomanTeknis from "@/components/admin/dokumen/PedomanTeknis";
 import DaftarKegiatan from "@/components/admin/dokumen/DaftarKegiatan";
 
 // Skema validasi form untuk masing-masing opsi
+
+const BACKEND_URL = "http://localhost:8000";
+
 const schemas = {
-  "rfc id": z.object({
-    file: z.any().refine((file) => file instanceof File && file.type === "application/pdf", {
-      message: "Masukkan file PDF yang valid!",
-    }),
+  RFC_ID: z.object({
+    file_path: z.any().refine((file) => file instanceof File, { message: "Masukkan file PDF!" }),
   }),
-  "rfc english": z.object({
-    file: z.any().refine((file) => file instanceof File && file.type === "application/pdf", {
-      message: "Masukkan file PDF yang valid!",
-    }),
+  RFC_ENGLISH: z.object({
+    file_path: z.any().refine((file) => file instanceof File, { message: "Masukkan file PDF!" }),
   }),
-  "aduan siber": z.object({
-    body: z.string().min(1, { message: "Isi aduan belum terisi!" }),
-    photo: z.any().refine((file) => file instanceof File, {
-      message: "Masukkan file gambar (png, jpg, jpeg)!",
-    }),
+  ADUAN_SIBER: z.object({
+    description: z.string().min(1, { message: "Isi tidak boleh kosong!" }),
+    file_path: z.any().refine((file) => file instanceof File, { message: "Masukkan gambar!" }),
   }),
-  "layanan va": z.object({
-    body: z.string().min(1, { message: "Isi layanan VA belum terisi!" }),
-    photo: z.any().refine((file) => file instanceof File, {
-      message: "Masukkan file gambar (png, jpg, jpeg)!",
-    }),
+  LAYANAN_VA: z.object({
+    description: z.string().min(1, { message: "Isi tidak boleh kosong!" }),
+    file_path: z.any().refine((file) => file instanceof File, { message: "Masukkan gambar!" }),
   }),
-  "pedoman teknis": z.object({
-    name: z.string().min(1, { message: "Nama dokumen belum terisi!" }),
-    file: z.any().refine((file) => file instanceof File && file.type === "application/pdf", {
-      message: "Masukkan file PDF yang valid!",
-    }),
+  PEDOMAN_TEKNIS: z.object({
+    name: z.string().min(1, { message: "Nama dokumen tidak boleh kosong!" }),
+    file_path: z.any().refine((file) => file instanceof File, { message: "Masukkan file PDF!" }),
   }),
-  "kegiatan": z.object({
+  kegiatan: z.object({
     acara: z.string().min(1, { message: "Nama acara tidak boleh kosong!" }),
     tanggal: z.string().min(1, { message: "Tanggal tidak boleh kosong!" }),
     tempat: z.string().min(1, { message: "Tempat tidak boleh kosong!" }),
     materi: z
-      .array(z.any().refine((file) => file instanceof File && file.type === "application/pdf", {
-        message: "Hanya file PDF yang diperbolehkan!",
-      }))
+      .array(z.any().refine((file) => file instanceof File && file.type === "application/pdf", { message: "Hanya file PDF yang diperbolehkan!" }))
       .min(1, { message: "Minimal satu file materi diperlukan!" }),
   }),
 };
 
-const Dokumen = () => {
-  const [formType, setFormType] = useState("rfc id");
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+const STATIC_IDS = {
+  RFC_ID: 123,
+  RFC_ENGLISH: 456,
+  ADUAN_SIBER: 789,
+  LAYANAN_VA: 1234,
+};
 
+const Dokumen = () => {
+  const [formType, setFormType] = useState("RFC_ID");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+const [initialData, setInitialData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingFetch, setLoadingFetch] = useState(false);
+  const defaultValues = {
+    RFC_ID: {name:'', file_path: undefined },
+    RFC_ENGLISH: {name:"", file_path: undefined },
+    ADUAN_SIBER: {name:"", description: "", file_path: undefined },
+    LAYANAN_VA: {name:"", description: "", file_path: undefined },
+    PEDOMAN_TEKNIS: { name: "", file_path: undefined },
+    kegiatan: { acara: "", tanggal: "", tempat: "", materi: [] },
+  };
   const form = useForm({
     resolver: zodResolver(schemas[formType]),
-    defaultValues: {
-      file: null,
-      name: "",
-      body: "",
-      photo: null,
-      acara: "",
-      tanggal: "",
-      tempat: "",
-      materi: [],
-    },
+    defaultValues:defaultValues[formType],
   });
 
-  const onSubmit = (data) => {
-    console.log("Form data submitted:", data);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoadingFetch(true);
+      try {
+        const id = STATIC_IDS[formType];
+        const response = await axios.get(`${BACKEND_URL}/documents/${id}`);
+        const data = response.data;
   
-    switch (formType) {
-      case "rfc id":
-        if (data.file) {
-          console.log("Mengirim rfc id:", {
-            file: data.file.name,
-          });
-        } else {
-          console.error("File belum dipilih untuk RFC ID");
-        }
-        break;
+        if (!data) throw new Error("Data tidak ditemukan");
   
-      case "rfc english":
-        if (data.file) {
-          console.log("Mengirim rfc english:", {
-            file: data.file.name,
-          });
-        } else {
-          console.error("File belum dipilih untuk RFC English");
-        }
-        break;
+        setInitialData(data);
+        const resetData = formType === "ADUAN_SIBER" || formType === "LAYANAN_VA"
+          ? { description: data.description || "", file_path: undefined }
+          : data;
   
-      case "aduan siber":
-        if (data.body && data.photo) {
-          console.log("Mengirim aduan siber:", {
-            body: data.body,
-            photo: data.photo.name,
-          });
-        } else {
-          console.error("Isi atau foto untuk Aduan Siber belum lengkap");
-        }
-        break;
+        form.reset(resetData);
+      } catch (error) {
+        console.error("Gagal mengambil data:", error);
+      } finally {
+        setLoadingFetch(false);
+      }
+    };
   
-      case "layanan va":
-        if (data.body && data.photo) {
-          console.log("Mengirim layanan va:", {
-            body: data.body,
-            photo: data.photo.name,
-          });
-        } else {
-          console.error("Isi atau foto untuk Layanan VA belum lengkap");
-        }
-        break;
-  
-      case "pedoman teknis":
-        if (data.file) {
-          console.log("Mengirim pedoman teknis:", {
-            file: data.file.name,
-          });
-        } else {
-          console.error("File belum dipilih untuk Pedoman Teknis");
-        }
-        break;
-  
-      case "kegiatan":
-        if (
-          data.acara &&
-          data.tanggal &&
-          data.tempat &&
-          Array.isArray(data.materi) &&
-          data.materi.length > 0
-        ) {
-          console.log("Mengirim data kegiatan:", {
-            acara: data.acara,
-            tanggal: data.tanggal,
-            tempat: data.tempat,
-            materi: data.materi.map((file) => file.name),
-          });
-        } else {
-          console.error("Data kegiatan belum lengkap, pastikan semua isian terisi");
-        }
-        break;
-  
-      default:
-        console.log("FormType tidak dikenal");
-    }
-  };
+    if (STATIC_IDS[formType]) fetchData();
+    else form.reset(defaultValues[formType]);
+  }, [formType]);
   
 
   const handleRemoveFile = (index) => {
-    // Hapus file dari uploadedFiles
     const updatedFiles = uploadedFiles.filter((_, i) => i !== index);
     setUploadedFiles(updatedFiles);
-  
-    // Update nilai input materi di react-hook-form
-    form.setValue("materi", updatedFiles, { shouldValidate: false });
+    form.setValue("materi", updatedFiles);
   };
+
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+  
+    try {
+      // Mendapatkan CSRF token
+      await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
+        withCredentials: true,
+      });
+  
+      const id = STATIC_IDS[formType];
+      const url =
+        formType === "kegiatan"
+          ? `${BACKEND_URL}/kegiatan`
+        : formType === "PEDOMAN_TEKNIS"
+        ? `${BACKEND_URL}/documents`
+        : `${BACKEND_URL}/documents/${id}?_method=PUT`;
+    
+      if (["RFC_ID", "RFC_ENGLISH", "ADUAN_SIBER", "LAYANAN_VA"].includes(formType)) {
+        data.name = formType; // Otomatis set properti name sesuai formType
+      }
+  
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (key === "materi" && Array.isArray(value)) {
+          value.forEach((file) => formData.append("materi[]", file));
+        } else if (key === "image" && value instanceof File) {
+          formData.append(key, value);
+        } else if (value) {
+          formData.append(key, value);
+        }
+      });
+  
+      await axios({
+        method: "post",
+        url,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
+  
+      alert(`${formType} berhasil disimpan!`);
+    } catch (error) {
+      console.error("Gagal menyimpan data:", error);
+      alert("Terjadi kesalahan saat menyimpan data.");
+    } finally {
+      setIsLoading(false);
+      window.location.reload();
+    }
+  };
+  
 
   return (
     <div>
@@ -185,28 +179,33 @@ const Dokumen = () => {
             setFormType(value);
             form.reset();
           }}
-          defaultValue="rfc id"
+          defaultValue="RFC_ID"
         >
           <SelectTrigger>
             <SelectValue placeholder="Pilih Kategori" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="rfc id">RFC ID</SelectItem>
-            <SelectItem value="rfc english">RFC English</SelectItem>
-            <SelectItem value="aduan siber">Aduan Siber</SelectItem>
-            <SelectItem value="layanan va">Layanan VA</SelectItem>
-            <SelectItem value="pedoman teknis">Pedoman Teknis</SelectItem>
+            <SelectItem value="RFC_ID">RFC ID</SelectItem>
+            <SelectItem value="RFC_ENGLISH">RFC English</SelectItem>
+            <SelectItem value="ADUAN_SIBER">Aduan Siber</SelectItem>
+            <SelectItem value="LAYANAN_VA">Layanan VA</SelectItem>
+            <SelectItem value="PEDOMAN_TEKNIS">Pedoman Teknis</SelectItem>
             <SelectItem value="kegiatan">Kegiatan</SelectItem>
           </SelectContent>
         </Select>
+        {loadingFetch ? (
+        <div className="flex justify-center items-center">
+          <p>Loading...</p>
+        </div>
+      ) : (
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            {formType === "rfc id" && (
+            {formType === "RFC_ID" && (
               <>
                 <FormField
                   control={form.control}
-                  name="file"
+                  name="file_path"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>File RFC ID</FormLabel>
@@ -225,11 +224,11 @@ const Dokumen = () => {
               </>             
             )}
 
-            {formType === "rfc english" && (
+            {formType === "RFC_ENGLISH" && (
               <>
                 <FormField
                   control={form.control}
-                  name="file"
+                  name="file_path"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>File RFC English</FormLabel>
@@ -248,11 +247,11 @@ const Dokumen = () => {
               </>              
             )}
 
-            {formType === "aduan siber" && (
+            {formType === "ADUAN_SIBER" && (
               <>
                 <FormField
                   control={form.control}
-                  name="body"
+                  name="description"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Isi</FormLabel>
@@ -269,7 +268,47 @@ const Dokumen = () => {
 
                 <FormField
                   control={form.control}
-                  name="photo"
+                  name="file_path"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Gambar</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="file_path"
+                          accept=".png, .jpg, .jpeg"
+                          onChange={(e) => field.onChange(e.target.files[0])}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Upload</Button>
+              </>
+            )}
+
+            {formType === "LAYANAN_VA" && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Isi</FormLabel>
+                      <FormControl>
+                        <RichTextEditor
+                          content={field.value}
+                          onChange={(value) => field.onChange(value)}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="file_path"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Gambar</FormLabel>
@@ -288,47 +327,7 @@ const Dokumen = () => {
               </>
             )}
 
-            {formType === "layanan va" && (
-              <>
-                <FormField
-                  control={form.control}
-                  name="body"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Isi</FormLabel>
-                      <FormControl>
-                        <RichTextEditor
-                          content={field.value}
-                          onChange={(value) => field.onChange(value)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="photo"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Gambar</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="file"
-                          accept=".png, .jpg, .jpeg"
-                          onChange={(e) => field.onChange(e.target.files[0])}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit">Upload</Button>
-              </>
-            )}
-
-            {formType === "pedoman teknis" && (
+            {formType === "PEDOMAN_TEKNIS" && (
               <>
                 <FormField
                   control={form.control}
@@ -346,7 +345,7 @@ const Dokumen = () => {
               
                 <FormField
                   control={form.control}
-                  name="file"
+                  name="file_path"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>File Pedoman Teknis</FormLabel>
@@ -464,6 +463,7 @@ const Dokumen = () => {
             )}
           </form>
         </Form>
+      )}
       </div>
     </div>
   );
