@@ -4,12 +4,36 @@ import React from 'react';
 import { HiArrowRight } from "react-icons/hi";
 import Image from "next/image";
 import Link from "next/link";
-import { berita } from "@/components/berita/berita_content";
+import { fetchPosts} from "@/components/berita/berita_content";
 import FadeIn from "@/components/transitions/FadeIn";
-
+import { useEffect, useState } from "react";
+const BACKEND_URL = 'http://localhost:8000';
 const Berita = () => {
-  // Sort berita berdasarkan tanggal terbaru
-  const sortedBerita = berita.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [initialPage, setInitialPage] = useState(0);
+  
+
+  useEffect(() => {
+      const getPosts = async () => {
+        try {
+          const data = await fetchPosts();
+          setPosts(data);
+          setLoading(false);
+        } catch (err) {
+          setError(err.message);
+          setLoading(false);
+        }
+      };
+  
+      getPosts();
+    }, []);
+    useEffect(() => {
+      setCurrentPage(initialPage); // Atur halaman awal berdasarkan prop
+    }, [initialPage]);
+  const sortedBerita = posts.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
   // Berita utama (pertama dalam daftar)
   const mainBerita = sortedBerita[0];
@@ -48,7 +72,7 @@ const Berita = () => {
             className="w-[90vw] md:w-auto h-auto md:h-[22vw] flex flex-col md:flex-row rounded-[2vw] md:rounded-[0.5vw] shadow-[0_0.1vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
             <Link href="/" className="relative w-full md:w-[38vw] max-md:h-[54vw] overflow-hidden">
               <Image
-                src={mainBerita.image}
+                src={`${BACKEND_URL}/storage/${mainBerita.image}`}
                 alt="berita"
                 fill
                 className="object-cover transition-transform duration-1000 ease-in-out md:hover:scale-110"
@@ -57,13 +81,13 @@ const Berita = () => {
             </Link>
             <div className="md:w-[42vw] flex flex-col p-[3vw] md:p-[1.4vw] gap-y-[1vw] md:gap-y-[0.5vw]">
               <p href="/" className="w-fit text-[3vw] md:text-[1vw] text-[#012247]">
-                {mainBerita.kategori}
+                {mainBerita.category}
               </p>
               <Link href="/" className="w-fit font-semibold text-[5vw] md:text-[1.5vw] line-clamp-2 max-md:leading-[6vw] text-[#012247] hover:underline">
                 {mainBerita.title}
               </Link>
               <p className="text-[2.5vw] md:text-[0.9vw] text-gray-500">
-                {mainBerita.date}
+                {mainBerita.updated_at}
               </p>
               <p className="max-md:hidden text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[10vw]">
                 {mainBerita.content}
@@ -82,7 +106,7 @@ const Berita = () => {
               className="md:w-[25.5vw] flex flex-row md:flex-col h-[25vw] md:h-[22vw] rounded-[1vw] md:rounded-[0.5vw] gap-y-[0.1vw] shadow-[0_0.2vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
               <Link href="/" className="relative max-md:min-w-[40.32vw] h-auto md:h-[13vw] overflow-hidden">
                 <Image
-                  src={item.image}
+                  src={`${BACKEND_URL}/storage/${item.image}`}
                   alt="berita"
                   fill
                   className="object-cover transition-transform duration-1000 ease-in-out md:hover:scale-110"
@@ -91,13 +115,13 @@ const Berita = () => {
               </Link>
               <div className="flex flex-col md:h-[9vw] max-md:pl-[2vw] pt-[1vw] md:p-[1vw] gap-y-[1vw] md:gap-y-[0.1vw]">
                 <p className="w-fit text-[3vw] md:text-[1vw] text-[#012247]">
-                  {item.kategori}
+                  {item.category}
                 </p>
                 <Link href="/" className="w-fit font-semibold text-[4vw] md:text-[1.3vw] line-clamp-2 max-md:leading-[5vw] text-[#012247] hover:underline">
                   {item.title}
                 </Link>
                 <p className="text-[2.2vw] md:text-[0.9vw] text-gray-500">
-                  {item.date}
+                  {item.updated_at}
                 </p>
               </div>
             </div>
