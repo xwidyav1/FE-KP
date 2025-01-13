@@ -105,8 +105,8 @@ export default function Layanan() {
     setSearchTerm(e.target.value);
     setCurrentPage(0); // Reset ke halaman pertama saat melakukan pencarian
   };
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;;
+  if (loading) return <p className="min-h-screen">Loading...</p>;
+  if (error) return <p className="min-h-screen">Error: {error}</p>;;
   return (
     <div className="relative w-full h-auto flex flex-col pt-[6vw] px-[5vw] md:px-[10vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF]">
       <FadeIn
@@ -151,8 +151,8 @@ export default function Layanan() {
             <FadeIn
               direction="top"
               order={3}
-              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw]">
-              {data.aduan}
+              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose md:prose-xl">
+              <div dangerouslySetInnerHTML={{ __html: data.aduan }} />           
             </FadeIn>
             <FadeIn
               direction="top"
@@ -185,8 +185,8 @@ export default function Layanan() {
             <FadeIn 
               direction="top"
               order={3}
-              className="list-disc list-inside space-y-2 text-[4vw] md:text-[1.1vw] mx-[2vw] md:mx-[1.5vw]">
-              {data.layanan}
+              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose md:prose-xl">
+              <div dangerouslySetInnerHTML={{ __html: data.layanan }} /> 
             </FadeIn>
             <FadeIn
               direction="top"

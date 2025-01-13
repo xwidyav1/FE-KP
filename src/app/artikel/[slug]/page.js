@@ -10,7 +10,9 @@ import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import FadeIn from "@/components/transitions/FadeIn";
 import { HiArrowRight } from "react-icons/hi";
+
 const BACKEND_URL = "http://localhost:8000";
+
 export default function NewsDetail({ params }) {
   const [posts, setPosts] = useState([]);
   const router = useRouter();
@@ -18,7 +20,8 @@ export default function NewsDetail({ params }) {
   const { slug } = use(params);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-useEffect(() => {
+
+  useEffect(() => {
     const getPosts = async () => {
       try {
         const data = await fetchPosts();
@@ -29,9 +32,9 @@ useEffect(() => {
         setLoading(false);
       }
     };
-
     getPosts();
   }, []);
+  
   const latestNews = [...posts]
   .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
   .slice(0, 5);
@@ -84,9 +87,10 @@ useEffect(() => {
 
           {/* Content */}
           <div className="prose h-auto md:max-w-[55vw]">
-            <p className="text-[3.8vw] md:text-[1vw] leading-relaxed text-gray-700">
-              {article.content}
-            </p>
+            <div
+              className="text-[3.8vw] md:text-[1vw] leading-relaxed text-gray-700 prose md:prose-xl"
+              dangerouslySetInnerHTML={{ __html: article.content }} 
+            /> 
           </div>
         </div>
         <FadeIn 
