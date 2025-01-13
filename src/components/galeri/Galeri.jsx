@@ -136,8 +136,8 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className="min-h-screen">Loading...</p>;
+  if (error) return <p className="min-h-screen">Error: {error}</p>;
 
   return (
     <div className="relative md:h-fit w-full max-w-full min-h-screen px-[5vw] md:px-[10.8vw] max-md:my-[10vw] md:mb-[15vw] md:mt-[10vw]">

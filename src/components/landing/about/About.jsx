@@ -66,7 +66,9 @@ const About = () => {
         </div>
         <FadeIn direction="top" order={2} className="flex flex-col gap-y-[5vw] max-md:px-[3vw]">
           <div className="w-full flex flex-col gap-y-[2vw]">
-            <p className="text-[3.5vw] md:text-[1.05vw]">{data.profil}</p>
+            <div className="text-[3.5vw] md:text-[1.05vw] prose md:prose-xl"
+              dangerouslySetInnerHTML={{ __html: data.profil }}
+            />
           </div>
           <div className="relative md:left-[15vw] w-[84vw] md:w-[50vw] aspect-[16/9] md:aspect-[7/4] bg-neutral-900 rounded-[3vw] md:rounded-[1.5vw] shadow-[0_0.52vw_2.2vw_0_rgba(0,0,0,0.25)]">
             <div className="max-md:hidden relative w-full h-full rounded-[3vw] md:rounded-[1.5vw]">
@@ -132,13 +134,16 @@ const About = () => {
           <FadeIn direction="top" order={2} className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
             <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">Visi</h2>
             <div 
-              className="text-[3.8vw] md:text-[1.05vw] prose lg:prose-xl"
+              className="text-[3.8vw] md:text-[1.05vw] prose md:prose-xl"
               dangerouslySetInnerHTML={{ __html: data.visi }}
             />
           </FadeIn>
           <FadeIn direction="top" order={2} className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
             <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">Misi</h2>
-            <p className="text-[3.8vw] md:text-[1.05vw]">{data.misi}</p>
+            <div 
+              className="text-[3.8vw] md:text-[1.05vw] prose md:prose-xl" 
+              dangerouslySetInnerHTML={{ __html: data.misi }}
+            />
           </FadeIn>
         </FadeIn>
       </div>

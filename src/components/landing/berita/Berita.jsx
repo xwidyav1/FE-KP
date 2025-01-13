@@ -89,9 +89,10 @@ const Berita = () => {
               <p className="text-[2.5vw] md:text-[0.9vw] text-gray-500">
                 {mainBerita.updated_at}
               </p>
-              <p className="max-md:hidden text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[10vw]">
-                {mainBerita.content}
-              </p>
+              <div 
+                className="max-md:hidden text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[10vw] prose md:prose-xl"
+                dangerouslySetInnerHTML={{ __html: mainBerita.content }}
+              />
             </div>
           </FadeIn>
         )}
