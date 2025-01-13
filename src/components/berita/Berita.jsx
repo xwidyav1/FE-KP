@@ -6,7 +6,7 @@ import BeritaCard from "./BeritaCard";
 import FadeIn from "@/components/transitions/FadeIn";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { fetchPosts } from "./berita_content";
-import { useEffect, useState } from "react";
+
 const Berita = ({ currentPage: initialPage, onPageChange }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);

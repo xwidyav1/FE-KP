@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays } from 'lucide-react';
-
+const BACKEND_URL = "http://localhost:8000";
 const BeritaCard = ({ post }) => {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-x-[1vw] md:m-[1.5vw]">
         <Link 
-          href={`/artikel/${post.id}`}
+          href={`/artikel/${post.slug}`}
           className="relative w-full md:w-[18.5vw] max-h-[50vw] md:max-h-[10.5vw] aspect-[16/9] md:mx-[0vw]">
           <Image
-            src={post.image}
+            src={`${BACKEND_URL}/storage/${post.image}`}
             alt={post.title}
             fill
             style={{ objectFit: "cover" }}
@@ -23,9 +23,9 @@ const BeritaCard = ({ post }) => {
             {post.category}
           </p>
           <Link 
-            href={`/artikel/${post.id}`}
+            href={`/artikel/${post.slug}`}
             className="w-fit font-semibold text-[5.5vw] md:text-[1.4vw] line-clamp-2 max-md:leading-[6.5vw] text-[#012247] hover:underline">
-            {value.title}
+            {post.title}
           </Link>
           <div className="flex gap-x-[1vw] md:gap-x-[0.5vw]">
             <CalendarDays className="size-[4vw] md:size-[1.3vw] text-[#FFC600]" />
