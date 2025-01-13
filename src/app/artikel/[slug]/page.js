@@ -1,7 +1,7 @@
 "use client"
 
 import { use, useEffect, useState } from 'react';
-import { berita } from '@/components/berita/berita_content';
+import { fetchPosts} from '@/components/berita/berita_content';
 import Navbar from '@/components/berita/Navbar';
 import Footer from "@/components/footer/Footer";
 import Image from "next/image";
@@ -10,24 +10,43 @@ import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import FadeIn from "@/components/transitions/FadeIn";
 import { HiArrowRight } from "react-icons/hi";
-
+const BACKEND_URL = "http://localhost:8000";
 export default function NewsDetail({ params }) {
+  const [posts, setPosts] = useState([]);
   const router = useRouter();
   const [article, setArticle] = useState(null);
   const { slug } = use(params);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
 
-  const latestNews = [...berita]
-  .sort((a, b) => new Date(b.date) - new Date(a.date))
+    getPosts();
+  }, []);
+  const latestNews = [...posts]
+  .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
   .slice(0, 5);
 
   useEffect(() => {
-    const currentArticle = berita.find(item => item.slug === slug);
-    if (!currentArticle) {
-      router.push('/berita/1'); // Redirect to news listing if article not found
-      return;
+    if (!loading && posts.length > 0) {
+      const currentArticle = posts.find(item => item.slug === slug);
+      if (!currentArticle) {
+        router.push('/berita/1'); // Redirect to news listing if article not found
+      } else {
+        setArticle(currentArticle);
+      }
     }
-    setArticle(currentArticle);
-  }, [slug, router]);
+  }, [loading, posts, slug, router]);
+  
 
   if (!article) {
     return <div className=""></div>;
@@ -41,21 +60,21 @@ export default function NewsDetail({ params }) {
           {/* Category and Title */}
           <div className="h-auto flex flex-col gap-y-[1vw] md:gap-y-[0.5vw]">
             <a className="text-[3.5vw] md:text-[1.1vw] text-[#012247]">
-              {article.kategori}
+              {article.category}
             </a>
             <h1 className="text-[6vw] md:text-[2.5vw] md:leading-[3.3vw] font-bold text-[#012247]">
               {article.title}
             </h1>
             <div className="flex items-center gap-x-[1vw] md:gap-x-[0.4vw]">
               <CalendarDays className="size-[5vw] md:size-[1.3vw] text-[#FFC600]" />
-              <p className="text-[3.5vw] md:text-[1vw] text-gray-500">{article.date}</p>
+              <p className="text-[3.5vw] md:text-[1vw] text-gray-500">{article.updated_at}</p>
             </div>
           </div>
 
           {/* Featured Image */}
           <div className="relative w-full aspect-[16/9] mb-[1vw]">
             <Image
-              src={article.image}
+              src={`${BACKEND_URL}/storage/${article.image}`}
               alt={article.title}
               fill
               style={{ objectFit: "cover" }}
@@ -91,7 +110,7 @@ export default function NewsDetail({ params }) {
                       {news.title}
                     </h3>
                     <div className="flex items-center gap-x-[0.4vw]">
-                      <p className="text-[3vw] md:text-[0.9vw] text-gray-500">{news.date}</p>
+                      <p className="text-[3vw] md:text-[0.9vw] text-gray-500">{news.updated_at}</p>
                     </div>
                   </div>
                 </Link>
