@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { guides } from '@/components/admin/dokumen/data_pedoman_teknis';
 import { useParams } from 'next/navigation';
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Nama dokumen belum terisi!" }),
@@ -32,10 +32,7 @@ const EditPedoman = () => {
 
   const guide = guides.find((guide) => guide.id === id);
 
-  if (!guide) {
-    return <div>Guide not found</div>;
-  }
-
+  // Ensure the hook is always called
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,6 +49,16 @@ const EditPedoman = () => {
     // Logika untuk mengupdate data post di backend dapat ditambahkan di sini
     console.log('Updated Data:', data);
   };
+
+  // Render "Guide not found" if no guide matches the id
+  if (!guide) {
+    return (
+      <div>
+        <BackButton text="Kembali" link="/admin/dokumen" />
+        <p>Guide not found</p>
+      </div>
+    );
+  }
 
   return (
     <div>

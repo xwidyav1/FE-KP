@@ -1,26 +1,11 @@
-export const guides = [
-  { 
-    name: 'Panduan Pelaporan Insiden', 
-    size: '811.48 Kb' 
-  },
-  { 
-    name: 'Panduan Penanganan Insiden Malware', 
-    size: '664.75 Kb' 
-  },
-  { 
-    name: 'Panduan Penanganan Insiden Serangan DDoS', 
-    size: '857.31 Kb' 
-  },
-  { name: 'Panduan Penanganan Insiden Serangan Phishing', 
-    size: '945.77 Kb' 
-  },
-  { name: 'Panduan Penanganan Insiden Serangan SQL Injection', 
-    size: '811.48 Kb' 
-  },
-  { name: 'Panduan Penanganan Insiden Web Defacement', 
-    size: '1095.17 Kb' 
-  },
-  { name: 'Surat Edaran Kewaspadaan Keamanan Siber', 
-    size: '368.56 Kb' 
-},
-];
+import axios from 'axios';
+
+export async function fetchPosts() {
+  try {
+    const response = await axios.get('http://localhost:8000/pedoman'); 
+    return response.data; // Mengembalikan data yang di-fetch
+  } catch (err) {
+    console.error('Error fetching data:', err.message);
+    throw err; // Melemparkan error jika ada
+  }
+}

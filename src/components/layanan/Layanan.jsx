@@ -16,11 +16,17 @@ import {
   MdKeyboardArrowRight, 
   MdKeyboardDoubleArrowRight 
 } from "react-icons/md";
-import { guides } from "./pedoman_teknis"
+import { fetchPosts } from "./pedoman_teknis"
 import FadeIn from "@/components/transitions/FadeIn";
-
+import axios from "axios";
 export default function Layanan() {
   const [isClient, setIsClient] = useState(false);
+  const [data, setData] = useState({
+      aduan: "",
+      aduan_image: "",
+      layanan: "",
+      layanan_image: "",
+    });
 
   useEffect(() => {
     setIsClient(true);
@@ -28,16 +34,55 @@ export default function Layanan() {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const rowsPerPage = 7;
   const [filteredData, setFilteredData] = useState([]);
-
   useEffect(() => {
-    const filtered = guides.filter((guide) =>
-      guide.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const fetchData = async () => {
+      try {
+        const aduanResponse = await axios.get("http://localhost:8000/documents/789");
+        const layananResponse = await axios.get("http://localhost:8000/documents/1234");
+        console.log("Aduan Response:", aduanResponse.data);
+        console.log("Layanan Response:", layananResponse.data);
+
+        setData({
+          aduan: aduanResponse.data.description,
+          aduan_image: aduanResponse.data.file_path,
+          layanan: layananResponse.data.description,
+          layanan_image: layananResponse.data.file_path,
+        });
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const pedoman = await fetchPosts();
+        setPosts(pedoman);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  
+  useEffect(() => {
+
+    const filtered = posts.filter((post) =>
+      post.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredData(filtered);
-  }, [searchTerm]);
+  }, [searchTerm,posts]);
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
@@ -60,7 +105,8 @@ export default function Layanan() {
     setSearchTerm(e.target.value);
     setCurrentPage(0); // Reset ke halaman pertama saat melakukan pencarian
   };
-
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;;
   return (
     <div className="relative w-full h-auto flex flex-col pt-[6vw] px-[5vw] md:px-[10vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF]">
       <FadeIn
@@ -106,26 +152,14 @@ export default function Layanan() {
               direction="top"
               order={3}
               className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw]">
-              Berdasarkan Peraturan Menteri Pertahanan Nomor 14 Tahun 2019 tentang Organisasi 
-              dan Tata Kerja Kementerian Pertahanan, Pusat Pertahanan Siber Bainstrahan Kemhan 
-              (Pushansiber) mempunyai   tugas   melaksanakan   penyiapan operasi  siber  
-              meliputi  pemantauan,  analisis  dan  pelaporan ancaman  siber,  penindakan,  
-              digital  forensik  dan  pemulihan serta pembentukan Computer Emergency Response Team (CERT)
-              <br/> Prosedur Aduan Siber
-              <br />1.  Penerimaan aduan insiden siber melalui telepon 021-75918947 atau surel csirt@kemhan.go.id.
-              <br />2.  Pencatatan aduan insiden siber baik identitas pelapor disertai data dukung dan bukti terjadinya insiden siber.
-              <br />3.  Notifikasi penerimaan aduan insiden siber.
-              <br />4.  Verifikasi aduan insiden siber.
-              <br />5.  Observasi dan investigasi aduan insiden siber.
-              <br />6.  Pemberian rekomendasi cara penanggulanangan insiden siber.
-              <br />7.  Jika administrator IT/pemilik aset tidak dapat menyelesaikan insiden siber dapat meminta BSSN untuk dapat membantu menindaklanjuti aduan insiden siber
+              {data.aduan}
             </FadeIn>
             <FadeIn
               direction="top"
               order={3} 
               className="relative w-auto h-[53vw] md:h-[49vw] md:mx-[1.5vw] overflow-hidden">
               <Image
-                src="/aduan-siber.png"
+                src={data.aduan_image}
                 alt="Alur Layanan Aduan Siber"
                 fill
                 className="object-contain"
@@ -152,25 +186,14 @@ export default function Layanan() {
               direction="top"
               order={3}
               className="list-disc list-inside space-y-2 text-[4vw] md:text-[1.1vw] mx-[2vw] md:mx-[1.5vw]">
-              <p>
-                Layanan Vulnerability Assesment (VA) dikhusukan bagi konstituen CSIRT Kemhan yaitu Satker/Sub Satker di Lingkungan Kementerian Pertahanan. Adapun informasi yang perlu disiapkan untuk pengajuan layanan ini adalah :
-              </p>
-              <li>Nama Aplikasi/Website yang akan di VA</li>
-              <li>PIC aplikasi/website (No. HP & Email)</li>
-              <li>Target IP/Domain</li>
-              <li>Upload surat permohonan dari satker kepada Pushansiber </li>
-              <li>Target IP/Domain </li>
-              <li>Upload surat permohonan dari satker kepada Pushansiber</li> 
-              <p>
-                Berikut Alur Layanan VA :
-              </p>
+              {data.layanan}
             </FadeIn>
             <FadeIn
               direction="top"
               order={3}
               className="relative w-auto h-[81vw] md:h-[75vw] md:mx-[1.5vw] overflow-hidden">
               <Image
-                src="/layanan-va.jpg"
+                src={data.layanan_image}
                 alt="Alur Layanan VA"
                 fill
                 className="object-contain"
@@ -180,7 +203,7 @@ export default function Layanan() {
           </FadeIn>
         </div>
         
-        <div id="guides" className="flex flex-col min-h-screen">
+        <div id="posts" className="flex flex-col min-h-screen">
           <FadeIn 
             direction="right"
             className="flex justify-start items-end max-md:mb-[5vw] h-[12vw]">
@@ -217,7 +240,7 @@ export default function Layanan() {
             {isClient ? (
               <TableBody>
                 {currentData.length > 0 ? (
-                  currentData.map((guide, index) => (
+                  currentData.map((post, index) => (
                     <TableRow
                       key={index}
                       className={`${
@@ -225,11 +248,15 @@ export default function Layanan() {
                       } hover:bg-blue-100`}
                     >
                       <TableCell className="border px-4 py-2 text-blue-600">
-                        <a href="#" className="hover:underline">
-                          {guide.name}
-                        </a>
+                      <a 
+                        href={`http://localhost:8000/storage/${post.file_path}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="hover:underline">
+                        {post.name}
+                      </a>
                       </TableCell>
-                      <TableCell className="border px-4 py-2">{guide.size}</TableCell>
+                      <TableCell className="border px-4 py-2">{post.size}</TableCell>
                     </TableRow>
                   ))
                 ) : (

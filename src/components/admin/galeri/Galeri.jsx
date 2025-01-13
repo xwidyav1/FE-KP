@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import BackButton from "@/components/admin/BackButton";
-import Image form "next/image"
+import Image from "next/image"
 import {
   Form,
   FormControl,

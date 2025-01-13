@@ -1,23 +1,40 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { galeri } from "./galeri_content";
+import { fetchPosts } from "./galeri_content";
 import GaleriCard from "./GaleriCard";
 import FadeIn from "@/components/transitions/FadeIn";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
-
+const BACKEND_URL = 'http://localhost:8000'; 
 const Galeri = ({ currentPage: initialPage, onPageChange }) => {
+  const [posts, setPosts] = useState([]);
   const [isMobile, setIsMobile] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
   const sliderRef = useRef(null);
   const touchStartX = useRef(null);
   const touchEndX = useRef(null);
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(initialPage);
   const itemsPerPage = 6; // Maksimal 6 gambar per halaman
-  const totalPages = Math.ceil(galeri.length / itemsPerPage);
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
 
+    getPosts();
+  }, []);
+
+ 
   useEffect(() => {
     setCurrentPage(initialPage); // Atur halaman awal berdasarkan prop
   }, [initialPage]);
@@ -42,7 +59,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
     onPageChange(totalPages);
   };
   
-  const currentItems = galeri.slice(
+  const currentItems = posts.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
@@ -101,7 +118,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
         ? "transform 0.4s ease-in-out"
         : "none";
       sliderRef.current.style.transform = `translateX(-${
-        (currentIndex * 102.35) / galeri.length
+        (currentIndex * 102.35) / posts.length
       }%)`;
     }
 
@@ -119,6 +136,8 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="relative md:h-fit w-full max-w-full min-h-screen px-[5vw] md:px-[10.8vw] max-md:my-[10vw] md:mb-[15vw] md:mt-[10vw]">
@@ -137,7 +156,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
         {isMobile ? (
           <div className="md:hidden block w-full relative h-[190w]">
             <div className="relative top-[5vw] flex justify-start gap-x-[2.4vw]">
-              {galeri.map((_, index) => (
+              {posts.map((post, index) => (
                 <button
                   key={index}
                   className={`rounded-[2vw] h-[2.4vw] md:h-[0.75vw] ${
@@ -155,22 +174,22 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
               className="relative w-[680%] top-0 left-0 flex gap-x-[15vw] mt-[20vw] transition-transform duration-300">
-              {galeri.map((value, index) => (
+              {posts.map((post, index) => (
                 <div
                   key={index}
                   className="bg-neutral-100 w-[90vw] md:hover:bg-shade-white md:hover:shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] relative flex flex-col items-center rounded-[4vw] md:rounded-[1vw] pt-[1.5vw] pb-[8vw] md:pb-[2vw] overflow-hidden">
-                  <GaleriCard value={value} index={index} />
+                  <GaleriCard post={post} index={index} />
                 </div>
               ))}
             </div>
           </div>
         ) : (
           <FadeIn className="max-md:hidden grid grid-cols-1 md:grid-cols-3 w-full h-[135vw] md:h-[35vw] justify-stretch items-stretch gap-[1.2vw] mt-[1vw] md:px-[3vw]">
-            {currentItems.map((value, index) => (
+            {currentItems.map((post, index) => (
               <div
                 key={index}
                 className="h-[17vw] bg-neutral-200 md:hover:bg-white md:hover:shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] relative flex flex-col items-center rounded-[4vw] md:rounded-[1vw] pt-[1vw] pb-[8vw] md:pb-[2vw] overflow-hidden transition-all duration-800 ease-in-out group hover:pt-[1vw]">
-                <GaleriCard value={value} index={index} />
+                <GaleriCard post={post} index={index} />
               </div>
             ))}
           </FadeIn>
