@@ -8,6 +8,7 @@ import Image from "next/image";
 import { CalendarDays } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import FadeIn from "@/components/transitions/FadeIn";
 
 export default function NewsDetail({ params }) {
   const router = useRouter();
@@ -28,13 +29,13 @@ export default function NewsDetail({ params }) {
   }, [slug, router]);
 
   if (!article) {
-    return <div className="">Loading...</div>;
+    return <div className=""></div>;
   }
 
   return (
     <div className="relative h-fit overflow-hidden">
       <Navbar />
-      <div className="flex flex-row px-[5vw] md:px-[10vw] my-[8vw] gap-x-[3vw]">
+      <FadeIn className="flex flex-row px-[5vw] md:px-[10vw] my-[8vw] gap-x-[3vw]">
         <div className="w-[55vw] flex flex-col gap-y-[1vw]">
           {/* Category and Title */}
           <div className="flex flex-col gap-y-[0.3vw]">
@@ -68,7 +69,9 @@ export default function NewsDetail({ params }) {
             </p>
           </div>
         </div>
-        <div className="w-[22vw] flex flex-col gap-y-[1.5vw]">
+        <FadeIn 
+          direction="left"
+          className="w-[22vw] flex flex-col gap-y-[1.5vw]">
           <div className="flex flex-row gap-x-[0.7vw] items-center">
             <div className="text-[1.5vw] font-semibold text-[#012247]">
               Berita Terbaru
@@ -94,8 +97,8 @@ export default function NewsDetail({ params }) {
               </div>
             ))}
           </div>
-        </div>
-      </div>
+        </FadeIn>
+      </FadeIn>
       <Footer />
     </div>
   );

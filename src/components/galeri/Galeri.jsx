@@ -121,7 +121,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
   }, []);
 
   return (
-    <div className="relative md:h-fit w-full max-w-full px-[5vw] md:px-[10.8vw] max-md:my-[10vw] md:mb-[15vw] md:mt-[10vw]">
+    <div className="relative md:h-fit w-full max-w-full min-h-screen px-[5vw] md:px-[10.8vw] max-md:my-[10vw] md:mb-[15vw] md:mt-[10vw]">
       <div className="flex flex-col items-start md:items-center gap-y-[5vw] md:gap-y-[1.2vw] rounded-[1.8vw] border-neutral-100 md:border-[0.2vw] pt-[2vw] pb-[30vw] md:pb-[3vw]">
         <FadeIn direction="down" order={2}>
           <div className="w-auto flex flex-row gap-x-[2vw] justify-center items-center">
@@ -165,7 +165,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
             </div>
           </div>
         ) : (
-          <div className="max-md:hidden grid grid-cols-1 md:grid-cols-3 w-full h-[135vw] md:h-[35vw] justify-stretch items-stretch gap-[1.2vw] mt-[1vw] md:px-[3vw]">
+          <FadeIn className="max-md:hidden grid grid-cols-1 md:grid-cols-3 w-full h-[135vw] md:h-[35vw] justify-stretch items-stretch gap-[1.2vw] mt-[1vw] md:px-[3vw]">
             {currentItems.map((value, index) => (
               <div
                 key={index}
@@ -173,7 +173,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
                 <GaleriCard value={value} index={index} />
               </div>
             ))}
-          </div>
+          </FadeIn>
         )}
 
         {/* Navigasi */}

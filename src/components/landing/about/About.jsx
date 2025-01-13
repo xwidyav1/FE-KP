@@ -27,18 +27,25 @@ const About = () => {
   };
 
   return (
-    <div className="w-screen max-w-full h-auto flex flex-col px-[10vw] py-[8vw] gap-y-[10vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF] overflow-x-clip">
-      <div className="w-auto flex flex-col gap-y-[2.5vw]">
-        <div className="w-auto flex flex-row gap-x-[2vw] justify-center items-center">
-          <div className="w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
-            <h1 className="text-[2.5vw] font-bold text-[#012247]">
+    <div id="about" className="w-screen max-w-full h-auto flex flex-col px-[5vw] md:px-[10vw] py-[20vw] md:py-[8vw] gap-y-[10vw] md:gap-y-[0vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF] overflow-x-clip">
+      <FadeIn
+        direction="top"
+        order={1}
+        className="w-auto flex flex-col gap-y-[10vw] md:gap-y-[4vw]">
+        <div
+          className="w-auto flex flex-col md:flex-row max-md:gap-y-[1vw] md:gap-x-[2vw] md:justify-center md:items-center">
+          <div className="max-md:hidden w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
+            <h1 className="text-[6vw] md:text-[2.5vw] font-bold text-[#012247]">
               Profil CSIRT Kemhan RI
             </h1>
-          <div className="w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
+          <div className="w-[16vw] md:w-[10vw] h-[0.5vw] md:h-[0.15vw] bg-[#FFC600] place-content-center"></div>
         </div>
-        <div className="flex flex-col gap-y-[5vw]">
+        <FadeIn 
+          direction="top"
+          orde={2}
+          className="flex flex-col gap-y-[5vw] max-md:px-[3vw]">
           <div className="w-full flex flex-col gap-y-[2vw]">
-            <p className="text-[1.05vw]">
+            <p className="text-[3.5vw] md:text-[1.05vw]">
               Tim Tanggap Insiden Siber/Computer Security Inicident Response Team Kementerian Pertahanan 
               (CSIRT Kemhan) ditetapkan oleh Menteri Pertahanan melalui Keputusan Menteri Pertahanan 
               (Kepmenhan) Nomor : Kep/ 821/ M/ VII/ 2021 tentang Penetapan Tim Tanggap Insiden Siber 
@@ -47,7 +54,7 @@ const About = () => {
               CSIRT Kemhan dan ditugaskan untuk melaksanakan perumusan, perencanaan, pembangunan, 
               pengoperasian, pengembangan, pengawasan, evaluasi dan anggaran terkait CSIRT Kemhan.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-[1.05vw]">
+            <ul className="list-disc list-inside space-y-2 text-[3.5vw] md:text-[1.05vw]">
               <h2>
               CSIRT Kemhan melaksanakan layanan tanggap insiden siber, berupa:
               </h2>
@@ -61,30 +68,28 @@ const About = () => {
                 Layanan <strong>manajemen kualitas keamanan</strong>, yaitu layanan yang mendukung kegiatan-kegiatan reaktif dan proaktif.
               </li>
             </ul>
-            <p className="text-[1.05vw]">
+            <p className="text-[3.5vw] md:text-[1.05vw]">
             CSIRT Kemhan secara resmi di-launching pada 8 Desember 2021 dan setiap pengguna sistem 
             elektronik di lingkungan Kementerian Pertahanan merupakan konstituen dari CSIRT Kemhan.
             </p>
           </div>
-          <div className="relative left-[15vw] w-[50vw] aspect-[327/490] md:aspect-[7/4] bg-neutral-900 rounded-[5vw] md:rounded-[1.5vw] shadow-[0_0.52vw_2.2vw_0_rgba(0,0,0,0.25)]">
-            <div className="hidden md:block relative w-full h-full rounded-[5vw] md:rounded-[1.5vw]">
+          <div className="relative md:left-[15vw] w-[84vw] md:w-[50vw] aspect-[16/9] md:aspect-[7/4] bg-neutral-900 rounded-[3vw] md:rounded-[1.5vw] shadow-[0_0.52vw_2.2vw_0_rgba(0,0,0,0.25)]">
+            <div className="max-md:hidden relative w-full h-full rounded-[3vw] md:rounded-[1.5vw]">
               <BorderBeam size={600} duration={20} borderWidth={6} />
             </div>
-            <div className="md:hidden block relative w-full h-full rounded-[5vw] md:rounded-[1.5vw]">
-              <BorderBeam size={400} duration={12} borderWidth={4} />
-            </div>
+            
             
             {!videoVisible && (
               <FadeIn
                 direction="right"
                 order={2.5}
-                className="relative -top-[80vw] md:-top-[19vw] mx-auto h-[20vw] md:h-[8vw] flex gap-x-[1vw] items-center justify-center text-white font-bold text-[3.5vw]">
+                className="relative top-[12.5vw] md:-top-[19vw] md:mx-auto h-[20vw] md:h-[8vw] flex gap-x-[1vw] items-center justify-center text-white font-bold text-[3.5vw]">
                 <p className="max-md:hidden">PLAY</p>
                 <button
-                  className="relative w-[28vw] md:w-[6vw] md:hover:scale-[1.05] transition duration-500 aspect-[120/75] "
+                  className="relative w-[20vw] md:w-[6vw] md:hover:scale-[1.05] transition duration-500 aspect-[120/75] "
                   onClick={togglePlay}>
                   <Image
-                    src="/play.png"
+                    src="/play_video_button.png"
                     alt="play button"
                     fill
                     style={{ objectFit: "contain" }}
@@ -116,36 +121,51 @@ const About = () => {
               }`}
             />
           </div>  
-        </div>
+        </FadeIn>
+      </FadeIn>
+      <div id="visimisi">
+        <FadeIn
+          direction="top"
+          order={1} 
+          className="md:w-auto flex flex-col gap-y-[10vw] md:gap-y-[4vw] md:mt-[2vw]">
+          <div className="h-[30vw] md:h-[12vw] flex items-end md:justify-center">
+            <div className="w-auto h-auto flex flex-col md:flex-row max-md:gap-y-[1vw] gap-x-[2vw] justify-center md:items-center">
+              <div className="max-md:hidden w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
+              <h1 className="text-[6vw] md:text-[2.5vw] font-bold text-[#012247]">
+                Visi & Misi CSIRT Kemhan RI
+              </h1>
+              <div className="w-[16vw] md:w-[10vw] h-[0.5vw] md:h-[0.15vw] bg-[#FFC600] place-content-center"></div>
+            </div>
+          </div>
+          
+          <FadeIn
+            direction="top"
+            order={2}
+            className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
+            <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">
+              Visi
+            </h2>    
+            <p className="text-[3.5vw] md:text-[1.05vw]">
+              Terwujudnya pengelolaan sistem keamanan informasi dengan baik dan aman di Lingkungan 
+              Kementerian Pertahanan untuk melindungi aset informasi yang dimiliki oleh Kementerian Pertahanan. 
+            </p>
+          </FadeIn> 
+          <FadeIn 
+            direction="top"
+            order={2}
+            className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
+            <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">
+              Misi
+            </h2>
+            <p className="text-[3.5vw] md:text-[1.05vw]">
+              Membangun pertahanan negara yang mampu menjaga kedaulatan di ruang siber, dengan mengamankan sumber daya infrastruktur kritis pertahanan membangun tata kelola sistem informasi pertahanan yang baik.
+              Membangun koordinasi, kerjasama dan kolaborasi dengan pihak terkait dan negara lain untuk membangun pertahanan siber yang tangguh.
+              Menyediakan dan mengoptimalkan sumber daya pertahanan siber melalui proses pembelajaran dan peningkatan kualitas yang berkelanjutan.
+            </p>
+          </FadeIn>           
+        </FadeIn>
       </div>
-      <div className="w-auto flex flex-col gap-y-[2.5vw]">
-        <div className="w-auto flex flex-row gap-x-[2vw] justify-center items-center">
-          <div className="w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
-            <h1 className="text-[2.5vw] font-bold text-[#012247]">
-              Visi & Misi CSIRT Kemhan RI
-            </h1>
-          <div className="w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
-        </div>
-        <div className="flex flex-col gap-y-[1vw]">
-          <h2 className="font-semibold text-[1.5vw]">
-            Visi
-          </h2>    
-          <p className="text-[1.05vw]">
-            Terwujudnya pengelolaan sistem keamanan informasi dengan baik dan aman di Lingkungan 
-            Kementerian Pertahanan untuk melindungi aset informasi yang dimiliki oleh Kementerian Pertahanan. 
-          </p>
-        </div> 
-        <div className="flex flex-col gap-y-[1vw]">
-          <h2 className="font-semibold text-[1.5vw]">
-            Misi
-          </h2>
-          <p className="text-[1.05vw]">
-            Membangun pertahanan negara yang mampu menjaga kedaulatan di ruang siber, dengan mengamankan sumber daya infrastruktur kritis pertahanan membangun tata kelola sistem informasi pertahanan yang baik.
-            Membangun koordinasi, kerjasama dan kolaborasi dengan pihak terkait dan negara lain untuk membangun pertahanan siber yang tangguh.
-            Menyediakan dan mengoptimalkan sumber daya pertahanan siber melalui proses pembelajaran dan peningkatan kualitas yang berkelanjutan.
-          </p>
-        </div>           
-      </div>
+      
     </div>
   )
 }

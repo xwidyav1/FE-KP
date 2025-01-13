@@ -10,8 +10,8 @@ import Image from "next/image";
 
 const menu = [
   { section: "Beranda", topDsktp: 0, topMb: 0 },
-  { section: "Tentang Kami", topDsktp: 245, topMb: 20 },
-  { section: "RFC 2350", topDsktp: 485, topMb: 100 },
+  { section: "Tentang Kami", topDsktp: 243, topMb: 217 },
+  { section: "RFC 2350", topDsktp: 495, topMb: 460 },
   { section: "Layanan", url: "/layanan" },
   { section: "Event", dropdown: [
     { section: "Kegiatan", url: "/kegiatan" },
@@ -111,7 +111,7 @@ const NavbarLanding = () => {
               className="h-full w-fit">
               <button
                 onClick={() => handleClick(value)}
-                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-[1.03vw] grid place-content-center transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
+                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-[1.05vw] grid place-content-center transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
                 {value.section}
               </button>
               {value.dropdown && hoveredMenu === value.section && (
@@ -140,10 +140,10 @@ const NavbarLanding = () => {
           <Link
             href="#Hero"
             replace
-            className="h-full w-[16vw] font-light rounded-[2vw] bg-neutral-900 text-primary text-sm-vw-mb grid place-content-center">
-            <div className="relative w-[5vw] aspect-[2654/2185.8]">
+            className="h-full w-[20vw] font-light rounded-[2vw] bg-transparant text-primary text-sm-vw-mb grid place-content-center">
+            <div className="relative w-[20vw] aspect-[2114/579]">
               <Image
-                src="/logo-kemhan.png"
+                src="/logo-csirt-kemhan.png"
                 alt="logo KEMHAN"
                 fill
                 style={{ objectFit: "contain" }}
@@ -170,9 +170,9 @@ const NavbarLanding = () => {
               damping: 20,
               stiffness: 120,
             }}
-            className="fixed inset-0 bg-black bg-opacity-50 z-[999]"
+            className="fixed inset-0 bg-[black] bg-opacity-50 z-[999]"
             onClick={closeMenu}>
-            <div className="absolute right-[5vw] top-[25vw] w-[60vw] bg-neutral-900/90 rounded-[2.5vw] border-[0.3vw] border-shade-white/50 py-[5vw] px-[3vw] flex flex-col gap-y-[2vw]">
+            <div className="absolute right-[5vw] top-[25vw] w-[60vw] bg-white rounded-[2.5vw] border-[0.3vw] border-shade-white/50 py-[5vw] px-[3vw] flex flex-col gap-y-[2vw]">
               {menu.map((value, index) => (
                 <FadeIn
                   direction="right"
@@ -184,9 +184,9 @@ const NavbarLanding = () => {
                       handleClick(value);
                       setIsMenuOpen(false);
                     }}
-                    className="w-full flex justify-between items-center py-[2vw] px-[4vw] text-shade-white font-medium text-sm-vw-mb hover:text-neutral-300 rounded-[1vw]">
+                    className="w-full flex justify-between items-center py-[2vw] px-[4vw] text-[#012247] font-medium text-[4vw] hover:text-[#FFC600] rounded-[1vw]">
                     {value.section}
-                    <HiChevronRight className="text-base-vw-mb" />
+                    <HiChevronRight className="text-[4.5vw]" />
                   </button>
                 </FadeIn>
               ))}

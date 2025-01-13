@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from '@/components/ui/input';
+import Image from "next/image"
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { posts } from '@/components/admin/posts/posts';
@@ -206,7 +207,7 @@ const Edit = () => {
                 <div className="flex flex-col space-y-2">
                   {/* Tampilkan foto saat ini */}
                   {field.value && typeof field.value === "string" ? (
-                    <img
+                    <Image
                       src={field.value}
                       alt="Current Photo"
                       className="w-[24vw] h-[13.5vw] object-cover rounded-md"
@@ -227,7 +228,7 @@ const Edit = () => {
                   </FormControl>
                   {previewImage && (
                   <div className="mt-4">
-                    <img
+                    <Image
                       src={previewImage}
                       alt="Preview"
                       className="h-32 w-32 object-cover rounded"

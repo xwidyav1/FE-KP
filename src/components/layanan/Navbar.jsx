@@ -10,9 +10,9 @@ import Image from "next/image";
 
 const menu = [
   { section: "Beranda", url:"/" },
-  { section: "Aduan Siber", topDsktp: 90, topMb: 20 },
-  { section: "Layanan VA", topDsktp: 262, topMb: 100 },
-  { section: "Pedoman Teknis", topDsktp: 487, topMb: 100  },
+  { section: "Aduan Siber", topDsktp: 97, topMb: 97.5 },
+  { section: "Layanan VA", topDsktp: 279, topMb: 248 },
+  { section: "Pedoman Teknis", topDsktp: 510, topMb: 373.5  },
 ];
 
 const NavbarLanding = () => {
@@ -102,7 +102,7 @@ const NavbarLanding = () => {
               className="h-full w-fit">
               <button
                 onClick={() => handleClick(value)}
-                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-lg-vw flex justify-center items-center place-content-center gap-x-[0.7vw] transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">               
+                className="ml-[0.005vw] h-[5vw] w-[8vw] font-medium rounded-[0.6vw] bg-inherit text-neutral-700 text-[1.05vw] flex justify-center items-center place-content-center gap-x-[0.7vw] transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">               
                 {value.section === "Beranda" && (
                   <HiArrowLeft className="size-[3vw] md:size-[1vw]" />
                 )}
@@ -115,17 +115,17 @@ const NavbarLanding = () => {
 
       {/* Navbar Mobile */}
       <div
-        className={`md:hidden fixed flex gap-x-[2vw] top-[5vw] right-[5vw] w-fit h-[15vw] p-[2vw] bg-shade-white/50 rounded-[2.5vw] border-[0.3vw] border-shade-white z-[1000] transition-transform duration-300 backdrop-blur-[1vw] ${
+        className={`md:hidden fixed flex gap-x-[2vw] top-[5vw] right-[5vw] w-fit h-[15vw] p-[2vw] bg-shade-white/50 rounded-[2.5vw] border-[0.3vw] border-white z-[1000] transition-transform duration-300 backdrop-blur-[1vw] ${
           visible ? "translate-y-0" : "-translate-y-[200%]"
         }`}>
         <FadeIn direction="down" order={2}>
           <Link
-            href="#Hero"
+            href="/"
             replace
-            className="h-full w-[16vw] font-light rounded-[2vw] bg-neutral-900 text-primary text-sm-vw-mb grid place-content-center">
-            <div className="relative w-[5vw] aspect-[2654/2185.8]">
+            className="h-full w-[20vw] font-light rounded-[2vw] bg-transparant text-primary text-sm-vw-mb grid place-content-center">
+            <div className="relative w-[20vw] aspect-[2114/579]">
               <Image
-                src="/logo-kemhan.png"
+                src="/logo-csirt-kemhan.png"
                 alt="logo KEMHAN"
                 fill
                 style={{ objectFit: "contain" }}
@@ -154,7 +154,7 @@ const NavbarLanding = () => {
             }}
             className="fixed inset-0 bg-black bg-opacity-50 z-[999]"
             onClick={closeMenu}>
-            <div className="absolute right-[5vw] top-[25vw] w-[60vw] bg-neutral-900/90 rounded-[2.5vw] border-[0.3vw] border-shade-white/50 py-[5vw] px-[3vw] flex flex-col gap-y-[2vw]">
+            <div className="absolute right-[5vw] top-[25vw] w-[60vw] bg-white rounded-[2.5vw] border-[0.3vw] border-shade-white/50 py-[5vw] px-[3vw] flex flex-col gap-y-[2vw]">
               {menu.map((value, index) => (
                 <FadeIn
                   direction="right"
@@ -166,7 +166,7 @@ const NavbarLanding = () => {
                       handleClick(value);
                       setIsMenuOpen(false);
                     }}
-                    className="w-full flex justify-between items-center py-[2vw] px-[4vw] text-shade-white font-medium text-sm-vw-mb hover:text-neutral-300 rounded-[1vw]">
+                    className="w-full flex justify-between items-center py-[2vw] px-[4vw] text-[#012247] font-medium text-[4vw] hover:text-[#FFC600] rounded-[1vw]">
                     {value.section}
                     <HiChevronRight className="text-base-vw-mb" />
                   </button>

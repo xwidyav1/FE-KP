@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useRouter } from "next/navigation";
+import Image from "next/image"
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -104,7 +105,7 @@ const Login = () => {
     <div className="flex justify-center items-center min-h-screen bg-slate-500">
       <div className="flex flex-row w-[70vw] h-[35vw] bg-gray-100 rounded-[1vw] overflow-hidden shadow-lg">
         <div className="relative w-[40vw] aspect-[1276/1080]">
-          <img
+          <Image
             src="/auth-bg.png"
             alt="background"
             className="absolute w-full h-full object-cover"
@@ -112,7 +113,7 @@ const Login = () => {
         </div>
         <div className="flex flex-col w-[30vw] justify-center items-center gap-y-[2vw]">
           <div className="relative w-[15vw] aspect-[2114/579]">
-            <img
+            <Image
               src="/logo-csirt-kemhan.png"
               alt="logo CSIRT Kemhan"
               className="absolute w-full h-full object-contain"
