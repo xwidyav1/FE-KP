@@ -26,7 +26,7 @@ export default function Footer() {
             <div>
               <a 
               target="_blank" 
-              href="https://www.facebook.com/UGMYogyakarta/"
+              href="https://www.facebook.com/KementerianPertahananRI/"
               rel="noopener noreferrer">             
                 <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -40,7 +40,7 @@ export default function Footer() {
             <div>
               <a 
                 target="_blank" 
-                href="https://www.instagram.com/ugm.yogyakarta" 
+                href="https://www.instagram.com/kemhanri?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
                 rel="noopener noreferrer">
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -54,7 +54,7 @@ export default function Footer() {
             <div>
               <a 
               target="_blank" 
-              href="https://twitter.com/UGMYogyakarta/" 
+              href="https://x.com/Kemhan_RI" 
               rel="noopener noreferrer">
                 <svg 
                   viewBox="0 0 20 20" 
@@ -216,8 +216,11 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="h-[13vw] md:h-[4.5vw] flex justify-center items-center bg-[#012247] text-white text-[3vw] md:text-[0.9vw]">
-        Copyright 2024© Pushansiber Kemhan RI
+      <div className="h-[13vw] md:h-[4.5vw] flex justify-center items-center bg-[#000000] text-white text-[3vw] md:text-[0.9vw]">
+        Copyright 2024© Pushansiber Kemhan RI 
+    
+    
+        |Mahasiswa Praktik Kerja Lapangan UGM (2025)|
       </div>
     </div>
   )
