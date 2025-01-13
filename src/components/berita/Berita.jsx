@@ -5,13 +5,29 @@ import { berita } from "./berita_content";
 import BeritaCard from "./BeritaCard";
 import FadeIn from "@/components/transitions/FadeIn";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
-
+import { fetchPosts } from "./berita_content";
+import { useEffect, useState } from "react";
 const Berita = ({ currentPage: initialPage, onPageChange }) => {
-
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(initialPage);
   const itemsPerPage = 6; // Maksimal 6 gambar per halaman
-  const totalPages = Math.ceil(berita.length / itemsPerPage);
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const data = await fetchPosts();
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
 
+    getPosts();
+  }, []);
   useEffect(() => {
     setCurrentPage(initialPage); // Atur halaman awal berdasarkan prop
   }, [initialPage]);
@@ -36,7 +52,7 @@ const Berita = ({ currentPage: initialPage, onPageChange }) => {
     onPageChange(totalPages);
   };
   
-  const currentItems = berita.slice(
+  const currentItems = posts.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
@@ -63,21 +79,21 @@ const Berita = ({ currentPage: initialPage, onPageChange }) => {
         </FadeIn>
 
         <FadeIn className="max-md:hidden grid grid-cols-1 md:grid-cols-2 w-full h-auto justify-stretch items-stretch gap-[1.2vw] mt-[1vw] md:px-[0vw]">
-          {currentItems.map((value, index) => (
+          {currentItems.map((post, index) => (
             <div
               key={index}
               className="h-auto bg-white relative rounded-[4vw] md:rounded-[1vw] pt-[0vw] pb-[8vw] md:pb-[0vw] overflow-hidden">
-              <BeritaCard value={value} index={index} />
+              <BeritaCard post={post} index={index} />
             </div>
           ))}
         </FadeIn>
 
         <FadeIn className="md:hidden grid grid-cols-1 w-full h-auto justify-stretch items-stretch gap-[7vw] max-md:mr-[2vw] mt-[3vw]">
-          {currentItems.map((value, index) => (
+          {currentItems.map((post, index) => (
             <div
               key={index}
               className="h-auto bg-white relative rounded-[2vw] md:rounded-[1vw] pt-[0vw] pb-[0vw] md:pb-[0vw] overflow-hidden">
-              <BeritaCard value={value} index={index} />
+              <BeritaCard post={post} index={index} />
             </div>
           ))}
         </FadeIn>
