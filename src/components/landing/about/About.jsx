@@ -131,11 +131,11 @@ const About = () => {
 
           <FadeIn direction="top" order={2} className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
             <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">Visi</h2>
-            <p className="text-[3.5vw] md:text-[1.05vw]">{data.visi}</p>
+            <p className="text-[3.8vw] md:text-[1.05vw]">{data.visi}</p>
           </FadeIn>
           <FadeIn direction="top" order={2} className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
             <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">Misi</h2>
-            <p className="text-[3.5vw] md:text-[1.05vw]">{data.misi}</p>
+            <p className="text-[3.8vw] md:text-[1.05vw]">{data.misi}</p>
           </FadeIn>
         </FadeIn>
       </div>

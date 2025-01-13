@@ -17,7 +17,7 @@ const Navbar = ({ middle = false }) => {
         <Link
           href="/"
           className="h-full w-[16vw] md:w-[10vw] grid place-content-center">
-          <div className="relative w-[5vw] md:w-[10vw] aspect-[2114/579]">
+          <div className="relative w-[20vw] md:w-[10vw] aspect-[2114/579]">
             <Image
               src="/logo-csirt-kemhan.png"
               alt="logo CSIRT KEMHAN"
@@ -36,8 +36,8 @@ const Navbar = ({ middle = false }) => {
           <FadeIn direction="down" order={2.2}>
             <Link
               href="/berita/1"
-              className="md:ml-[0.005vw] h-[14vw] md:h-[3vw] w-[22vw] md:w-[7vw] font-medium rounded-[2.5vw] md:rounded-[0.6vw] bg-inherit text-neutral-700 text-sm-vw-mb md:text-lg-vw flex justify-center items-center gap-x-[2vw] md:gap-x-[.5vw] transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
-              <HiArrowLeft className="size-[3vw] md:size-[1vw]" />
+              className="md:ml-[0.005vw] h-[14vw] md:h-[3vw] w-[25vw] md:w-[7vw] font-medium rounded-[2.5vw] md:rounded-[0.6vw] bg-inherit text-neutral-700 text-sm-vw-mb md:text-lg-vw flex justify-center items-center gap-x-[2vw] md:gap-x-[.5vw] transition-color duration-300 ease-in-out delay-100 hover:text-yellow-500">
+              <HiArrowLeft className="size-[4vw] md:size-[1vw]" />
               {value.section}
             </Link>
           </FadeIn>
