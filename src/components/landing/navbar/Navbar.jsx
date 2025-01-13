@@ -26,6 +26,8 @@ const NavbarLanding = () => {
   const [visible, setVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +46,7 @@ const NavbarLanding = () => {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      setActiveDropdown(null);
     }
   }, [isMenuOpen]);
 
@@ -56,6 +59,14 @@ const NavbarLanding = () => {
       setIsMenuOpen(false);
     }
   };
+
+  const toggleDropdown = (section) => {
+    if (activeDropdown === section) {
+      setActiveDropdown(null); // Tutup jika dropdown yang sama dipilih
+    } else {
+      setActiveDropdown(section); // Buka dropdown baru
+    }
+  };  
 
   const handleClick = (item) => {
     if (item.url) {
@@ -181,13 +192,41 @@ const NavbarLanding = () => {
                   className="w-full h-fit py-[0.2vw]">
                   <button
                     onClick={() => {
-                      handleClick(value);
-                      setIsMenuOpen(false);
+                      if (value.dropdown) {
+                        toggleDropdown(value.section); // Toggle dropdown
+                      } else {
+                        handleClick(value); // Navigasi langsung
+                        setIsMenuOpen(false);
+                      }
                     }}
                     className="w-full flex justify-between items-center py-[2vw] px-[4vw] text-[#012247] font-medium text-[4vw] hover:text-[#FFC600] rounded-[1vw]">
                     {value.section}
-                    <HiChevronRight className="text-[4.5vw]" />
+                    {!value.dropdown && <HiChevronRight className="text-[4.5vw]" />}
+                    {value.dropdown && (
+                      <HiChevronRight
+                        className={`text-[4.5vw] transition-transform duration-300 ${
+                          activeDropdown === value.section ? "rotate-90" : ""
+                        }`}
+                      />
+                    )}
                   </button>
+                  {/* Dropdown Menu */}
+                  {value.dropdown && activeDropdown === value.section && (
+                    <div
+                      className="ml-[6vw] mr-[4vw] mt-[2vw] flex flex-col gap-y-[2vw] bg-inherit items-start border-black">
+                      {value.dropdown.map((item, subIndex) => (
+                        <button
+                          key={subIndex}
+                          onClick={() => {
+                            handleClick(item);
+                            setIsMenuOpen(false);
+                          }}
+                          className="text-[#012247] font-medium text-[4vw] hover:text-[#FFC600] pl-[2vw]">
+                          {item.section}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </FadeIn>
               ))}
             </div>

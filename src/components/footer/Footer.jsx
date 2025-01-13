@@ -5,8 +5,8 @@ import { House, Phone, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <div className="w-full h-[220vw] md:h-[30vw] flex flex-col">
-      <div className="flex flex-col md:flex-row h-[295.5vw] md:h-[25.5vw] pt-[10vw] md:pt-[5vw] px-[7vw] max-md:gap-y-[15vw] md:gap-x-[6vw] bg-gradient-to-b from-[#000000] to-[#000000] text-white">
+    <div className="w-full h-[260vw] md:h-[30vw] flex flex-col">
+      <div className="flex flex-col md:flex-row h-[295.5vw] md:h-[25.5vw] pt-[10vw] md:pt-[5vw] px-[7vw] max-md:gap-y-[15vw] md:gap-x-[3vw] bg-gradient-to-b from-[#000000] to-[#000000] text-white">
         <div className="md:w-[17vw] flex flex-col gap-y-[5vw] md:gap-y-[2vw]">
           <div className="relative w-[50vw] md:w-[13vw] aspect-[2114/579]">
             <Image
@@ -26,7 +26,7 @@ export default function Footer() {
             <div>
               <a 
               target="_blank" 
-              href="https://www.facebook.com/KementerianPertahananRI/"
+              href="https://www.facebook.com/KementerianPertahananRI"
               rel="noopener noreferrer">             
                 <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -40,7 +40,7 @@ export default function Footer() {
             <div>
               <a 
                 target="_blank" 
-                href="https://www.instagram.com/kemhanri?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+                href="https://www.instagram.com/kemhanri" 
                 rel="noopener noreferrer">
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -54,7 +54,7 @@ export default function Footer() {
             <div>
               <a 
               target="_blank" 
-              href="https://x.com/Kemhan_RI" 
+              href="https://x.com/kemhan_ri" 
               rel="noopener noreferrer">
                 <svg 
                   viewBox="0 0 20 20" 
@@ -67,7 +67,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-row gap-x-[16vw] md:gap-x-[6vw]">
+        <div className="flex flex-row gap-x-[16vw] md:gap-x-[2vw]">
           <div className="flex flex-col w-full md:w-[10vw] gap-y-[3vw] md:gap-y-[2vw]">
             <div className="text-[4vw] md:text-[1.2vw] font-semibold">
               Peta Situs
@@ -151,7 +151,7 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col w-full md:w-[12vw] gap-y-[2vw]">
+          <div className="flex flex-col w-full md:w-[10vw] gap-y-[2vw]">
             <div className="text-[4vw] md:text-[1.2vw] font-semibold">
               Dukungan
             </div>        
@@ -212,6 +212,25 @@ export default function Footer() {
             <div>
               Silahkan gunakan PGP untuk komunikasi e-mail terenkripsi.
               PGP Key dapat diunduh di <a href="https://csirt.kemhan.go.id/assets/CSIRT-Kemhan_0xAD591C54_public.asc" className="text-[#FFC600] hover:text-[#FFB300]">sini</a>.
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-[5vw] md:gap-y-[1.8vw]">
+          <div className="text-[4vw] md:text-[1.2vw] font-semibold">
+            Pengunjung
+          </div>
+          <div className="flex flex-col text-[3.5vw] md:text-[1vw] ml-[2vw] md:ml-[0.5vw] md:gap-y-[0.5vw]">
+            <div>
+              Daily : 1000
+            </div>
+            <div>
+              Weekly : 7000
+            </div>
+            <div>
+              Monthly : 30000
+            </div>
+            <div>
+              Total : 360000
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
 
-const LearnAI101 = () => {
+const Rfc = () => {
   const [links, setLinks] = useState({
     id: "#",
     en: "#",
@@ -43,12 +43,12 @@ const LearnAI101 = () => {
       >
         <div className="flex flex-col gap-y-[10vw] md:gap-y-[2vw]  md:items-center p-[10vw] md:p-[4vw] z-10">
           <FadeIn direction="down" order={2}>
-            <h2 className="text-[5vw] md:text-[1.5vw] text-[#012247] font-semibold">
+            <h2 className="text-[5.5vw] md:text-[1.5vw] text-[#012247] font-semibold">
               Dokumen RFC 2350
             </h2>
           </FadeIn>
           <FadeIn direction="down" order={2.5}>
-            <p className="text-[3.5vw] md:text-[1.1vw] text-black font-light md:text-center">
+            <p className="text-[3.8vw] md:text-[1.1vw] text-black font-light md:text-center">
               Dokumen ini berisi deskripsi CSIRT Kemhan berdasarkan RFC 2350,
               <br className="max-md:hidden" /> yaitu informasi dasar mengenai
               CSIRT Kemhan, menjelaskan tanggung jawab,
@@ -71,7 +71,7 @@ const LearnAI101 = () => {
           </Link>
           <Link href={links.en} target="_blank">
             <FadeIn direction="down" order={2.5}>
-              <button className="group overflow-hidden relative bg-[#FFC600] hover:bg-[#FFD900] transition duration-500 w-[30vw] md:w-[10vw] h-[14vw] md:h-[3.6vw] rounded-[2vw] md:rounded-[0.5vw] flex flex-row gap-x-[3vw] md:gap-x-[1vw] justify-center items-center px-[5vw] md:px-[1.6vw] py-[0.5vw] md:py-[0.4vw] max-md:ml-[10vw] z-10">
+              <button className="group overflow-hidden relative bg-[#FFC600] hover:bg-[#FFD900] transition duration-500 w-[30vw] md:w-[10vw] h-[14vw] md:h-[3.6vw] rounded-[2vw] md:rounded-[0.5vw] flex flex-row gap-x-[3vw] md:gap-x-[1vw] justify-center items-center px-[5vw] md:px-[1.6vw] py-[0.5vw] md:py-[0.4vw] max-md:ml-[7.5vw] z-10">
                 <p className="text-[#012247] text-[3vw] md:text-[0.9vw] font-semibold">
                   English
                 </p>
@@ -113,4 +113,4 @@ const LearnAI101 = () => {
   );
 };
 
-export default LearnAI101;
+export default Rfc;

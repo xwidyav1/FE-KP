@@ -9,6 +9,7 @@ import { CalendarDays } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import FadeIn from "@/components/transitions/FadeIn";
+import { HiArrowRight } from "react-icons/hi";
 
 export default function NewsDetail({ params }) {
   const router = useRouter();
@@ -33,21 +34,21 @@ export default function NewsDetail({ params }) {
   }
 
   return (
-    <div className="relative h-fit overflow-hidden">
+    <div className="relative overflow-hidden">
       <Navbar />
-      <FadeIn className="flex flex-row px-[5vw] md:px-[10vw] my-[8vw] gap-x-[3vw]">
-        <div className="w-[55vw] flex flex-col gap-y-[1vw]">
+      <FadeIn className="flex flex-col md:flex-row px-[5vw] md:px-[10vw] my-[25vw] md:my-[8vw] max-md:gap-y-[25vw] md:gap-x-[3vw]">
+        <div className="h-auto md:min-h-screen md:w-[55vw] flex flex-col gap-y-[5vw] md:gap-y-[1vw]">
           {/* Category and Title */}
-          <div className="flex flex-col gap-y-[0.3vw]">
-            <a className="text-[1.2vw] md:text-[1.1vw] text-[#012247]">
+          <div className="h-auto flex flex-col gap-y-[1vw] md:gap-y-[0.5vw]">
+            <a className="text-[3.5vw] md:text-[1.1vw] text-[#012247]">
               {article.kategori}
             </a>
-            <h1 className="text-[4vw] md:text-[2.5vw] font-bold text-[#012247]">
+            <h1 className="text-[6vw] md:text-[2.5vw] md:leading-[3.3vw] font-bold text-[#012247]">
               {article.title}
             </h1>
-            <div className="flex items-center gap-x-[0.4vw]">
-              <CalendarDays className="size-[1.3vw] text-[#FFC600]" />
-              <p className="text-[1vw] text-gray-500">{article.date}</p>
+            <div className="flex items-center gap-x-[1vw] md:gap-x-[0.4vw]">
+              <CalendarDays className="size-[5vw] md:size-[1.3vw] text-[#FFC600]" />
+              <p className="text-[3.5vw] md:text-[1vw] text-gray-500">{article.date}</p>
             </div>
           </div>
 
@@ -58,44 +59,53 @@ export default function NewsDetail({ params }) {
               alt={article.title}
               fill
               style={{ objectFit: "cover" }}
-              className="rounded-[0.7vw]"
+              className="rounded-[1vw] md:rounded-[0.7vw]"
             />
           </div>
 
           {/* Content */}
-          <div className="prose max-w-none">
-            <p className="text-[1.2vw] md:text-[1vw] leading-relaxed text-gray-700">
+          <div className="prose h-auto md:max-w-[55vw]">
+            <p className="text-[3.8vw] md:text-[1vw] leading-relaxed text-gray-700">
               {article.content}
             </p>
           </div>
         </div>
         <FadeIn 
           direction="left"
-          className="w-[22vw] flex flex-col gap-y-[1.5vw]">
-          <div className="flex flex-row gap-x-[0.7vw] items-center">
-            <div className="text-[1.5vw] font-semibold text-[#012247]">
+          className="md:w-[22vw] flex flex-col gap-y-[7vw] md:gap-y-[1.5vw]">
+          <div className="flex flex-col md:flex-row gap-x-[0.7vw] md:items-center">
+            <div className="text-[6vw] md:text-[1.5vw] font-semibold text-[#012247]">
               Berita Terbaru
             </div>
-            <div className="w-[10vw] h-[0.15vw] bg-[#FFC600]"></div>
+            <div className="w-[16vw] md:w-[10vw] h-[0.5vw] md:h-[0.15vw] bg-[#FFC600]"></div>
           </div>
-          <div className="flex flex-col gap-y-[1.2vw] ml-[1vw]">
+          <div className="flex flex-col gap-y-[3.5vw] md:gap-y-[1.2vw] ml-[2vw] md:ml-[1vw]">
             {latestNews.map((news, index) => (
-              <div key={index} className={`${index !== latestNews.length - 1 ? 'border-b border-gray-200 pb-[1.2vw]' : ''}`}>
+              <div key={index} className={`${index !== latestNews.length - 1 ? 'border-b border-gray-200 pb-[3.5vw] md:pb-[1.2vw]' : ''}`}>
                 <Link 
                   href={`/artikel/${news.slug}`}
                   className="group"
                 >
-                  <div className="w-fit flex flex-col gap-y-[0.3vw]">
-                    <h3 className="text-[1.1vw] font-medium text-[#012247] group-hover:text-[#FFC600] line-clamp-2 transition-colors">
+                  <div className="w-fit flex flex-col gap-y-[1vw] md:gap-y-[0.3vw]">
+                    <h3 className="text-[4vw] md:text-[1.1vw] font-medium text-[#012247] group-hover:text-[#FFC600] line-clamp-2 transition-colors">
                       {news.title}
                     </h3>
                     <div className="flex items-center gap-x-[0.4vw]">
-                      <p className="text-[0.9vw] text-gray-500">{news.date}</p>
+                      <p className="text-[3vw] md:text-[0.9vw] text-gray-500">{news.date}</p>
                     </div>
                   </div>
                 </Link>
               </div>
             ))}
+          </div>
+          <div className="flex flex-row justify-end text-[3.8vw] md:text-[1.1vw] items-center gap-x-[0.6vw] pt-[3vw] pb-[15vw]">
+            <Link
+              href="/berita/1"
+              className="relative group flex items-center gap-x-[0.4vw] max-md:underline">
+              Lihat Semua
+              <HiArrowRight className="w-[5vw] md:w-[1.1vw] group-hover:translate-x-1 transition duration-300" />
+              <span className="absolute max-md:hidden bottom-0 left-0 w-full h-[0.1vw] bg-neutral-900 origin-right scale-x-0 transition-transform duration-300 group-hover:origin-left group-hover:scale-x-100"></span>
+            </Link>
           </div>
         </FadeIn>
       </FadeIn>

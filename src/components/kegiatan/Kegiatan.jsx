@@ -55,19 +55,19 @@ export default function Kegiatan() {
   };
 
   return (
-    <FadeIn className="relative w-full h-auto min-h-screen flex flex-col pt-[8vw] px-[10vw] bg-[#FFFFFF]">
-        <div className="flex flex-col">
+    <FadeIn className="relative w-full h-auto min-h-screen flex flex-col pt-[25vw] md:pt-[8vw] px-[5vw] md:px-[10vw] bg-[#FFFFFF]">
+        <div className="flex flex-col max-md:gap-y-[1vw]">
           <FadeIn 
             direction="right"
-            className="flex flex-row gap-x-[1vw] items-center">
-            <div className="text-[2.5vw] font-semibold text-[#012247]">
+            className="flex flex-col md:flex-row gap-x-[1vw] md:items-center">
+            <div className="text-[6vw] md:text-[2.5vw] font-semibold text-[#012247]">
               Event Siber
             </div>
-            <div className="w-[8vw] h-[0.15vw] bg-[#FFC600]"></div>
+            <div className="w-[16vw] md:w-[8vw] h-[0.5vw] md:h-[0.15vw] bg-[#FFC600]"></div>
           </FadeIn>
 
           {/* Search Bar */}
-          <div className="w-[20vw] mt-[2vw]">
+          <div className="md:w-[20vw] mt-[6vw] md:mt-[2vw]">
             <input
               type="text"
               placeholder="Cari kegiatan ..."
@@ -119,34 +119,34 @@ export default function Kegiatan() {
           </Table>
 
           {/* Pagination Controls */}
-          <div className="max-md:hidden flex flex-row justify-end items-center w-full mt-4 gap-x-4 mr-6">
-            <div className="text-black text-sm">
+          <div className="flex flex-row justify-end items-center w-full mt-4 gap-x-4 mr-6">
+            <div className="text-black text-[3.5vw] md:text-[1vw]">
               Page {currentPage + 1} of {totalPages}
             </div>
             <div className="flex flex-row justify-between gap-x-2">
               <button 
-                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
                 onClick={handleFirstPage}
                 disabled={currentPage === 0}
               >
                 <MdKeyboardDoubleArrowLeft />
               </button>
               <button 
-                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
                 onClick={handlePrevDesktop}
                 disabled={currentPage === 0}
               >
                 <MdKeyboardArrowLeft />
               </button>
               <button 
-                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
                 onClick={handleNextDesktop}
                 disabled={currentPage === totalPages - 1}
               >
                 <MdKeyboardArrowRight />
               </button>
               <button 
-                className="flex items-center justify-center w-10 h-10 text-lg border border-gray-300 rounded-lg disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+                className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
                 onClick={handleLastPage}
                 disabled={currentPage === totalPages - 1}
               >

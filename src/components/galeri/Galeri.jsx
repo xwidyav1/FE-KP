@@ -141,19 +141,19 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
 
   return (
     <div className="relative md:h-fit w-full max-w-full min-h-screen px-[5vw] md:px-[10.8vw] max-md:my-[10vw] md:mb-[15vw] md:mt-[10vw]">
-      <div className="flex flex-col items-start md:items-center gap-y-[5vw] md:gap-y-[1.2vw] rounded-[1.8vw] border-neutral-100 md:border-[0.2vw] pt-[2vw] pb-[30vw] md:pb-[3vw]">
+      <div className="flex flex-col items-start md:items-center gap-y-[5vw] md:gap-y-[1.2vw] rounded-[1.8vw] border-neutral-100 md:border-[0.2vw] pt-[15vw] md:pt-[2vw] pb-[30vw] md:pb-[3vw]">
         <FadeIn direction="down" order={2}>
-          <div className="w-auto flex flex-row gap-x-[2vw] justify-center items-center">
-            <div className="w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
-              <h1 className="text-[3vw] font-semibold text-[#012247]">
+          <div className="w-auto flex flex-col md:flex-row gap-x-[2vw] justify-center md:items-center">
+            <div className="max-md:hidden w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
+              <h1 className="text-[6vw] md:text-[3vw] font-semibold text-[#012247]">
                 Galeri
               </h1>
-            <div className="w-[10vw] h-[0.15vw] bg-[#FFC600] place-content-center"></div>
+            <div className="w-[18.5vw] md:w-[10vw] h-[0.5vw] md:h-[0.15vw] bg-[#FFC600] place-content-center"></div>
           </div>         
         </FadeIn>
 
         {/* Galeri Cards */}
-        {isMobile ? (
+        {/* {isMobile ? (
           <div className="md:hidden block w-full relative h-[190w]">
             <div className="relative top-[5vw] flex justify-start gap-x-[2.4vw]">
               {posts.map((post, index) => (
@@ -183,41 +183,43 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
               ))}
             </div>
           </div>
-        ) : (
-          <FadeIn className="max-md:hidden grid grid-cols-1 md:grid-cols-3 w-full h-[135vw] md:h-[35vw] justify-stretch items-stretch gap-[1.2vw] mt-[1vw] md:px-[3vw]">
+        ) : ( */}
+          <FadeIn className="grid grid-cols-1 md:grid-cols-3 w-full h-auto md:h-[35vw] justify-stretch items-stretch gap-[5vw] md:gap-[1.2vw] max-md:pt-[1vw] md:mt-[1vw] md:px-[3vw]">
             {currentItems.map((post, index) => (
               <div
                 key={index}
-                className="h-[17vw] bg-neutral-200 md:hover:bg-white md:hover:shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] relative flex flex-col items-center rounded-[4vw] md:rounded-[1vw] pt-[1vw] pb-[8vw] md:pb-[2vw] overflow-hidden transition-all duration-800 ease-in-out group hover:pt-[1vw]">
+                className="md:h-[17vw] bg-neutral-200 md:hover:bg-white md:hover:shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] relative flex flex-col items-center rounded-[2vw] md:rounded-[1vw] pt-[1vw] pb-[3.5vw] md:pb-[2vw] overflow-hidden transition-all duration-800 ease-in-out group md:hover:pt-[1vw]">
                 <GaleriCard post={post} index={index} />
               </div>
             ))}
           </FadeIn>
-        )}
 
         {/* Navigasi */}
-        <div className="max-md:hidden flex flex-row justify-end items-center w-full mt-[2vw] gap-x-[2vw] mr-[6vw]">
-          <div className="text-black text-[1vw]">
+        <div className="flex flex-row justify-end items-center w-full mt-[2vw] gap-x-[2vw] mr-[6vw]">
+          <div className="text-black text-[3.5vw] md:text-[1vw]">
             Page {currentPage + 1} of {totalPages}
           </div>
           <div className="flex flex-row justify-between gap-x-[0.5vw]">
             <button 
-              className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+              className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handleFirstPage}
               disabled={currentPage === 0}>
               <MdKeyboardDoubleArrowLeft />
             </button>
-            <button className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+            <button 
+              className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handlePrevDesktop}
               disabled={currentPage === 0}>
               <MdKeyboardArrowLeft />  
             </button>
-            <button className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+            <button 
+              className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handleNextDesktop}
               disabled={currentPage === totalPages - 1}>
               <MdKeyboardArrowRight />
             </button>
-            <button className="flex items-center justify-center w-[2.5vw] h-[2.5vw] text-[1.7vw] border-[0.1vw] border-gray-300 rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
+            <button 
+              className="flex items-center justify-center w-[8vw] h-[8vw] text-[5vw] md:w-[2.5vw] md:h-[2.5vw] md:text-[1.7vw] bg-white border-[0.3vw] md:border-[0.1vw] border-gray-300 rounded-[1vw] md:rounded-[0.5vw] disabled:opacity-50 disabled:pointer-events-none hover:bg-gray-100 duration-200 ease-in-out"
               onClick={handleLastPage}
               disabled={currentPage === totalPages - 1}>
               <MdKeyboardDoubleArrowRight />
