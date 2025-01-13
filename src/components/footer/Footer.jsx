@@ -6,7 +6,7 @@ import { House, Phone, Mail } from 'lucide-react';
 export default function Footer() {
   return (
     <div className="w-full h-[220vw] md:h-[30vw] flex flex-col">
-      <div className="flex flex-col md:flex-row h-[295.5vw] md:h-[25.5vw] pt-[10vw] md:pt-[5vw] px-[7vw] max-md:gap-y-[15vw] md:gap-x-[6vw] bg-gradient-to-b from-[#083D62] to-[#012247] text-white">
+      <div className="flex flex-col md:flex-row h-[295.5vw] md:h-[25.5vw] pt-[10vw] md:pt-[5vw] px-[7vw] max-md:gap-y-[15vw] md:gap-x-[6vw] bg-gradient-to-b from-[#000000] to-[#000000] text-white">
         <div className="md:w-[17vw] flex flex-col gap-y-[5vw] md:gap-y-[2vw]">
           <div className="relative w-[50vw] md:w-[13vw] aspect-[2114/579]">
             <Image
