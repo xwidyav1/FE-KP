@@ -1,72 +1,12 @@
-export const galeri = [
-  {
-    imgsrc: "/launching-kemhan-csirt.jpeg",
-    description:
-      "Penyerahan simbolis Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt2.jpeg",
-    description:
-      "Foto bersama di acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt3.jpeg",
-    description:
-      "Sambutan acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt4.jpeg",
-    description:
-      "Poster Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt2.jpeg",
-    description:
-      "Foto bersama di acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt3.jpeg",
-    description:
-      "Sambutan acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt.jpeg",
-    description:
-      "Penyerahan simbolis Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt2.jpeg",
-    description:
-      "Foto bersama di acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt3.jpeg",
-    description:
-      "Sambutan acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt4.jpeg",
-    description:
-      "Poster Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt.jpeg",
-    description:
-      "Penyerahan simbolis Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt2.jpeg",
-    description:
-      "Foto bersama di acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt3.jpeg",
-    description:
-      "Sambutan acara Launching CSIRT KEMHAN",
-  },
-  {
-    imgsrc: "/launching-kemhan-csirt4.jpeg",
-    description:
-      "Poster Launching CSIRT KEMHAN",
-  },
-];
+import axios from 'axios';
+
+export async function fetchPosts() {
+  try {
+    const response = await axios.get('http://localhost:8000/galleries'); // Ganti dengan endpoint backend Anda
+    console.log('Data fetched successfully:', response.data);
+    return response.data; // Mengembalikan data yang di-fetch
+  } catch (err) {
+    console.error('Error fetching data:', err.message);
+    throw err; // Melemparkan error jika ada
+  }
+}

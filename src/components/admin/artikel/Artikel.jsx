@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import BackButton from "@/components/admin/BackButton";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,11 +56,11 @@ const Artikel = () => {
   const [initialData, setInitialData] = useState(null);
   const [loadingFetch, setLoadingFetch] = useState(false);
 
-  const formIds = {
+  const formIds = useMemo(() => ({
     profil: 1122,
     visi: 2233,
     misi: 3456,
-  };
+  }), []);
 
   const form = useForm({
     resolver: zodResolver(schemas[formType]),
@@ -124,7 +124,7 @@ const Artikel = () => {
       });
       setLoadingFetch(false);
     }
-  }, [formType]);
+  }, [formType, form, formIds]);
   
   
 

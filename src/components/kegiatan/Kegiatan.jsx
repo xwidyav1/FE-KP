@@ -15,16 +15,26 @@ import {
   MdKeyboardArrowRight, 
   MdKeyboardDoubleArrowRight 
 } from "react-icons/md";
-import { events } from "./kegiatan_content"
+import { fetchEvents } from "@/components/kegiatan/kegiatan_content"
 import FadeIn from "@/components/transitions/FadeIn"
-
+import Link from "next/link"
+const BACKEND_URL = "http://localhost:8000"; // Ganti dengan URL backend Anda
 export default function Kegiatan() {
+  const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  useEffect(() => {
+    const getEvents = async () => {
+      const fetchedEvents = await fetchEvents();
+      setEvents(fetchedEvents);
+    };
 
+    getEvents();
+  }, []);
   const rowsPerPage = 7;
   const filteredEvents = events.filter((event) =>
-    event.name.toLowerCase().includes(searchTerm.toLowerCase())
+    event.acara.toLowerCase().includes(searchTerm.toLowerCase())
   );
   const totalPages = Math.ceil(filteredEvents.length / rowsPerPage);
 
@@ -86,11 +96,17 @@ export default function Kegiatan() {
                         index % 2 === 0 ? 'bg-gray-100' : ''
                       } hover:bg-blue-100`}
                     >
-                      <TableCell className="border px-4 py-2">{event.name}</TableCell>
-                      <TableCell className="border px-4 py-2">{event.date}</TableCell>
-                      <TableCell className="border px-4 py-2">{event.place}</TableCell>
-                      <TableCell className="border px-4 py-2">{event.materi}</TableCell>
-                    </TableRow>
+                      <TableCell className="border px-4 py-2">{event.acara}</TableCell>
+                      <TableCell className="border px-4 py-2">{event.tanggal}</TableCell>
+                      <TableCell className="border px-4 py-2">{event.tempat}</TableCell>
+                    <TableCell className="border px-4 py-2">
+                      {event.materi.map((materi, index) => (
+                        <Link key={index} href={`${BACKEND_URL}/storage/${event.materi}`} target="_blank" className="text-blue-500 hover:underline block">
+                          {materi}
+                        </Link>
+                      ))}
+                    </TableCell>
+                  </TableRow>
                   ))
                 ) : (
                   <TableRow>

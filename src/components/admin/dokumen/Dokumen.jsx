@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import BackButton from "@/components/admin/BackButton";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -72,14 +72,14 @@ const Dokumen = () => {
 const [initialData, setInitialData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFetch, setLoadingFetch] = useState(false);
-  const defaultValues = {
+  const defaultValues = useMemo(() => ({
     RFC_ID: {name:'', file_path: undefined },
     RFC_ENGLISH: {name:"", file_path: undefined },
     ADUAN_SIBER: {name:"", description: "", file_path: undefined },
     LAYANAN_VA: {name:"", description: "", file_path: undefined },
     PEDOMAN_TEKNIS: { name: "", file_path: undefined },
     kegiatan: { acara: "", tanggal: "", tempat: "", materi: [] },
-  };
+  }), []);
   const form = useForm({
     resolver: zodResolver(schemas[formType]),
     defaultValues:defaultValues[formType],
@@ -110,7 +110,7 @@ const [initialData, setInitialData] = useState(null);
   
     if (STATIC_IDS[formType]) fetchData();
     else form.reset(defaultValues[formType]);
-  }, [formType]);
+  }, [formType, form, defaultValues] );
   
 
   const handleRemoveFile = (index) => {
