@@ -36,7 +36,7 @@ const LearnAI101 = () => {
               </button>
             </FadeIn>
           </Link>
-          <Link href="https://csirt.kemhan.go.id/assets/rfc2350/rfc2350-id.pdf" target="_blank">
+          <Link href="https://csirt.kemhan.go.id/assets/rfc2350/rfc2350-en.pdf" target="_blank">
             <FadeIn direction="down" order={2.5}>
               <button className="group overflow-hidden relative bg-[#FFC600] hover:bg-[#FFD900] transition duration-500 w-[30vw] md:w-[10vw] h-[14vw] md:h-[3.6vw] rounded-[2vw] md:rounded-[0.5vw] flex flex-row gap-x-[3vw] md:gap-x-[1vw] justify-center items-center px-[5vw] md:px-[1.6vw] py-[0.5vw] md:py-[0.4vw] max-md:ml-[10vw] z-10">
                 <p className="text-[#012247] text-[3vw] md:text-[0.9vw] font-semibold">
