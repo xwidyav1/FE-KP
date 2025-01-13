@@ -16,18 +16,11 @@ import {
   MdKeyboardDoubleArrowRight 
 } from "react-icons/md";
 import { events } from "./kegiatan_content"
+import FadeIn from "@/components/transitions/FadeIn"
 
 export default function Kegiatan() {
-  // State untuk mengontrol mounting komponen
-  const [isMounted, setIsMounted] = useState(false);
-
-  // State lainnya
   const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const rowsPerPage = 7;
   const filteredEvents = events.filter((event) =>
@@ -51,19 +44,17 @@ export default function Kegiatan() {
     setCurrentPage(0); // Reset ke halaman pertama saat melakukan pencarian
   };
 
-  if (!isMounted) {
-    return null;
-  }
-
   return (
-    <div className="relative w-full h-auto flex flex-col pt-[8vw] px-[10vw] bg-[#FFFFFF]">
+    <FadeIn className="relative w-full h-auto min-h-screen flex flex-col pt-[8vw] px-[10vw] bg-[#FFFFFF]">
         <div className="flex flex-col">
-          <div className="flex flex-row gap-x-[1vw] items-center">
+          <FadeIn 
+            direction="right"
+            className="flex flex-row gap-x-[1vw] items-center">
             <div className="text-[2.5vw] font-semibold text-[#012247]">
               Event Siber
             </div>
             <div className="w-[8vw] h-[0.15vw] bg-[#FFC600]"></div>
-          </div>
+          </FadeIn>
 
           {/* Search Bar */}
           <div className="w-[20vw] mt-[2vw]">
@@ -149,6 +140,6 @@ export default function Kegiatan() {
           </div>
         </div>
       </div>
-    </div>
+    </FadeIn>
   )
 }

@@ -14,6 +14,7 @@ import { fetchPosts } from '@/components/admin/galeri/data_galeri';
 import { Trash2 } from 'lucide-react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useEffect } from 'react';
+import Image from "next/image"
 
 const BACKEND_URL = 'http://localhost:8000'; 
 const TabelGaleri = ({ description }) => {
@@ -78,8 +79,8 @@ const TabelGaleri = ({ description }) => {
             <TableRow key={post.id}>
               <TableCell>{post.description}</TableCell>
               <TableCell className="hidden md:table-cell">
-                <img 
-                  src={`${BACKEND_URL}/storage/${post.image}`} 
+                <Image
+                  src={`${BACKEND_URL}/storage/${post.image}`}
                   alt={post.description} 
                   className="w-[14.4vw] h-[8.1vw] object-cover rounded-md" 
                 />

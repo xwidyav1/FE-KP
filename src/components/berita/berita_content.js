@@ -9,7 +9,7 @@ export const berita = [
     slug: "berita-pertama",
   },
   {
-    title: "Runway's Next-Gen Video Generation AI",
+    title: "Runway's Next-Gen Video Generation AIApple's New AI Innovations Apple&apos;s New AI Innovations Apple&apos;s New AI Innovations",
     content:
       "Runway launched a new AI model for high-fidelity, fast, and controllable video generation, pushing the boundaries of creative AI applications. This innovation promises to revolutionize video production by making it more accessible and efficient.",
     image: "/launching-kemhan-csirt4.jpeg",
@@ -20,14 +20,14 @@ export const berita = [
   {
     title: "AI Optimism in Financial Planning",
     content:
-      "A Northwestern Mutual study shows growing trust in AI tools for financial planning among younger Americans. The study highlights a cautious yet positive outlook on AI's role in enhancing efficiency in financial services.",
+      "A Northwestern Mutual study shows growing trust in AI tools for financial planning among younger Americans. The study highlights a cautious yet positive outlook on AI&apos;s role in enhancing efficiency in financial services.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
     date: "4 Januari 2025, 08.30",
     slug: "berita-ketiga",
   },
   {
-    title: "Ilya Sutskever's New AI Company",
+    title: "Ilya Sutskever&apos;s New AI Company",
     content:
       "Ilya Sutskever, co-founder of OpenAI, launched Safe Superintelligence Inc (SSI) to focus on developing safe and ethical AI technologies. This new venture aims to address critical issues in AI safety and reliability.",
     image: "/launching-kemhan-csirt4.jpeg",
@@ -36,7 +36,7 @@ export const berita = [
     slug: "berita-keempat",
   },
   {
-    title: "Shutterstock's AI Licensing Success",
+    title: "Shutterstock&apos;s AI Licensing Success",
     content:
       "Shutterstock generated $104 million in 2023 by providing its media library for AI model training, attracting major tech firms like OpenAI and Meta. This move highlights the potential of the dataset market in AI development.",
     image: "/launching-kemhan-csirt4.jpeg",
@@ -45,9 +45,9 @@ export const berita = [
     slug: "berita-kelima",
   },
   {
-    title: "Anthropic's Claude 3.5 Sonnet Release",
+    title: "Anthropic&apos;s Claude 3.5 Sonnet Release",
     content:
-      "Anthropic introduced Claude 3.5 Sonnet, an advanced AI model known for its nuanced understanding and natural tone. It's available for free on Claude.ai and the Claude iPhone app, enhancing productivity in tasks like legal drafting and business report writing.",
+      "Anthropic introduced Claude 3.5 Sonnet, an advanced AI model known for its nuanced understanding and natural tone. It&apos;s available for free on Claude.ai and the Claude iPhone app, enhancing productivity in tasks like legal drafting and business report writing. nthropic introduced Claude 3.5 Sonnet, an advanced AI model known for its nuanced understanding and natural tone. It&apos;s available for free on Claude.ai and the Claude iPhone app, enhancing productivity in tasks like legal drafting and business report writ",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
     date: "1 Januari 2025, 08.30",
@@ -65,7 +65,7 @@ export const berita = [
   {
     title: "AI in Healthcare and Education",
     content:
-      "The global push for effective AI governance continues, with new initiatives focusing on the transformational benefits of AI in public services like healthcare and education. This collaborative effort aims to maximize AI's positive impact on society.",
+      "The global push for effective AI governance continues, with new initiatives focusing on the transformational benefits of AI in public services like healthcare and education. This collaborative effort aims to maximize AI&apos;s positive impact on society.",
     image: "/launching-kemhan-csirt4.jpeg",
     kategori: "Kategori",
     date: "1 Januari 2025, 08.30",

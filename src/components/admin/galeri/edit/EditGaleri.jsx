@@ -7,6 +7,7 @@ import { z } from 'zod';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { useToast } from "@/hooks/use-toast";
+import Image from "next/image"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -148,7 +149,7 @@ const EditGaleri = () => {
                 <div className="flex flex-col space-y-2">
                   {/* Tampilkan foto saat ini */}
                   {field.value && typeof field.value === "string" ? (
-                    <img
+                    <Image
                       src={field.value}
                       alt="Current Photo"
                       className="w-[24vw] h-[13.5vw] object-cover rounded-md"
@@ -169,7 +170,7 @@ const EditGaleri = () => {
                   </FormControl>
                   {previewImage && (
                   <div className="mt-4">
-                    <img
+                    <Image
                       src={previewImage}
                       alt="Preview"
                       className="h-32 w-32 object-cover rounded"
