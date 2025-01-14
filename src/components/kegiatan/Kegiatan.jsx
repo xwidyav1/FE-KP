@@ -101,7 +101,7 @@ export default function Kegiatan() {
                       <TableCell className="border px-4 py-2">{event.tempat}</TableCell>
                     <TableCell className="border px-4 py-2">
                       {event.materi.map((materi, index) => (
-                        <Link key={index} href={`${BACKEND_URL}/storage/${event.materi}`} target="_blank" className="text-blue-500 hover:underline block">
+                        <Link key={index} href={`${BACKEND_URL}/storage/${materi}`} target="_blank" className="text-blue-500 hover:underline block">
                           {materi}
                         </Link>
                       ))}

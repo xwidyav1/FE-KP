@@ -39,6 +39,7 @@ export default function Layanan() {
   const [error, setError] = useState(null);
   const rowsPerPage = 7;
   const [filteredData, setFilteredData] = useState([]);
+  const [loadingFetch, setLoadingFetch] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +47,7 @@ export default function Layanan() {
         const layananResponse = await axios.get("http://localhost:8000/documents/1234");
         console.log("Aduan Response:", aduanResponse.data);
         console.log("Layanan Response:", layananResponse.data);
-
+        setLoadingFetch(true);
         setData({
           aduan: aduanResponse.data.description,
           aduan_image: aduanResponse.data.file_path,
@@ -55,6 +56,8 @@ export default function Layanan() {
         });
       } catch (error) {
         console.error("Failed to fetch data:", error);
+      }finally {
+        setLoadingFetch(false);
       }
     };
 
@@ -105,8 +108,10 @@ export default function Layanan() {
     setSearchTerm(e.target.value);
     setCurrentPage(0); // Reset ke halaman pertama saat melakukan pencarian
   };
+  if (loadingFetch) return <p className="min-h-screen">Loading...</p>;
   if (loading) return <p className="min-h-screen">Loading...</p>;
   if (error) return <p className="min-h-screen">Error: {error}</p>;;
+  
   return (
     <div className="relative w-full h-auto flex flex-col pt-[6vw] px-[5vw] md:px-[10vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF]">
       <FadeIn
@@ -151,20 +156,25 @@ export default function Layanan() {
             <FadeIn
               direction="top"
               order={3}
-              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose md:prose-xl">
+              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose-xl">
               <div dangerouslySetInnerHTML={{ __html: data.aduan }} />           
             </FadeIn>
             <FadeIn
               direction="top"
               order={3} 
               className="relative w-auto h-[53vw] md:h-[49vw] md:mx-[1.5vw] overflow-hidden">
-              <Image
-                src={data.aduan_image}
-                alt="Alur Layanan Aduan Siber"
-                fill
-                className="object-contain"
-                draggable="false"
-              />
+              
+              {data.aduan_image ? (
+                <Image
+                  src={data.aduan_image}
+                  alt="Alur Layanan Aduan Siber"
+                  fill
+                  className="object-contain"
+                  draggable="false"
+                />
+              ) : (
+                <p>Gambar tidak tersedia</p>
+              )}
             </FadeIn>
           </FadeIn>
         </div>      
@@ -185,20 +195,24 @@ export default function Layanan() {
             <FadeIn 
               direction="top"
               order={3}
-              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose md:prose-xl">
+              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose-xl">
               <div dangerouslySetInnerHTML={{ __html: data.layanan }} /> 
             </FadeIn>
             <FadeIn
               direction="top"
               order={3}
               className="relative w-auto h-[81vw] md:h-[75vw] md:mx-[1.5vw] overflow-hidden">
-              <Image
-                src={data.layanan_image}
-                alt="Alur Layanan VA"
-                fill
-                className="object-contain"
-                draggable="false"
-              />
+               {data.layanan_image ? (
+                <Image
+                  src={data.layanan_image}
+                  alt="Alur Layanan VA"
+                  fill
+                  className="object-contain"
+                  draggable="false"
+                />
+              ) : (
+                <p>Gambar tidak tersedia</p>
+              )}
             </FadeIn>
           </FadeIn>
         </div>
@@ -319,6 +333,7 @@ export default function Layanan() {
           </div>
         </div>
       </div>
+      
     </div>
   )
 }

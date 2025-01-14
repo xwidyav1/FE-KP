@@ -124,7 +124,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
 
     const timer = setTimeout(() => setTransitioning(false), 400);
     return () => clearTimeout(timer);
-  }, [currentIndex, transitioning]);
+  }, [currentIndex, transitioning, posts.length]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -152,38 +152,7 @@ const Galeri = ({ currentPage: initialPage, onPageChange }) => {
           </div>         
         </FadeIn>
 
-        {/* Galeri Cards */}
-        {/* {isMobile ? (
-          <div className="md:hidden block w-full relative h-[190w]">
-            <div className="relative top-[5vw] flex justify-start gap-x-[2.4vw]">
-              {posts.map((post, index) => (
-                <button
-                  key={index}
-                  className={`rounded-[2vw] h-[2.4vw] md:h-[0.75vw] ${
-                    index === currentIndex
-                      ? "bg-neutral-900 w-[26vw] md:w-[6vw]"
-                      : "bg-neutral-100 w-[8.667vw] md:w-[2vw]"
-                  }`}
-                  onClick={() => handleIndicatorClick(index)}
-                />
-              ))}
-            </div>
-            <div
-              ref={sliderRef}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-              className="relative w-[680%] top-0 left-0 flex gap-x-[15vw] mt-[20vw] transition-transform duration-300">
-              {posts.map((post, index) => (
-                <div
-                  key={index}
-                  className="bg-neutral-100 w-[90vw] md:hover:bg-shade-white md:hover:shadow-[0_0.52vw_1.56vw_0_rgba(0,0,0,0.15)] relative flex flex-col items-center rounded-[4vw] md:rounded-[1vw] pt-[1.5vw] pb-[8vw] md:pb-[2vw] overflow-hidden">
-                  <GaleriCard post={post} index={index} />
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : ( */}
+       
           <FadeIn className="grid grid-cols-1 md:grid-cols-3 w-full h-auto md:h-[35vw] justify-stretch items-stretch gap-[5vw] md:gap-[1.2vw] max-md:pt-[1vw] md:mt-[1vw] md:px-[3vw]">
             {currentItems.map((post, index) => (
               <div
