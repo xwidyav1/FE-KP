@@ -85,7 +85,7 @@ const Hero = () => {
                   src={slide.image}
                   alt={`hero ${index}`}
                   fill
-                  className="object-cover opacity-90"
+                  className="object-cover opacity-95"
                   draggable="false"
                 />
                 <div className="absolute w-[70vw] md:w-[60vw] max-md:h-[100vw] flex flex-col max-md:justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-y-[15vw] md:gap-y-[2vw] z-10">

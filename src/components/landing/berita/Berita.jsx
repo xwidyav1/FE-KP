@@ -70,7 +70,7 @@ const Berita = () => {
             direction="top"
             order={2} 
             className="w-[90vw] md:w-auto h-auto md:h-[22vw] flex flex-col md:flex-row rounded-[2vw] md:rounded-[0.5vw] shadow-[0_0.1vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
-            <Link href="/" className="relative w-full md:w-[38vw] max-md:h-[54vw] overflow-hidden">
+            <Link href={`/artikel/${mainBerita.slug}`} className="relative w-full md:w-[38vw] max-md:h-[54vw] overflow-hidden">
               <Image
                 src={`${BACKEND_URL}/storage/${mainBerita.image}`}
                 alt="berita"
@@ -83,7 +83,7 @@ const Berita = () => {
               <p href="/" className="w-fit text-[3vw] md:text-[1vw] text-[#012247]">
                 {mainBerita.category}
               </p>
-              <Link href="/" className="w-fit font-semibold text-[5vw] md:text-[1.5vw] line-clamp-2 max-md:leading-[6vw] text-[#012247] hover:underline">
+              <Link href={`/artikel/${mainBerita.slug}`} className="w-fit font-semibold text-[5vw] md:text-[1.5vw] line-clamp-2 max-md:leading-[6vw] text-[#012247] hover:underline">
                 {mainBerita.title}
               </Link>
               <p className="text-[2.5vw] md:text-[0.9vw] text-gray-500">
@@ -105,7 +105,7 @@ const Berita = () => {
             <div
               key={index}
               className="md:w-[25.5vw] flex flex-row md:flex-col h-[25vw] md:h-[22vw] rounded-[1vw] md:rounded-[0.5vw] gap-y-[0.1vw] shadow-[0_0.2vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
-              <Link href="/" className="relative max-md:min-w-[40.32vw] h-auto md:h-[13vw] overflow-hidden">
+              <Link href={`/artikel/${item.slug}`} className="relative max-md:min-w-[40.32vw] h-auto md:h-[13vw] overflow-hidden">
                 <Image
                   src={`${BACKEND_URL}/storage/${item.image}`}
                   alt="berita"
@@ -118,7 +118,7 @@ const Berita = () => {
                 <p className="w-fit text-[3vw] md:text-[1vw] text-[#012247]">
                   {item.category}
                 </p>
-                <Link href="/" className="w-fit font-semibold text-[4vw] md:text-[1.3vw] line-clamp-2 max-md:leading-[5vw] text-[#012247] hover:underline">
+                <Link href={`/artikel/${item.slug}`} className="w-fit font-semibold text-[4vw] md:text-[1.3vw] line-clamp-2 max-md:leading-[5vw] text-[#012247] hover:underline">
                   {item.title}
                 </Link>
                 <p className="text-[2.2vw] md:text-[0.9vw] text-gray-500">

@@ -156,7 +156,7 @@ export default function Layanan() {
             <FadeIn
               direction="top"
               order={3}
-              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose-xl">
+              className="min-w-[80vw] mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.2vw] text-black prose">
               <div dangerouslySetInnerHTML={{ __html: data.aduan }} />           
             </FadeIn>
             <FadeIn
@@ -195,7 +195,7 @@ export default function Layanan() {
             <FadeIn 
               direction="top"
               order={3}
-              className="mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.1vw] prose-xl">
+              className="min-w-[80vw] mx-[2vw] md:mx-[1.5vw] text-[4vw] md:text-[1.2vw] text-black prose">
               <div dangerouslySetInnerHTML={{ __html: data.layanan }} /> 
             </FadeIn>
             <FadeIn
