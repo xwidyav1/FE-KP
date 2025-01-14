@@ -81,10 +81,10 @@ export default function Kegiatan() {
           <Table>
             <TableHeader>
               <TableRow className="bg-[#012247] pointer-events-none">
-                <TableHead className="text-white">Acara</TableHead>
-                <TableHead className="text-white">Tanggal</TableHead>
-                <TableHead className="text-white">Tempat</TableHead>
-                <TableHead className="text-white">Materi</TableHead>
+                <TableHead className="text-white text-center">Acara</TableHead>
+                <TableHead className="text-white text-center">Tanggal</TableHead>
+                <TableHead className="text-white text-center">Tempat</TableHead>
+                <TableHead className="text-white text-center">Materi</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -97,12 +97,12 @@ export default function Kegiatan() {
                       } hover:bg-blue-100`}
                     >
                       <TableCell className="border px-4 py-2">{event.acara}</TableCell>
-                      <TableCell className="border px-4 py-2">{event.tanggal}</TableCell>
+                      <TableCell className="border px-4 py-2 text-center">{event.tanggal}</TableCell>
                       <TableCell className="border px-4 py-2">{event.tempat}</TableCell>
                     <TableCell className="border px-4 py-2">
                       {event.materi.map((materi, index) => (
-                        <Link key={index} href={`${BACKEND_URL}/storage/${materi}`} target="_blank" className="text-blue-500 hover:underline block">
-                          {materi}
+                        <Link key={index} href={`${BACKEND_URL}/storage/${materi}`} target="_blank" className="text-center text-blue-500 hover:underline block">
+                          Lihat Materi
                         </Link>
                       ))}
                     </TableCell>
