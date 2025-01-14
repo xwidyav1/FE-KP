@@ -88,7 +88,7 @@ export default function NewsDetail({ params }) {
           {/* Content */}
           <div className="prose h-auto md:max-w-[55vw]">
             <div
-              className="text-[3.8vw] md:text-[1vw] leading-relaxed text-gray-700 prose md:prose-xl"
+              className="text-[3.8vw] md:text-[1vw] leading-relaxed text-gray-700 prose-xl"
               dangerouslySetInnerHTML={{ __html: article.content }} 
             /> 
           </div>

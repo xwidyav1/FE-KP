@@ -33,9 +33,10 @@ const BeritaCard = ({ post }) => {
             {post.updated_at}
           </p>
           </div>         
-          <p className="text-[4vw] md:text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[49vw] md:max-h-[12vw]">
-            {post.content}
-          </p>
+          <div
+            className="text-[4vw] md:text-[1vw] overflow-hidden text-ellipsis whitespace-normal max-h-[49vw] md:max-h-[12vw] prose-xl"
+            dangerouslySetInnerHTML={{ __html: post.content }} 
+          />
         </div>
       </div>
     </>

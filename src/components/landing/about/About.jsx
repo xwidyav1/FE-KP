@@ -66,7 +66,7 @@ const About = () => {
         </div>
         <FadeIn direction="top" order={2} className="flex flex-col gap-y-[5vw] max-md:px-[3vw]">
           <div className="w-full flex flex-col gap-y-[2vw]">
-            <div className="text-[3.5vw] md:text-[1.05vw] prose md:prose-xl"
+            <div className="text-[3.5vw] md:text-[1.05vw] prose-xl"
               dangerouslySetInnerHTML={{ __html: data.profil }}
             />
           </div>
@@ -134,14 +134,14 @@ const About = () => {
           <FadeIn direction="top" order={2} className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
             <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">Visi</h2>
             <div 
-              className="text-[3.8vw] md:text-[1.05vw] prose md:prose-xl"
+              className="text-[3.8vw] md:text-[1.05vw] prose-xl"
               dangerouslySetInnerHTML={{ __html: data.visi }}
             />
           </FadeIn>
           <FadeIn direction="top" order={2} className="flex flex-col gap-y-[1vw] max-md:px-[3vw]">
             <h2 className="font-semibold text-[4.5vw] md:text-[1.5vw]">Misi</h2>
             <div 
-              className="text-[3.8vw] md:text-[1.05vw] prose md:prose-xl" 
+              className="text-[3.8vw] md:text-[1.05vw] prose-xl" 
               dangerouslySetInnerHTML={{ __html: data.misi }}
             />
           </FadeIn>
