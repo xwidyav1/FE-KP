@@ -10,8 +10,8 @@ import Image from "next/image";
 
 const menu = [
   { section: "Beranda", topDsktp: 0, topMb: 0 },
-  { section: "Tentang Kami", topDsktp: 243, topMb: 217 },
-  { section: "RFC 2350", topDsktp: 495, topMb: 460 },
+  { section: "Tentang Kami", topDsktp: 237, topMb: 190 },
+  { section: "RFC 2350", topDsktp: 525, topMb: 435 },
   { section: "Layanan", url: "/layanan" },
   { section: "Event", dropdown: [
     { section: "Kegiatan", url: "/kegiatan" },

@@ -71,7 +71,7 @@ const About = () => {
             />
           </div>
           <div className="relative md:left-[15vw] w-[84vw] md:w-[50vw] aspect-[16/9] md:aspect-[7/4] bg-neutral-900 rounded-[3vw] md:rounded-[1.5vw] shadow-[0_0.52vw_2.2vw_0_rgba(0,0,0,0.25)]">
-            <div className="max-md:hidden relative w-full h-full rounded-[3vw] md:rounded-[1.5vw]">
+            <div className="max-xl:hidden relative w-full h-full rounded-[3vw] md:rounded-[1.5vw]">
               <BorderBeam size={600} duration={20} borderWidth={6} />
             </div>
 
@@ -79,7 +79,7 @@ const About = () => {
               <FadeIn
                 direction="right"
                 order={2.5}
-                className="relative top-[12.5vw] md:-top-[19vw] md:mx-auto h-[20vw] md:h-[8vw] flex gap-x-[1vw] items-center justify-center text-white font-bold text-[3.5vw]">
+                className="relative top-[12.5vw] md:top-[4.5vw] lg:top-[4vw] xl:-top-[19vw] md:mx-auto h-[20vw] xl:h-[8vw] flex gap-x-[1vw] items-center justify-center text-white font-bold text-[3.5vw]">
                 <p className="max-md:hidden">PLAY</p>
                 <button
                   className="relative w-[20vw] md:w-[6vw] md:hover:scale-[1.05] transition duration-500 aspect-[120/75] "

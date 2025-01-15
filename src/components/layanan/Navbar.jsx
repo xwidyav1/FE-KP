@@ -10,9 +10,9 @@ import Image from "next/image";
 
 const menu = [
   { section: "Beranda", url:"/" },
-  { section: "Aduan Siber", topDsktp: 97, topMb: 97.5 },
-  { section: "Layanan VA", topDsktp: 279, topMb: 248 },
-  { section: "Pedoman Teknis", topDsktp: 510, topMb: 373.5  },
+  { section: "Aduan Siber", topDsktp: 97, topMb: 80 },
+  { section: "Layanan VA", topDsktp: 315, topMb: 248 },
+  { section: "Pedoman Teknis", topDsktp: 551, topMb: 365  },
 ];
 
 const NavbarLanding = () => {
