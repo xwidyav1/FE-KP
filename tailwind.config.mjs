@@ -8,6 +8,19 @@ export default {
   ],
   theme: {
   	extend: {
+			typography: {
+        DEFAULT: {
+          css: {
+            color: 'inherit', // Menggunakan warna teks default (text-black)
+            'ul > li::marker': {
+              color: 'black', // Warna untuk bullet list
+            },
+            'ol > li::marker': {
+              color: 'black', // Warna untuk angka list
+            },
+          },
+        },
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

@@ -19,6 +19,7 @@ import {
 import { fetchPosts } from "./pedoman_teknis"
 import FadeIn from "@/components/transitions/FadeIn";
 import axios from "axios";
+
 export default function Layanan() {
   const [isClient, setIsClient] = useState(false);
   const [data, setData] = useState({
@@ -109,8 +110,8 @@ export default function Layanan() {
     setCurrentPage(0); // Reset ke halaman pertama saat melakukan pencarian
   };
   if (loadingFetch) return <p className="min-h-screen">Loading...</p>;
-  if (loading) return <p className="min-h-screen">Loading...</p>;
-  if (error) return <p className="min-h-screen">Error: {error}</p>;;
+  if (loading) return <p className="min-h-screen"></p>;
+  if (error) return <p className="min-h-screen flex items-center justify-center">Error: {error}</p>;;
   
   return (
     <div className="relative w-full h-auto flex flex-col pt-[6vw] px-[5vw] md:px-[10vw] bg-gradient-to-b from-[#EBEBEB] to-[#FFFFFF]">
