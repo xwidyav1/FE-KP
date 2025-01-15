@@ -235,11 +235,16 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="h-[13vw] md:h-[4.5vw] flex justify-center items-center bg-[#000000] text-white text-[3vw] md:text-[0.9vw]">
-        Copyright 2024© Pushansiber Kemhan RI 
-    
-    
-        |Mahasiswa Praktik Kerja Lapangan UGM (2025)|
+      <div className="h-[13vw] md:h-[4.5vw] flex flex-col md:flex-row justify-center items-center bg-[#000000] text-white text-[3vw] md:text-[0.9vw] md:gap-x-[0.7vw]">
+        <p>
+          Copyright 2025© Pushansiber Kemhan RI 
+        </p>  
+        <p className="max-md:hidden">
+          |
+        </p>     
+        <p> 
+          Mahasiswa Praktik Kerja Lapangan UGM 2025
+        </p>
       </div>
     </div>
   )
