@@ -5,7 +5,7 @@ import { fetchPosts } from "./galeri_content";
 import GaleriCard from "./GaleriCard";
 import FadeIn from "@/components/transitions/FadeIn";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from "react-icons/md";
-const BACKEND_URL = 'http://localhost:8000'; 
+
 const Galeri = ({ currentPage: initialPage, onPageChange }) => {
   const [posts, setPosts] = useState([]);
   const [isMobile, setIsMobile] = useState(true);

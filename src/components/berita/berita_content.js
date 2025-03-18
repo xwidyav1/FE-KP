@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const generateSlug = (title) => {
   return title
     .toLowerCase()
@@ -25,7 +27,7 @@ const formatDateTime = (dateString) => {
 };
 export async function fetchPosts() {
   try {
-    const response = await axios.get('http://localhost:8000/berita');
+    const response = await axios.get(`${BACKEND_URL}/api/berita`);
     const postsWithSlug = response.data.map(post => ({
       ...post,
       slug: generateSlug(post.title),

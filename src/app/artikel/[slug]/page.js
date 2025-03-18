@@ -11,7 +11,7 @@ import Link from "next/link";
 import FadeIn from "@/components/transitions/FadeIn";
 import { HiArrowRight } from "react-icons/hi";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export default function NewsDetail({ params }) {
   const [posts, setPosts] = useState([]);
@@ -77,7 +77,7 @@ export default function NewsDetail({ params }) {
           {/* Featured Image */}
           <div className="relative w-full aspect-[16/9] mb-[1vw]">
             <Image
-              src={`${BACKEND_URL}/storage/${article.image}`}
+              src={`${BACKEND_URL}/api/storage/${article.image}`}
               alt={article.title}
               fill
               style={{ objectFit: "cover" }}

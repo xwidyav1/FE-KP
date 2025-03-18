@@ -23,9 +23,9 @@ const About = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profilResponse = await axios.get(`${BACKEND_URL}/artikel/1122`);
-        const visiResponse = await axios.get(`${BACKEND_URL}/artikel/2233`);
-        const misiResponse = await axios.get(`${BACKEND_URL}/artikel/3456`);
+        const profilResponse = await axios.get(`${BACKEND_URL}/api/artikel/1122`);
+        const visiResponse = await axios.get(`${BACKEND_URL}/api/artikel/2233`);
+        const misiResponse = await axios.get(`${BACKEND_URL}/api/artikel/3456`);
 
         setData({
           profil: profilResponse.data.content,

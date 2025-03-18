@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export async function fetchEvents() {
   try {
-    const response = await axios.get('http://localhost:8000/kegiatan'); // Ganti dengan endpoint backend Anda
+    const response = await axios.get(`${BACKEND_URL}/api/kegiatan`);
     if (response.status === 200 && Array.isArray(response.data)) {
       // Pastikan properti 'materi' selalu berupa array
       const processedData = response.data.map(event => ({

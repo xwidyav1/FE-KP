@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays } from 'lucide-react';
-const BACKEND_URL = "http://localhost:8000";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const BeritaCard = ({ post }) => {
   return (
     <>
@@ -10,7 +12,7 @@ const BeritaCard = ({ post }) => {
           href={`/artikel/${post.slug}`}
           className="relative w-full md:w-[18.5vw] max-h-[50vw] md:max-h-[10.5vw] aspect-[16/9] md:mx-[0vw]">
           <Image
-            src={`${BACKEND_URL}/storage/${post.image}`}
+            src={`${BACKEND_URL}/api/storage/${post.image}`}
             alt={post.title}
             fill
             style={{ objectFit: "cover" }}
