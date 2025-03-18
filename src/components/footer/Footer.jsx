@@ -1,9 +1,28 @@
+"use client";
 import React from 'react'
 import Image from "next/image"
 import Link from "next/link"
 import { House, Phone, Mail } from 'lucide-react';
-
+import { useState, useEffect } from 'react';
+import { fetchPosts } from '@/components/footer/pengunjung';
 export default function Footer() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+      const getPosts = async () => {
+        try {
+          const data = await fetchPosts();
+          setPosts(data);
+          setLoading(false);
+        } catch (err) {
+          setError(err.message);
+          setLoading(false);
+        }
+      };
+  
+      getPosts();
+    }, []);
+  
   return (
     <div className="w-full h-[260vw] md:h-[30vw] flex flex-col">
       <div className="flex flex-col md:flex-row h-[295.5vw] md:h-[25.5vw] pt-[10vw] md:pt-[5vw] px-[7vw] max-md:gap-y-[15vw] md:gap-x-[3vw] bg-gradient-to-b from-[#000000] to-[#000000] text-white">
@@ -221,16 +240,16 @@ export default function Footer() {
           </div>
           <div className="flex flex-col text-[3.5vw] md:text-[1vw] ml-[2vw] md:ml-[0.5vw] md:gap-y-[0.5vw]">
             <div>
-              Daily : 1000
+              Daily : {posts.daily}
             </div>
             <div>
-              Weekly : 7000
+              Weekly : {posts.weekly}
             </div>
             <div>
-              Monthly : 30000
+              Monthly : {posts.monthly}
             </div>
             <div>
-              Total : 360000
+              Total : {posts.total}
             </div>
           </div>
         </div>
