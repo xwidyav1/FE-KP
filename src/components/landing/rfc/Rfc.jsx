@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const Rfc = () => {
   const [links, setLinks] = useState({
     id: "#",
@@ -15,10 +17,9 @@ const Rfc = () => {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const backendUrl = "http://localhost:8000";
         const [idResponse, enResponse] = await Promise.all([
-          axios.get(`${backendUrl}/documents/123`),
-          axios.get(`${backendUrl}/documents/456`),
+          axios.get(`${BACKEND_URL}/documents/123`),
+          axios.get(`${BACKEND_URL}/documents/456`),
         ]);
 
         setLinks({

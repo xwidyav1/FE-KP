@@ -7,6 +7,8 @@ import React, { useState, useRef, useEffect } from "react";
 import YouTube from "react-youtube";
 import axios from "axios";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const About = () => {
   const [videoVisible, setVideoVisible] = useState(false);
   const [data, setData] = useState({
@@ -21,9 +23,9 @@ const About = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profilResponse = await axios.get("http://localhost:8000/artikel/1122");
-        const visiResponse = await axios.get("http://localhost:8000/artikel/2233");
-        const misiResponse = await axios.get("http://localhost:8000/artikel/3456");
+        const profilResponse = await axios.get(`${BACKEND_URL}/artikel/1122`);
+        const visiResponse = await axios.get(`${BACKEND_URL}/artikel/2233`);
+        const misiResponse = await axios.get(`${BACKEND_URL}/artikel/3456`);
 
         setData({
           profil: profilResponse.data.content,
