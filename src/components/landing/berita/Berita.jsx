@@ -7,7 +7,9 @@ import Link from "next/link";
 import { fetchPosts} from "@/components/berita/berita_content";
 import FadeIn from "@/components/transitions/FadeIn";
 import { useEffect, useState } from "react";
-const BACKEND_URL = 'http://localhost:8000';
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const Berita = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);

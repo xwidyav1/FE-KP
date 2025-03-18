@@ -20,6 +20,8 @@ import { fetchPosts } from "./pedoman_teknis"
 import FadeIn from "@/components/transitions/FadeIn";
 import axios from "axios";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export default function Layanan() {
   const [isClient, setIsClient] = useState(false);
   const [data, setData] = useState({
@@ -44,8 +46,8 @@ export default function Layanan() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const aduanResponse = await axios.get("http://localhost:8000/documents/789");
-        const layananResponse = await axios.get("http://localhost:8000/documents/1234");
+        const aduanResponse = await axios.get(`${BACKEND_URL}/documents/789`);
+        const layananResponse = await axios.get(`${BACKEND_URL}/documents/1234`);
         console.log("Aduan Response:", aduanResponse.data);
         console.log("Layanan Response:", layananResponse.data);
         setLoadingFetch(true);
