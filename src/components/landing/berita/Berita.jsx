@@ -74,7 +74,7 @@ const Berita = () => {
             className="w-[90vw] md:w-auto h-auto md:h-[22vw] flex flex-col md:flex-row rounded-[2vw] md:rounded-[0.5vw] shadow-[0_0.1vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
             <Link href={`/artikel/${mainBerita.slug}`} className="relative w-full md:w-[38vw] max-md:h-[54vw] overflow-hidden">
               <Image
-                src={`${BACKEND_URL}/storage/${mainBerita.image}`}
+                src={`${BACKEND_URL}/api/storage/${mainBerita.image}`}
                 alt="berita"
                 fill
                 className="object-cover transition-transform duration-1000 ease-in-out md:hover:scale-110"
@@ -109,7 +109,7 @@ const Berita = () => {
               className="md:w-[25.5vw] flex flex-row md:flex-col h-[25vw] md:h-[22vw] rounded-[1vw] md:rounded-[0.5vw] gap-y-[0.1vw] shadow-[0_0.2vw_0.4vw_0_rgba(0,0,0,0.1)] overflow-hidden">
               <Link href={`/artikel/${item.slug}`} className="relative max-md:min-w-[40.32vw] h-auto md:h-[13vw] overflow-hidden">
                 <Image
-                  src={`${BACKEND_URL}/storage/${item.image}`}
+                  src={`${BACKEND_URL}/api/storage/${item.image}`}
                   alt="berita"
                   fill
                   className="object-cover transition-transform duration-1000 ease-in-out md:hover:scale-110"

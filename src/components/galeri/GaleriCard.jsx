@@ -1,10 +1,12 @@
 import Image from "next/image";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const GaleriCard = ({ post }) => {
   // Pastikan URL gambar relatif digabung dengan base URL
   const imageURL = post.image.startsWith("http")
     ? post.image
-    : `http://localhost:8000/storage/${post.image}`;
+    : `${BACKEND_URL}/api/storage/${post.image}`;
 
   return (
     <div className="flex flex-col items-center">

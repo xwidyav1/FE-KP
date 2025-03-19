@@ -18,8 +18,8 @@ const Rfc = () => {
     const fetchLinks = async () => {
       try {
         const [idResponse, enResponse] = await Promise.all([
-          axios.get(`${BACKEND_URL}/documents/123`),
-          axios.get(`${BACKEND_URL}/documents/456`),
+          axios.get(`${BACKEND_URL}/api/documents/123`),
+          axios.get(`${BACKEND_URL}/api/documents/456`),
         ]);
 
         setLinks({

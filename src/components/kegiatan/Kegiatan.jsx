@@ -18,7 +18,9 @@ import {
 import { fetchEvents } from "@/components/kegiatan/kegiatan_content"
 import FadeIn from "@/components/transitions/FadeIn"
 import Link from "next/link"
-const BACKEND_URL = "http://localhost:8000"; // Ganti dengan URL backend Anda
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export default function Kegiatan() {
   const [events, setEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -101,7 +103,7 @@ export default function Kegiatan() {
                       <TableCell className="border px-4 py-2">{event.tempat}</TableCell>
                     <TableCell className="border px-4 py-2">
                       {event.materi.map((materi, index) => (
-                        <Link key={index} href={`${BACKEND_URL}/storage/${materi}`} target="_blank" className="text-center text-blue-500 hover:underline block">
+                        <Link key={index} href={`${BACKEND_URL}/api/storage/${materi}`} target="_blank" className="text-center text-blue-500 hover:underline block">
                           Lihat Materi
                         </Link>
                       ))}
