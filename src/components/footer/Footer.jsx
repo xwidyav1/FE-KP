@@ -8,6 +8,7 @@ import { fetchPosts } from '@/components/footer/pengunjung';
 export default function Footer() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   useEffect(() => {
       const getPosts = async () => {
         try {
